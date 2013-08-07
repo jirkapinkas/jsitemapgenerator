@@ -5,11 +5,12 @@
 <h2>Typical usage:</h2>
 
 <code>
-webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com").setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
-File file = new File("/var/www/sitemap.xml");
-webSitemapGenerator.constructAndSaveSitemap(file);
-webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
+webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");<br>
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")<br>
+                   .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));<br>
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));<br>
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));<br>
+File file = new File("/var/www/sitemap.xml");<br>
+webSitemapGenerator.constructAndSaveSitemap(file);<br>
+webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");<br>
 </code>
