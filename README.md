@@ -11,7 +11,7 @@
 
 <pre>
 <code>
-webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")
                    .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));

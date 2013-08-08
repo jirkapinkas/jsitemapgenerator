@@ -1,0 +1,13 @@
+<project xmlns="http://maven.apache.org/DECORATION/1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd"
+ name="Java sitemap generator">
+ <body>
+ <links>
+        <item name="project on github" href="https://github.com/jirkapinkas/jsitemapgenerator"/>
+    </links>
+    <menu name="Overview">
+      <item name="Javadoc" href="apidocs/index.html" />
+    </menu>
+ 	<footer>(C) Jiri Pinkas All rights reserved</footer>
+ </body>
+</project>
