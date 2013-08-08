@@ -18,10 +18,18 @@ public class WebSitemapGenerator {
 
 	private W3CDateFormat dateFormat = new W3CDateFormat();
 
+	/**
+	 * Construct web sitemap.
+	 * @param baseUrl All URLs must start with this baseUrl
+	 */
 	public WebSitemapGenerator(String baseUrl) {
 		this.baseUrl = baseUrl;
 	}
 
+	/**
+	 * Add single URL to sitemap
+	 * @param url single URL
+	 */
 	public void addUrl(WebSitemapUrl url) {
 		String strurl = url.getUrl().toString();
 		if (!strurl.startsWith(baseUrl)) {
@@ -30,12 +38,20 @@ public class WebSitemapGenerator {
 		urls.put(url.getUrl().toString(), url);
 	}
 
+	/**
+	 * Add collection of URLs to sitemap
+	 * @param urls Collection of URLs
+	 */
 	public void addUrls(Collection<WebSitemapUrl> urls) {
 		for (WebSitemapUrl url : urls) {
 			addUrl(url);
 		}
 	}
 
+	/**
+	 * Construct sitemap into array of Strings
+	 * @return sitemap
+	 */
 	public String[] constructSitemap() {
 		ArrayList<String> out = new ArrayList<String>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -48,6 +64,12 @@ public class WebSitemapGenerator {
 		return out.toArray(new String[] {});
 	}
 
+	/**
+	 * Save sitemap to output file
+	 * @param file Output file
+	 * @param sitemap Sitemap as array of Strings (created by constructSitemap() method)
+	 * @throws IOException
+	 */
 	public void saveSitemap(File file, String[] sitemap) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		for (String string : sitemap) {
@@ -56,11 +78,21 @@ public class WebSitemapGenerator {
 		writer.close();
 	}
 
+	/**
+	 * Construct and save sitemap to output file
+	 * @param file Output file
+	 * @throws IOException
+	 */
 	public void constructAndSaveSitemap(File file) throws IOException {
 		String[] sitemap = constructSitemap();
 		saveSitemap(file, sitemap);
 	}
 
+	/**
+	 * Ping Google that sitemap has changed. Will call this URL: http://www.google.com/webmasters/tools/ping?sitemap=<URL Encoded sitemapUrl>
+	 * @param sitemapUrl sitemap URL
+	 * @throws Exception
+	 */
 	public void pingGoogle(String sitemapUrl) throws Exception {
 		// TODO change sysout to logging
 		try {
