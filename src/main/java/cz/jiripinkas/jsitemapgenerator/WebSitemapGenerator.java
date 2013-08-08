@@ -1,4 +1,4 @@
-package com.javavids.jsitemapgenerator;
+package cz.jiripinkas.jsitemapgenerator;
 
 import java.io.BufferedWriter;
 import java.io.File;
