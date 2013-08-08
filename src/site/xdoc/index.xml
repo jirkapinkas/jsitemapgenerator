@@ -3,12 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
 	<properties>
-<<<<<<< HEAD
 		<title>About</title>
-=======
-		<title>Page Title</title>
-		<author email="user@company.com">John Doe</author>
->>>>>>> 6129fe42875f6034d0cb78e983c3541539aca15a
 	</properties>
 
 	<!-- Optional HEAD element, which is copied as is into the XHTML <head> 
@@ -33,7 +28,6 @@
 		</section>
 
 		<section name="Typical usage:">
-<<<<<<< HEAD
 		
 		<p>First add this library to <a href="dependency-info.html">classpath</a>.</p>
 		
@@ -44,25 +38,14 @@
 // create web sitemap for web http://www.javavids.com
 WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
 // add some URLs
-=======
-
-			<!-- You can also include preformatted source blocks in the document -->
-			<source>
-WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
->>>>>>> 6129fe42875f6034d0cb78e983c3541539aca15a
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")
                    .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
-<<<<<<< HEAD
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 webSitemapGenerator.constructAndSaveSitemap(file);
 // inform Google that this sitemap has changed
-=======
-File file = new File("/var/www/sitemap.xml");
-webSitemapGenerator.constructAndSaveSitemap(file);
->>>>>>> 6129fe42875f6034d0cb78e983c3541539aca15a
 webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
 			</source>
 
