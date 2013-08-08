@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+	<properties>
+		<title>About</title>
+	</properties>
+
+	<!-- Optional HEAD element, which is copied as is into the XHTML <head> 
+		element -->
+	<!-- <head> -->
+	<!-- <meta . /> -->
+	<!-- </head> -->
+
+	<body>
+
+		<!-- The body of the document contains a number of sections -->
+		<section name="Java sitemap generator">
+
+			<!-- Within sections, any XHTML can be used -->
+			<p>This library generates a web sitemap and can ping Google that it has changed. This project has been inspired by <a href="https://code.google.com/p/sitemapgen4j/" target="_blank">sitemapgen4j</a>, but is much more focused on traditional web sitemap and ease of use.</p>
+
+			<!-- in addition to XHTML, any number of subsections can be within a section -->
+<!-- 			<subsection name="subsection 1"> -->
+<!-- 				<p>Subsection!</p> -->
+<!-- 			</subsection> -->
+
+		</section>
+
+		<section name="Typical usage:">
+		
+		<p>First add this library to <a href="dependency-info.html">classpath</a>.</p>
+		
+		<p>Next create a sitemap:</p>
+
+			<!-- You can also include preformatted source blocks in the document -->
+			<source>
+// create web sitemap for web http://www.javavids.com
+WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+// add some URLs
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")
+                   .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
+webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
+// generate sitemap and save it to file /var/www/sitemap.xml
+File file = new File("/var/www/sitemap.xml");
+webSitemapGenerator.constructAndSaveSitemap(file);
+// inform Google that this sitemap has changed
+webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
+			</source>
+
+		</section>
+
+	</body>
+
+</document>

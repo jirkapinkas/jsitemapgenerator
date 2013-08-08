@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+	<properties>
+		<title>Development</title>
+	</properties>
+
+	<!-- Optional HEAD element, which is copied as is into the XHTML <head> 
+		element -->
+	<!-- <head> -->
+	<!-- <meta . /> -->
+	<!-- </head> -->
+
+	<body>
+
+		<!-- The body of the document contains a number of sections -->
+		<section name="How to develop">
+
+			<p>Follows reminder how to develop this library:</p>
+
+			<ul>
+				<li>repository: https://github.com/jirkapinkas/jsitemapgenerator.git
+				</li>
+				<li>how to compile library: mvn package</li>
+				<li>how to compile web site: mvn site:site</li>
+				<li>And that's all :)</li>
+			</ul>
+
+		</section>
+
+	</body>
+
+</document>

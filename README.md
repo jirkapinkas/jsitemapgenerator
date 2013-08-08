@@ -9,18 +9,39 @@
 
 <h2>Typical usage:</h2>
 
+<p>First add this library to classpath:</p>
+
 <pre>
 <code>
-webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+&lt;dependency&gt;
+  &lt;groupId&gt;cz.jiripinkas.jsitemapgenerator&lt;/groupId&gt;
+  &lt;artifactId&gt;jsitemapgenerator&lt;/artifactId&gt;
+  &lt;version&gt;TODO CHANGE TO LATEST VERSION&lt;/version&gt;
+&lt;/dependency&gt;
+</code>
+</pre>
+
+<p>Next create a sitemap:</p>
+
+
+<pre>
+<code>
+// create web sitemap for web http://www.javavids.com
+WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+// add some URLs
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")
                    .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
 webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
+// generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 webSitemapGenerator.constructAndSaveSitemap(file);
+// inform Google that this sitemap has changed
 webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
 </code>
 </pre>
+
+<h2></h2>
 
 
 <h2>My other projects:</h2>
