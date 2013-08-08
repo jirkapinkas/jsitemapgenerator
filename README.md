@@ -4,6 +4,7 @@
 
 <h2>Typical usage:</h2>
 
+<div class="highlight">
 <pre>
 <code>
 webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
@@ -16,3 +17,4 @@ webSitemapGenerator.constructAndSaveSitemap(file);
 webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
 </code>
 </pre>
+</div>
