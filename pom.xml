@@ -4,6 +4,29 @@
 	<groupId>cz.jiripinkas.jsitemapgenerator</groupId>
 	<artifactId>jsitemapgenerator</artifactId>
 	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>Java sitemap generator</name>
+	<description>This library generates a web sitemap and can ping Google that it has changed. This project has been inspired by sitemapgen4j, but is much more focused on traditional web sitemap and ease of use.</description>
+	<url>http://jsitemapgenerator.jiripinkas.cz/</url>
+	<licenses>
+		<license>
+			<name>FreeBSD License</name>
+			<url>http://www.freebsd.org/copyright/freebsd-license.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/jirkapinkas/jsitemapgenerator</url>
+		<connection>https://github.com/jirkapinkas/jsitemapgenerator</connection>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>jirkapinkas</id>
+			<name>Jiri Pinkas</name>
+			<email>jirka.pinkas@gmail.com</email>
+		</developer>
+	</developers>
 
 	<properties>
 		<httpclient.version>4.2.2</httpclient.version>
