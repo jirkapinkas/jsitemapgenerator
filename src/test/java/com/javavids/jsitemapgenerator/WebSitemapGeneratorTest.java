@@ -56,6 +56,10 @@ public class WebSitemapGeneratorTest {
 	@Test
 	public void testConstructSitemap() throws Exception {
 		String[] sitemap = webSitemapGenerator.constructSitemap();
+		
+		for (String string : sitemap) {
+			System.out.println(string);
+		}
 
 		StringBuilder sb = new StringBuilder();
 		for (String s : sitemap) {
