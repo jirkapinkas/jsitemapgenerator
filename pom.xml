@@ -16,9 +16,16 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/jirkapinkas/jsitemapgenerator</url>
-		<connection>https://github.com/jirkapinkas/jsitemapgenerator</connection>
+		<connection>scm:git:git@github.com:jirkapinkas/jsitemapgenerator.git</connection>
+		<developerConnection>scm:git:git@github.com:jirkapinkas/jsitemapgenerator.git</developerConnection>
+		<url>git@github.com:jirkapinkas/jsitemapgenerator.git</url>
 	</scm>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
 	<developers>
 		<developer>
