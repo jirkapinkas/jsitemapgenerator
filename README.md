@@ -14,9 +14,9 @@
 <pre>
 <code>
 &lt;dependency&gt;
-  &lt;groupId&gt;cz.jiripinkas.jsitemapgenerator&lt;/groupId&gt;
+  &lt;groupId&gt;cz.jiripinkas&lt;/groupId&gt;
   &lt;artifactId&gt;jsitemapgenerator&lt;/artifactId&gt;
-  &lt;version&gt;TODO CHANGE TO LATEST VERSION&lt;/version&gt;
+  &lt;version&gt;1.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code>
 </pre>
