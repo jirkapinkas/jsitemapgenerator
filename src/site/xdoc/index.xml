@@ -38,15 +38,15 @@
 // create web sitemap for web http://www.javavids.com
 WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
 // add some URLs
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com")
+webSitemapGenerator.addPage(new WebPage().setName("index.php")
                    .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
-webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
+webSitemapGenerator.addPage(new WebPage().setName("latest.php"));
+webSitemapGenerator.addPage(new WebPage().setName("contact.php"));
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 webSitemapGenerator.constructAndSaveSitemap(file);
 // inform Google that this sitemap has changed
-webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
+webSitemapGenerator.pingGoogle();
 			</source>
 
 		</section>

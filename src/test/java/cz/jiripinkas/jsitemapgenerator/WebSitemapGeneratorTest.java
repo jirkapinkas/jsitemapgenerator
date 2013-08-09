@@ -18,10 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
-import cz.jiripinkas.jsitemapgenerator.WebSitemapGenerator;
-import cz.jiripinkas.jsitemapgenerator.WebSitemapUrl;
-
 public class WebSitemapGeneratorTest {
 
 	private WebSitemapGenerator webSitemapGenerator;
@@ -29,9 +25,9 @@ public class WebSitemapGeneratorTest {
 	@Before
 	public void setUp() throws Exception {
 		webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
-		webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com").setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
-		webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/latest.php"));
-		webSitemapGenerator.addUrl(new WebSitemapUrl().setUrl("http://www.javavids.com/contact.php"));
+		webSitemapGenerator.addPage(new WebPage().setName("index.php").setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
+		webSitemapGenerator.addPage(new WebPage().setName("latest.php"));
+		webSitemapGenerator.addPage(new WebPage().setName("contact.php"));
 	}
 
 	private void testSitemapXsd(InputStream sitemapXml) throws SAXException, IOException {
@@ -57,7 +53,7 @@ public class WebSitemapGeneratorTest {
 	@Test
 	public void testConstructSitemap() throws Exception {
 		String[] sitemap = webSitemapGenerator.constructSitemap();
-		
+
 		for (String string : sitemap) {
 			System.out.println(string);
 		}
@@ -94,7 +90,7 @@ public class WebSitemapGeneratorTest {
 
 	@Test
 	public void testPingGoogle() throws Exception {
-		webSitemapGenerator.pingGoogle("http://www.javavids.com/sitemap.xml");
+		webSitemapGenerator.pingGoogle("http://jsitemapgenerator.jiripinkas.cz/sitemap.xml");
 	}
 
 }

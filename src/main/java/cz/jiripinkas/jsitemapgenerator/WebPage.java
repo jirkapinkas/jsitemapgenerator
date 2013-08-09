@@ -4,17 +4,28 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 
-public class WebSitemapUrl {
-	private URL url;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+
+public class WebPage {
+	private String name;
 	private Date lastMod;
 	private ChangeFreq changeFreq;
 	private Double priority;
 
-	public String constructUrl(W3CDateFormat dateFormat) {
+	public String constructUrl(W3CDateFormat dateFormat, String baseUrl) {
 		StringBuilder out = new StringBuilder();
 		out.append("<url>\n");
 		out.append("<loc>");
-		out.append(url);
+		try {
+			if (name != null) {
+				out.append(new URL(baseUrl + name).toString());
+			} else {
+				out.append(new URL(baseUrl).toString());
+			}
+		} catch (MalformedURLException e) {
+			throw new InvalidUrlException(e);
+		}
 		out.append("</loc>\n");
 		if (lastMod != null) {
 			out.append("<lastmod>");
@@ -35,37 +46,31 @@ public class WebSitemapUrl {
 		return out.toString();
 	}
 
-	public WebSitemapUrl setUrl(URL url) {
-		this.url = url;
+	public WebPage setName(String name) {
+		this.name = name;
 		return this;
 	}
 
-	public WebSitemapUrl setUrl(String url) {
-		try {
-			this.url = new URL(url);
-		} catch (MalformedURLException e) {
-			throw new RuntimeException("Must add only valid URL!", e);
-		}
-		return this;
-	}
-
-	public WebSitemapUrl setLastMod(Date lastMod) {
+	public WebPage setLastMod(Date lastMod) {
 		this.lastMod = lastMod;
 		return this;
 	}
 
-	public WebSitemapUrl setChangeFreq(ChangeFreq changeFreq) {
+	public WebPage setChangeFreq(ChangeFreq changeFreq) {
 		this.changeFreq = changeFreq;
 		return this;
 	}
 
-	public WebSitemapUrl setPriority(Double priority) {
+	public WebPage setPriority(Double priority) {
+		if (priority < 0.0 || priority > 1.0) {
+			throw new InvalidPriorityException("Priority must be between 0 and 1.0");
+		}
 		this.priority = priority;
 		return this;
 	}
 
-	public URL getUrl() {
-		return url;
+	public String getName() {
+		return name;
 	}
 
 	public Date getLastMod() {
