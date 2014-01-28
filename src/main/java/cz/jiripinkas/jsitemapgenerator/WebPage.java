@@ -13,6 +13,7 @@ public class WebPage {
 	private ChangeFreq changeFreq;
 	private Double priority;
 	private String shortDescription;
+	private String shortName;
 
 	public String constructUrl(W3CDateFormat dateFormat, String baseUrl) {
 		StringBuilder out = new StringBuilder();
@@ -45,6 +46,15 @@ public class WebPage {
 		}
 		out.append("</url>\n");
 		return out.toString();
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public WebPage setShortName(String shortName) {
+		this.shortName = shortName;
+		return this;
 	}
 
 	public String getShortDescription() {
