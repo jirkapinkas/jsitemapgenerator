@@ -56,7 +56,7 @@ public class RssGenerator extends AbstractGenerator {
 			builder.append("</description>" + "\n");
 
 			builder.append("<link>");
-			builder.append(baseUrl + "/" + webPage.getName());
+			builder.append(baseUrl + webPage.getName());
 			builder.append("</link>" + "\n");
 
 			builder.append("<pubDate>");
