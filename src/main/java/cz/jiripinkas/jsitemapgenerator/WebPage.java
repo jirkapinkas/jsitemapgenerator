@@ -12,6 +12,7 @@ public class WebPage {
 	private Date lastMod;
 	private ChangeFreq changeFreq;
 	private Double priority;
+	private String shortDescription;
 
 	public String constructUrl(W3CDateFormat dateFormat, String baseUrl) {
 		StringBuilder out = new StringBuilder();
@@ -44,6 +45,15 @@ public class WebPage {
 		}
 		out.append("</url>\n");
 		return out.toString();
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public WebPage setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+		return this;
 	}
 
 	public WebPage setName(String name) {

@@ -9,6 +9,6 @@
 		<menu>
 			<item name="Development" href="development.html" />
 		</menu>
-		<footer>(C) Jiri Pinkas All rights reserved.</footer>
+		<footer><description>(C) Jiri Pinkas All rights reserved.</description></footer>
 	</body>
 </project>
