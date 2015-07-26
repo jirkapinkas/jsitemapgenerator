@@ -101,7 +101,7 @@ public String constructSitemapString() {
 
 	/**
 	 * Ping Bing that sitemap has changed. Will call this URL:
-	 * http://www.google.com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
+	 * http://www.bing.com/ping?sitemap=URL_Encoded_sitemapUrl
 	 * 
 	 * @param sitemapUrl sitemap url
 	 * 
