@@ -57,7 +57,7 @@ public String constructSitemapString() {
 	 * @param sitemap
 	 *            Sitemap as array of Strings (created by constructSitemap()
 	 *            method)
-	 * @throws IOException
+	 * @throws IOException when error
 	 */
 	public void saveSitemap(File file, String[] sitemap) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -72,7 +72,7 @@ public String constructSitemapString() {
 	 * 
 	 * @param file
 	 *            Output file
-	 * @throws IOException
+	 * @throws IOException when error
 	 */
 	public void constructAndSaveSitemap(File file) throws IOException {
 		String[] sitemap = constructSitemap();
@@ -81,9 +81,9 @@ public String constructSitemapString() {
 
 	/**
 	 * Ping Google that sitemap has changed. Will call this URL:
-	 * http://www.google.com/webmasters/tools/ping?sitemap=<URL Encoded
-	 * sitemapUrl>
+	 * http://www.google.com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
 	 * 
+	 * @param sitemapUrl sitemap url
 	 */
 	public void pingGoogle(String sitemapUrl) {
 		try {
@@ -101,8 +101,9 @@ public String constructSitemapString() {
 
 	/**
 	 * Ping Bing that sitemap has changed. Will call this URL:
-	 * http://www.google.com/webmasters/tools/ping?sitemap=<URL Encoded
-	 * sitemapUrl>
+	 * http://www.google.com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
+	 * 
+	 * @param sitemapUrl sitemap url
 	 * 
 	 */
 	public void pingBing(String sitemapUrl) {

@@ -14,6 +14,7 @@ public class HttpClientUtil {
 	 * @param url
 	 *            URL
 	 * @return status code (for example 200)
+	 * @throws Exception When error
 	 */
 	public static int get(String url) throws Exception {
 
