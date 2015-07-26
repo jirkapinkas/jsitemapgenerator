@@ -88,7 +88,6 @@ public String constructSitemapString() {
 	public void pingGoogle(String sitemapUrl) {
 		try {
 			String pingUrl = "http://www.google.com/webmasters/tools/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
-			System.out.println("Will ping this URL: " + pingUrl);
 			// ping Google
 			int returnCode = HttpClientUtil.get(pingUrl);
 			if (returnCode != 200) {
@@ -109,7 +108,6 @@ public String constructSitemapString() {
 	public void pingBing(String sitemapUrl) {
 		try {
 			String pingUrl = "http://www.bing.com/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
-			System.out.println("Will ping this URL: " + pingUrl);
 			// ping Bing
 			int returnCode = HttpClientUtil.get(pingUrl);
 			if (returnCode != 200) {
