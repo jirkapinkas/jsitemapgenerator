@@ -8,20 +8,16 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 
 public class WebSitemapGenerator extends AbstractGenerator {
-
-	private static final Logger logger = LoggerFactory.getLogger(WebSitemapGenerator.class);
 
 	private W3CDateFormat dateFormat = new W3CDateFormat();
 
 	public WebSitemapGenerator(String baseUrl) {
 		super(baseUrl);
 	}
+
 	/**
 	 * Construct sitemap into array of Strings
 	 * 
@@ -37,6 +33,20 @@ public class WebSitemapGenerator extends AbstractGenerator {
 		}
 		out.add("</urlset>");
 		return out.toArray(new String[] {});
+	}
+	
+	/**
+	 * Construct sitemap into single String
+	 * 
+	 * @return sitemap
+	 */
+public String constructSitemapString() {
+		String[] sitemapArray = constructSitemap();
+		StringBuilder result = new StringBuilder();
+		for (String line : sitemapArray) {
+			result.append(line);
+		}
+		return result.toString();
 	}
 
 	/**
@@ -78,8 +88,28 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	public void pingGoogle(String sitemapUrl) {
 		try {
 			String pingUrl = "http://www.google.com/webmasters/tools/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
-			logger.debug("Will ping this URL: " + pingUrl);
+			System.out.println("Will ping this URL: " + pingUrl);
 			// ping Google
+			int returnCode = HttpClientUtil.get(pingUrl);
+			if (returnCode != 200) {
+				throw new GWTException("Google could not be informed about new sitemap!");
+			}
+		} catch (Exception ex) {
+			throw new GWTException("Google could not be informed about new sitemap!");
+		}
+	}
+
+	/**
+	 * Ping Bing that sitemap has changed. Will call this URL:
+	 * http://www.google.com/webmasters/tools/ping?sitemap=<URL Encoded
+	 * sitemapUrl>
+	 * 
+	 */
+	public void pingBing(String sitemapUrl) {
+		try {
+			String pingUrl = "http://www.bing.com/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
+			System.out.println("Will ping this URL: " + pingUrl);
+			// ping Bing
 			int returnCode = HttpClientUtil.get(pingUrl);
 			if (returnCode != 200) {
 				throw new GWTException("Google could not be informed about new sitemap!");
@@ -95,5 +125,13 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 */
 	public void pingGoogle() {
 		pingGoogle(baseUrl + "sitemap.xml");
+	}
+
+	/**
+	 * Ping Google that sitemap has changed. Sitemap must be on this location:
+	 * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+	 */
+	public void pingBing() {
+		pingBing(baseUrl + "sitemap.xml");
 	}
 }
