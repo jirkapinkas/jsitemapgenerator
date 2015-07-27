@@ -15,6 +15,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -52,17 +53,8 @@ public class WebSitemapGeneratorTest {
 
 	@Test
 	public void testConstructSitemap() throws Exception {
-		String[] sitemap = webSitemapGenerator.constructSitemap();
-
-		for (String string : sitemap) {
-			System.out.println(string);
-		}
-
-		StringBuilder sb = new StringBuilder();
-		for (String s : sitemap) {
-			sb.append(s);
-		}
-		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sb.toString().getBytes("UTF-8"));
+		String sitemap = webSitemapGenerator.constructSitemapString();
+		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemap.getBytes("UTF-8"));
 		testSitemapXsd(sitemapXml);
 	}
 
@@ -87,10 +79,12 @@ public class WebSitemapGeneratorTest {
 			tmpFile.delete();
 		}
 	}
-
+	
+	@Ignore
 	@Test
 	public void testPingGoogle() throws Exception {
 		webSitemapGenerator.pingGoogle("http://jsitemapgenerator.jiripinkas.cz/sitemap.xml");
 	}
+
 
 }
