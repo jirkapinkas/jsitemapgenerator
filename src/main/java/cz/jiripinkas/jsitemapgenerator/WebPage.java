@@ -7,7 +7,7 @@ import java.util.Date;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
-public class WebPage {
+public class WebPage implements Comparable<WebPage> {
 	private String name;
 	private Date lastMod;
 	private ChangeFreq changeFreq;
@@ -105,4 +105,16 @@ public class WebPage {
 		return priority;
 	}
 
+	public int compareTo(WebPage o) {
+		if(this.getPriority() == null && o.getPriority() == null) {
+			return 0;
+		} 
+		if(this.getPriority() == null) {
+			return 1;
+		}
+		if(o.getPriority() == null) {
+			return -1;
+		}
+		return - this.getPriority().compareTo(o.getPriority());
+	}
 }

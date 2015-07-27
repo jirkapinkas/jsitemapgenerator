@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 
@@ -19,7 +19,9 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	}
 
 	/**
-	 * Construct sitemap into array of Strings
+	 * Construct sitemap into array of Strings. The URLs will be ordered using
+	 * priority in descending order (URLs with higher priority will be at the
+	 * top).
 	 * 
 	 * @return sitemap
 	 */
@@ -27,14 +29,15 @@ public class WebSitemapGenerator extends AbstractGenerator {
 		ArrayList<String> out = new ArrayList<String>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.add("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
-		Collection<WebPage> values = urls.values();
+		ArrayList<WebPage> values = new ArrayList<WebPage>(urls.values());
+		Collections.sort(values);
 		for (WebPage webSitemapUrl : values) {
 			out.add(webSitemapUrl.constructUrl(dateFormat, baseUrl));
 		}
 		out.add("</urlset>");
 		return out.toArray(new String[] {});
 	}
-	
+
 	/**
 	 * Construct sitemap into single String
 	 * 
@@ -57,7 +60,8 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 * @param sitemap
 	 *            Sitemap as array of Strings (created by constructSitemap()
 	 *            method)
-	 * @throws IOException when error
+	 * @throws IOException
+	 *             when error
 	 */
 	public void saveSitemap(File file, String[] sitemap) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -72,7 +76,8 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 * 
 	 * @param file
 	 *            Output file
-	 * @throws IOException when error
+	 * @throws IOException
+	 *             when error
 	 */
 	public void constructAndSaveSitemap(File file) throws IOException {
 		String[] sitemap = constructSitemap();
@@ -81,9 +86,11 @@ public class WebSitemapGenerator extends AbstractGenerator {
 
 	/**
 	 * Ping Google that sitemap has changed. Will call this URL:
-	 * http://www.google.com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
+	 * http://www.google
+	 * .com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
 	 * 
-	 * @param sitemapUrl sitemap url
+	 * @param sitemapUrl
+	 *            sitemap url
 	 */
 	public void pingGoogle(String sitemapUrl) {
 		ping("http://www.google.com/webmasters/tools/ping?sitemap=", sitemapUrl);
@@ -93,13 +100,14 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 * Ping Bing that sitemap has changed. Will call this URL:
 	 * http://www.bing.com/ping?sitemap=URL_Encoded_sitemapUrl
 	 * 
-	 * @param sitemapUrl sitemap url
+	 * @param sitemapUrl
+	 *            sitemap url
 	 * 
 	 */
 	public void pingBing(String sitemapUrl) {
 		ping("http://www.bing.com/ping?sitemap=", sitemapUrl);
 	}
-	
+
 	private void ping(String resourceUrl, String sitemapUrl) {
 		try {
 			String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
