@@ -40,7 +40,7 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 * 
 	 * @return sitemap
 	 */
-public String constructSitemapString() {
+	public String constructSitemapString() {
 		String[] sitemapArray = constructSitemap();
 		StringBuilder result = new StringBuilder();
 		for (String line : sitemapArray) {
@@ -86,16 +86,7 @@ public String constructSitemapString() {
 	 * @param sitemapUrl sitemap url
 	 */
 	public void pingGoogle(String sitemapUrl) {
-		try {
-			String pingUrl = "http://www.google.com/webmasters/tools/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
-			// ping Google
-			int returnCode = HttpClientUtil.get(pingUrl);
-			if (returnCode != 200) {
-				throw new GWTException("Google could not be informed about new sitemap!");
-			}
-		} catch (Exception ex) {
-			throw new GWTException("Google could not be informed about new sitemap!");
-		}
+		ping("http://www.google.com/webmasters/tools/ping?sitemap=", sitemapUrl);
 	}
 
 	/**
@@ -106,8 +97,12 @@ public String constructSitemapString() {
 	 * 
 	 */
 	public void pingBing(String sitemapUrl) {
+		ping("http://www.bing.com/ping?sitemap=", sitemapUrl);
+	}
+	
+	private void ping(String resourceUrl, String sitemapUrl) {
 		try {
-			String pingUrl = "http://www.bing.com/ping?sitemap=" + URLEncoder.encode(sitemapUrl, "UTF-8");
+			String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
 			// ping Bing
 			int returnCode = HttpClientUtil.get(pingUrl);
 			if (returnCode != 200) {
