@@ -16,7 +16,19 @@
 &lt;dependency&gt;
   &lt;groupId&gt;cz.jiripinkas&lt;/groupId&gt;
   &lt;artifactId&gt;jsitemapgenerator&lt;/artifactId&gt;
-  &lt;version&gt;1.1&lt;/version&gt;
+  &lt;version&gt;1.6&lt;/version&gt;
+&lt;/dependency&gt;
+</code>
+</pre>
+
+<p>If you want to use "ping google / bing" functionality, also add this library to classpath:</p>
+
+<pre>
+<code>
+&lt;dependency&gt;
+  &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;
+  &lt;artifactId&gt;httpclient&lt;/artifactId&gt;
+  &lt;version&gt;4.2.2&lt;/version&gt;
 &lt;/dependency&gt;
 </code>
 </pre>
@@ -29,10 +41,10 @@
 // create web sitemap for web http://www.javavids.com
 WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
 // add some URLs
-webSitemapGenerator.addPage(new WebPage().setName("index.php")
-                   .setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
-webSitemapGenerator.addPage(new WebPage().setName("latest.php"));
-webSitemapGenerator.addPage(new WebPage().setName("contact.php"));
+webSitemapGenerator.addPage(new WebPageBuilder().name("index.php")
+   .priorityMax().changeFreqNever().lastModNow().build());
+webSitemapGenerator.addPage(new WebPageBuilder().name("latest.php").build());
+webSitemapGenerator.addPage(new WebPageBuilder().name("contact.php").build());
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 webSitemapGenerator.constructAndSaveSitemap(file);
@@ -48,6 +60,6 @@ webSitemapGenerator.pingGoogle();
 <ul>
 	<li><a href="http://www.javavids.com" target="_blank" title="Java video tutorials">Java video tutorials</a> (free online tutorials)</li>
 	<li><a href="http://sitemonitoring.sourceforge.net/" target="_blank" title="Website monitoring software">Website monitoring software</a> (free OSS software)</li>
-	<li><a href="http://www.java-skoleni.cz" target="_blank" title="Java školené">Java školení</a> (in Czech)</li>
-	<li><a href="http://www.sql-skoleni.cz" target="_blank" title="Java školení">SQL školení</a> (in Czech)</li>
+	<li><a href="http://www.java-skoleni.cz" target="_blank" title="Java skoleni">Java skoleni</a> (in Czech)</li>
+	<li><a href="http://www.sql-skoleni.cz" target="_blank" title="SQL skoleni">SQL skoleni</a> (in Czech)</li>
 </ul>
