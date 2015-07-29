@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+import cz.jiripinkas.jsitemapgenerator.sitemap.WebSitemapGenerator;
 
 public class WebPageTest {
 

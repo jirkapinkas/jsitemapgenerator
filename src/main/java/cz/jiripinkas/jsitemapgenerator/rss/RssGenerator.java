@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator;
+package cz.jiripinkas.jsitemapgenerator.rss;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 public class RssGenerator extends AbstractGenerator {
 

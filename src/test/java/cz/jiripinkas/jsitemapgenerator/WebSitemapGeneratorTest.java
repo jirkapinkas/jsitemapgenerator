@@ -19,6 +19,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import cz.jiripinkas.jsitemapgenerator.sitemap.WebSitemapGenerator;
+
 public class WebSitemapGeneratorTest {
 
 	private WebSitemapGenerator webSitemapGenerator;

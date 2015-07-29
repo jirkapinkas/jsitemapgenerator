@@ -1,7 +1,11 @@
-package cz.jiripinkas.jsitemapgenerator;
+package cz.jiripinkas.jsitemapgenerator.sitemap;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.W3CDateFormat;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 public class WebSitemapGenerator extends AbstractSitemapGenerator {
 
