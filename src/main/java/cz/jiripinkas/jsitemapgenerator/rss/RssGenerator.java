@@ -35,8 +35,8 @@ public class RssGenerator extends AbstractGenerator {
 		builder.append("<rss version=\"2.0\">" + "\n");
 		builder.append("<channel>" + "\n");
 		builder.append("<title>" + webTitle + "</title>" + "\n");
-		builder.append("<description>" + webDescription + "</description>" + "\n");
 		builder.append("<link>" + baseUrl + "</link>" + "\n");
+		builder.append("<description>" + webDescription + "</description>" + "\n");
 
 		List<WebPage> webPages = new ArrayList<WebPage>(urls.values());
 
@@ -47,10 +47,13 @@ public class RssGenerator extends AbstractGenerator {
 			}
 		});
 
-		Date latestDate = webPages.get(0).getLastMod();
+		Date latestDate = new Date();
+		if(webPages.size() > 0) {
+			latestDate = webPages.get(0).getLastMod();
+		}
 
-		builder.append("<lastBuildDate>" + new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(latestDate) + " +0000</lastBuildDate>" + "\n");
 		builder.append("<pubDate>" + new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(latestDate) + " +0000</pubDate>" + "\n");
+		builder.append("<lastBuildDate>" + new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(latestDate) + " +0000</lastBuildDate>" + "\n");
 		builder.append("<ttl>1800</ttl>" + "\n");
 
 		for (WebPage webPage : webPages) {
