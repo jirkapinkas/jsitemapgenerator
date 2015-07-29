@@ -23,6 +23,12 @@ public class RssGenerator extends AbstractGenerator {
 		this.webDescription = webDescription;
 	}
 
+	/**
+	 * This will construct RSS from web pages. Web pages are sorted using
+	 * lastMod in descending order (latest is first)
+	 * 
+	 * @return
+	 */
 	public String constructRss() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n");

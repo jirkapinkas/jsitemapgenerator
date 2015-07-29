@@ -33,7 +33,7 @@
 </code>
 </pre>
 
-<p>Next create a sitemap:</p>
+<h3>How to create a sitemap:</h3>
 
 
 <pre>
@@ -53,8 +53,28 @@ sitemapGenerator.pingGoogle();
 </code>
 </pre>
 
-<h2></h2>
+<h3>How to create a sitemap index:</h3>
 
+<pre>
+<code>
+SitemapIndexGenerator sitemapIndexGenerator = new SitemapIndexGenerator("http://javalibs.com");
+sitemapIndexGenerator.addPage(new WebPageBuilder().name("sitemap-plugins.xml").build());
+sitemapIndexGenerator.addPage(new WebPageBuilder().name("sitemap-archetypes.xml").build());
+System.out.println(sitemapIndexGenerator.constructSitemapString());
+</code>
+</pre>
+
+<h3>How to create RSS channel:</h3>
+
+<pre>
+<code>
+RssGenerator rssGenerator = new RssGenerator("http://www.topjavablogs", 
+                                             "Top Java Blogs", "Best Java Blogs");
+rssGenerator.addPage(new RssItemBuilder().pubDate(new Date()).title("News Title")
+                        .description("News Description").name("page-name").build());
+System.out.println(rssGenerator.constructRss());
+</code>
+</pre>
 
 <h2>My other projects:</h2>
 <ul>
