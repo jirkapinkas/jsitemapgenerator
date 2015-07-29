@@ -2,34 +2,24 @@ package cz.jiripinkas.jsitemapgenerator.sitemap;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
-
-import javax.xml.XMLConstants;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 
 public class WebSitemapGeneratorTest {
 
-	private WebSitemapGenerator webSitemapGenerator;
+	private SitemapGenerator webSitemapGenerator;
 
 	@Before
 	public void setUp() throws Exception {
-		webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+		webSitemapGenerator = new SitemapGenerator("http://www.javavids.com");
 		webSitemapGenerator.addPage(new WebPage().setName("index.php").setPriority(1.0).setChangeFreq(ChangeFreq.NEVER).setLastMod(new Date()));
 		webSitemapGenerator.addPage(new WebPage().setName("latest.php"));
 		webSitemapGenerator.addPage(new WebPage().setName("contact.php"));
@@ -47,32 +37,11 @@ public class WebSitemapGeneratorTest {
 		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/latest.php</loc>\n</url>\n", url);
 	}
 
-
-	private void testSitemapXsd(InputStream sitemapXml) throws SAXException, IOException {
-		Source xmlFile = new StreamSource(sitemapXml);
-		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		Schema schema = schemaFactory.newSchema(new File("sitemap.xsd"));
-		Validator validator = schema.newValidator();
-		validator.validate(xmlFile);
-	}
-
-	private void testSitemapXsdFile(File file) throws IOException, SAXException {
-		FileInputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(file);
-			testSitemapXsd(inputStream);
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-	}
-
 	@Test
 	public void testConstructSitemap() throws Exception {
 		String sitemap = webSitemapGenerator.constructSitemapString();
 		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemap.getBytes("UTF-8"));
-		testSitemapXsd(sitemapXml);
+		TestUtil.testSitemapXsd(sitemapXml, new File("sitemap.xsd"));
 	}
 
 	@Test
@@ -80,7 +49,7 @@ public class WebSitemapGeneratorTest {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		webSitemapGenerator.saveSitemap(tmpFile, webSitemapGenerator.constructSitemap());
 		try {
-			testSitemapXsdFile(tmpFile);
+			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
 			tmpFile.delete();
 		}
@@ -91,17 +60,16 @@ public class WebSitemapGeneratorTest {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		webSitemapGenerator.constructAndSaveSitemap(tmpFile);
 		try {
-			testSitemapXsdFile(tmpFile);
+			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
 			tmpFile.delete();
 		}
 	}
-	
+
 	@Ignore
 	@Test
 	public void testPingGoogle() throws Exception {
 		webSitemapGenerator.pingGoogle("http://jsitemapgenerator.jiripinkas.cz/sitemap.xml");
 	}
-
 
 }

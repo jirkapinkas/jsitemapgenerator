@@ -4,13 +4,13 @@ import org.junit.Test;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
-import cz.jiripinkas.jsitemapgenerator.sitemap.WebSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.sitemap.SitemapGenerator;
 
 public class WebPageTest {
 
 	@Test(expected = InvalidUrlException.class)
 	public void testConstruct() {
-		new WebSitemapGenerator("www.javavids.com");
+		new SitemapGenerator("www.javavids.com");
 	}
 
 	@Test(expected = InvalidPriorityException.class)

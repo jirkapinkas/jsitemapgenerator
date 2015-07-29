@@ -39,17 +39,17 @@
 <pre>
 <code>
 // create web sitemap for web http://www.javavids.com
-WebSitemapGenerator webSitemapGenerator = new WebSitemapGenerator("http://www.javavids.com");
+SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com");
 // add some URLs
-webSitemapGenerator.addPage(new WebPageBuilder().name("index.php")
+sitemapGenerator.addPage(new WebPageBuilder().name("index.php")
    .priorityMax().changeFreqNever().lastModNow().build());
-webSitemapGenerator.addPage(new WebPageBuilder().name("latest.php").build());
-webSitemapGenerator.addPage(new WebPageBuilder().name("contact.php").build());
+sitemapGenerator.addPage(new WebPageBuilder().name("latest.php").build());
+sitemapGenerator.addPage(new WebPageBuilder().name("contact.php").build());
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
-webSitemapGenerator.constructAndSaveSitemap(file);
+sitemapGenerator.constructAndSaveSitemap(file);
 // inform Google that this sitemap has changed
-webSitemapGenerator.pingGoogle();
+sitemapGenerator.pingGoogle();
 </code>
 </pre>
 

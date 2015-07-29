@@ -10,6 +10,8 @@ import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 
 public abstract class AbstractSitemapGenerator extends AbstractGenerator {
 
+	protected W3CDateFormat dateFormat = new W3CDateFormat();
+
 	public AbstractSitemapGenerator(String baseUrl) {
 		super(baseUrl);
 	}
