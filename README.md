@@ -16,7 +16,7 @@
 &lt;dependency&gt;
   &lt;groupId&gt;cz.jiripinkas&lt;/groupId&gt;
   &lt;artifactId&gt;jsitemapgenerator&lt;/artifactId&gt;
-  &lt;version&gt;1.6&lt;/version&gt;
+  &lt;version&gt;2.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code>
 </pre>
