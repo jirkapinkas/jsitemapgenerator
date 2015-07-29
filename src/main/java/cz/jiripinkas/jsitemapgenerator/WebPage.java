@@ -1,6 +1,8 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 
@@ -11,6 +13,23 @@ public class WebPage implements Comparable<WebPage> {
 	private Double priority;
 	private String shortDescription;
 	private String shortName;
+
+	private List<Image> images;
+
+	public void addImage(Image image) {
+		if (images == null) {
+			images = new ArrayList<Image>();
+		}
+		images.add(image);
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
 
 	public String getShortName() {
 		return shortName;
@@ -70,15 +89,15 @@ public class WebPage implements Comparable<WebPage> {
 	}
 
 	public int compareTo(WebPage o) {
-		if(this.getPriority() == null && o.getPriority() == null) {
+		if (this.getPriority() == null && o.getPriority() == null) {
 			return 0;
-		} 
-		if(this.getPriority() == null) {
+		}
+		if (this.getPriority() == null) {
 			return 1;
 		}
-		if(o.getPriority() == null) {
+		if (o.getPriority() == null) {
 			return -1;
 		}
-		return - this.getPriority().compareTo(o.getPriority());
+		return -this.getPriority().compareTo(o.getPriority());
 	}
 }
