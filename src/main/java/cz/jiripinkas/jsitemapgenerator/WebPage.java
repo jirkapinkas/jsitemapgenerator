@@ -1,11 +1,8 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Date;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 public class WebPage implements Comparable<WebPage> {
 	private String name;
@@ -14,39 +11,6 @@ public class WebPage implements Comparable<WebPage> {
 	private Double priority;
 	private String shortDescription;
 	private String shortName;
-
-	public String constructUrl(W3CDateFormat dateFormat, String baseUrl) {
-		StringBuilder out = new StringBuilder();
-		out.append("<url>\n");
-		out.append("<loc>");
-		try {
-			if (name != null) {
-				out.append(new URL(baseUrl + name).toString());
-			} else {
-				out.append(new URL(baseUrl).toString());
-			}
-		} catch (MalformedURLException e) {
-			throw new InvalidUrlException(e);
-		}
-		out.append("</loc>\n");
-		if (lastMod != null) {
-			out.append("<lastmod>");
-			out.append(dateFormat.format(lastMod));
-			out.append("</lastmod>\n");
-		}
-		if (changeFreq != null) {
-			out.append("<changefreq>");
-			out.append(changeFreq);
-			out.append("</changefreq>\n");
-		}
-		if (priority != null) {
-			out.append("<priority>");
-			out.append(priority);
-			out.append("</priority>\n");
-		}
-		out.append("</url>\n");
-		return out.toString();
-	}
 
 	public String getShortName() {
 		return shortName;
