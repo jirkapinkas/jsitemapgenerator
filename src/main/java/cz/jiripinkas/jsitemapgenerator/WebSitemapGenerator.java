@@ -1,13 +1,9 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class WebSitemapGenerator extends AbstractGenerator {
+public class WebSitemapGenerator extends AbstractSitemapGenerator {
 
 	private W3CDateFormat dateFormat = new W3CDateFormat();
 
@@ -22,6 +18,7 @@ public class WebSitemapGenerator extends AbstractGenerator {
 	 * 
 	 * @return sitemap
 	 */
+	@Override
 	public String[] constructSitemap() {
 		ArrayList<String> out = new ArrayList<String>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -33,52 +30,6 @@ public class WebSitemapGenerator extends AbstractGenerator {
 		}
 		out.add("</urlset>");
 		return out.toArray(new String[] {});
-	}
-
-	/**
-	 * Construct sitemap into single String
-	 * 
-	 * @return sitemap
-	 */
-	public String constructSitemapString() {
-		String[] sitemapArray = constructSitemap();
-		StringBuilder result = new StringBuilder();
-		for (String line : sitemapArray) {
-			result.append(line);
-		}
-		return result.toString();
-	}
-
-	/**
-	 * Save sitemap to output file
-	 * 
-	 * @param file
-	 *            Output file
-	 * @param sitemap
-	 *            Sitemap as array of Strings (created by constructSitemap()
-	 *            method)
-	 * @throws IOException
-	 *             when error
-	 */
-	public void saveSitemap(File file, String[] sitemap) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		for (String string : sitemap) {
-			writer.write(string);
-		}
-		writer.close();
-	}
-
-	/**
-	 * Construct and save sitemap to output file
-	 * 
-	 * @param file
-	 *            Output file
-	 * @throws IOException
-	 *             when error
-	 */
-	public void constructAndSaveSitemap(File file) throws IOException {
-		String[] sitemap = constructSitemap();
-		saveSitemap(file, sitemap);
 	}
 
 }
