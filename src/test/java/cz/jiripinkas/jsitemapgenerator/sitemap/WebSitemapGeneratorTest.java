@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator;
+package cz.jiripinkas.jsitemapgenerator.sitemap;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -14,12 +14,14 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import cz.jiripinkas.jsitemapgenerator.sitemap.WebSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 public class WebSitemapGeneratorTest {
 
@@ -32,6 +34,19 @@ public class WebSitemapGeneratorTest {
 		webSitemapGenerator.addPage(new WebPage().setName("latest.php"));
 		webSitemapGenerator.addPage(new WebPage().setName("contact.php"));
 	}
+
+	@Test
+	public void testConstructUrlEmptyPage() {
+		String url = webSitemapGenerator.constructUrl(new WebPage());
+		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/</loc>\n</url>\n", url);
+	}
+
+	@Test
+	public void testConstructUrlNotEmptyPage() {
+		String url = webSitemapGenerator.constructUrl(new WebPage().setName("latest.php"));
+		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/latest.php</loc>\n</url>\n", url);
+	}
+
 
 	private void testSitemapXsd(InputStream sitemapXml) throws SAXException, IOException {
 		Source xmlFile = new StreamSource(sitemapXml);

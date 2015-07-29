@@ -1,6 +1,5 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
@@ -8,18 +7,6 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.sitemap.WebSitemapGenerator;
 
 public class WebPageTest {
-
-	@Test
-	public void testConstructUrlEmptyPage() {
-		String url = new WebPage().constructUrl(new W3CDateFormat(), "http://www.javavids.com/");
-		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/</loc>\n</url>\n", url);
-	}
-
-	@Test
-	public void testConstructUrlNotEmptyPage() {
-		String url = new WebPage().setName("latest.php").constructUrl(new W3CDateFormat(), "http://www.javavids.com/");
-		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/latest.php</loc>\n</url>\n", url);
-	}
 
 	@Test(expected = InvalidUrlException.class)
 	public void testConstruct() {

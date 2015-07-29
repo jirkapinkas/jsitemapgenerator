@@ -39,7 +39,7 @@ public class WebSitemapGenerator extends AbstractSitemapGenerator {
 		return out.toArray(new String[] {});
 	}
 
-	private String constructUrl(WebPage webPage) {
+	String constructUrl(WebPage webPage) {
 		StringBuilder out = new StringBuilder();
 		out.append("<url>\n");
 		out.append("<loc>");
