@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import cz.jiripinkas.jsitemapgenerator.RssItemBuilder;
+import cz.jiripinkas.jsitemapgenerator.generator.RssGenerator;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 
 public class RssGeneratorTest {

@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator.sitemap;
+package cz.jiripinkas.jsitemapgenerator.generator;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -14,7 +14,8 @@ import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.ImageBuilder;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.WebPageBuilder;
-import cz.jiripinkas.jsitemapgenerator.sitemap.SitemapGenerator.AdditionalNamespace;
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator.AdditionalNamespace;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 
 public class SitemapGeneratorTest {

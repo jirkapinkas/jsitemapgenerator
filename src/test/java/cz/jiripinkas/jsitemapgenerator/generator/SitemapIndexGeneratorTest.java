@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator.siteindex;
+package cz.jiripinkas.jsitemapgenerator.generator;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.WebPageBuilder;
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapIndexGenerator;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 
 public class SitemapIndexGeneratorTest {

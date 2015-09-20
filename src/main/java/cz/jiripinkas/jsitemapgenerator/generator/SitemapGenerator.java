@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator.sitemap;
+package cz.jiripinkas.jsitemapgenerator.generator;
 
 import java.net.MalformedURLException;
 import java.net.URL;

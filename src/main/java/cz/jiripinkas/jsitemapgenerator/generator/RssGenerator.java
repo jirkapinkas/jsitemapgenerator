@@ -1,4 +1,4 @@
-package cz.jiripinkas.jsitemapgenerator.rss;
+package cz.jiripinkas.jsitemapgenerator.generator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +17,35 @@ public class RssGenerator extends AbstractGenerator {
 
 	private String webDescription;
 
+	/**
+	 * Create RssGenerator
+	 * 
+	 * @param baseUrl
+	 *            Base URL
+	 * @param root
+	 *            If Base URL is root (for example http://www.javavids.com or if
+	 *            it's some path like http://www.javalibs.com/blog)
+	 * @param webTitle
+	 *            Web title
+	 * @param webDescription
+	 *            Web description
+	 */
+	public RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
+		super(baseUrl, root);
+		this.webTitle = webTitle;
+		this.webDescription = webDescription;
+	}
+
+	/**
+	 * Create RssGenerator. Root = true.
+	 * 
+	 * @param baseUrl
+	 *            Base URL
+	 * @param webTitle
+	 *            Web title
+	 * @param webDescription
+	 *            Web description
+	 */
 	public RssGenerator(String baseUrl, String webTitle, String webDescription) {
 		super(baseUrl);
 		this.webTitle = webTitle;
@@ -48,7 +77,7 @@ public class RssGenerator extends AbstractGenerator {
 		});
 
 		Date latestDate = new Date();
-		if(webPages.size() > 0) {
+		if (webPages.size() > 0) {
 			latestDate = webPages.get(0).getLastMod();
 		}
 

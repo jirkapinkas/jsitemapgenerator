@@ -20,18 +20,34 @@ public abstract class AbstractGenerator {
 	 * @param baseUrl
 	 *            All URLs must start with this baseUrl, for example
 	 *            http://www.javavids.com
+	 * @param root
+	 *            If Base URL is root (for example http://www.javavids.com or if
+	 *            it's some path like http://www.javalibs.com/blog)
 	 */
-	public AbstractGenerator(String baseUrl) {
+	public AbstractGenerator(String baseUrl, boolean root) {
 		try {
 			new URL(baseUrl);
 		} catch (MalformedURLException e) {
 			throw new InvalidUrlException(e);
 		}
 
-		if (!baseUrl.endsWith("/")) {
-			baseUrl += "/";
+		if (root) {
+			if (!baseUrl.endsWith("/")) {
+				baseUrl += "/";
+			}
 		}
 		this.baseUrl = baseUrl;
+	}
+
+	/**
+	 * Construct web sitemap. Root = true.
+	 * 
+	 * @param baseUrl
+	 *            All URLs must start with this baseUrl, for example
+	 *            http://www.javavids.com
+	 */
+	public AbstractGenerator(String baseUrl) {
+		this(baseUrl, true);
 	}
 
 	/**
@@ -55,5 +71,5 @@ public abstract class AbstractGenerator {
 			addPage(webPage);
 		}
 	}
-	
+
 }
