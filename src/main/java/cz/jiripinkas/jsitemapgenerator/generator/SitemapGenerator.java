@@ -12,18 +12,20 @@ import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 public class SitemapGenerator extends AbstractSitemapGenerator {
-	
-	public enum AdditionalNamespace { IMAGE }
-	
+
+	public enum AdditionalNamespace {
+		IMAGE
+	}
+
 	private StringBuilder additionalNamespacesStringBuilder = new StringBuilder();
 
 	public SitemapGenerator(String baseUrl) {
 		super(baseUrl);
 	}
-	
+
 	public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
 		this(baseUrl);
-		if(Arrays.asList(additionalNamespaces).contains(AdditionalNamespace.IMAGE)) {
+		if (Arrays.asList(additionalNamespaces).contains(AdditionalNamespace.IMAGE)) {
 			additionalNamespacesStringBuilder.append(" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" ");
 		}
 	}
@@ -44,7 +46,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 		Collections.sort(values);
 		for (WebPage webPage : values) {
 			out.add(constructUrl(webPage));
-			if(webPage.getImages() != null) {
+			if (webPage.getImages() != null) {
 				for (Image image : webPage.getImages()) {
 					out.add(constructImage(image));
 				}
@@ -53,31 +55,31 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 		out.add("</urlset>");
 		return out.toArray(new String[] {});
 	}
-	
+
 	String constructImage(Image image) {
 		StringBuilder out = new StringBuilder();
 		out.append("<image:image>\n");
-		if(image.getLoc() != null) {
+		if (image.getLoc() != null) {
 			out.append("<image:loc>");
 			out.append(image.getLoc());
 			out.append("</image:loc>\n");
 		}
-		if(image.getCaption() != null) {
+		if (image.getCaption() != null) {
 			out.append("<image:caption>");
 			out.append(image.getCaption());
 			out.append("</image:caption>\n");
 		}
-		if(image.getGeoLocation() != null) {
+		if (image.getGeoLocation() != null) {
 			out.append("<image:geo_location>");
 			out.append(image.getGeoLocation());
 			out.append("</image:geo_location>\n");
 		}
-		if(image.getTitle() != null) {
+		if (image.getTitle() != null) {
 			out.append("<image:title>");
 			out.append(image.getTitle());
 			out.append("</image:title>\n");
 		}
-		if(image.getLicense() != null) {
+		if (image.getLicense() != null) {
 			out.append("<image:license>");
 			out.append(image.getLicense());
 			out.append("</image:license>\n");
@@ -92,7 +94,13 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 		out.append("<loc>");
 		try {
 			if (webPage.getName() != null) {
-				out.append(new URL(baseUrl + webPage.getName()).toString());
+				String wpName = webPage.getName();
+				if (baseUrl.endsWith("/")) {
+					while (wpName.startsWith("/")) {
+						wpName = wpName.substring(1);
+					}
+				}
+				out.append(new URL(baseUrl + wpName).toString());
 			} else {
 				out.append(new URL(baseUrl).toString());
 			}
