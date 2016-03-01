@@ -45,12 +45,14 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 		ArrayList<WebPage> values = new ArrayList<WebPage>(urls.values());
 		Collections.sort(values);
 		for (WebPage webPage : values) {
+			out.add("<url>\n");
 			out.add(constructUrl(webPage));
 			if (webPage.getImages() != null) {
 				for (Image image : webPage.getImages()) {
 					out.add(constructImage(image));
 				}
 			}
+			out.add("</url>\n");
 		}
 		out.add("</urlset>");
 		return out.toArray(new String[] {});
@@ -90,7 +92,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
 	String constructUrl(WebPage webPage) {
 		StringBuilder out = new StringBuilder();
-		out.append("<url>\n");
 		out.append("<loc>");
 		try {
 			if (webPage.getName() != null) {
@@ -123,7 +124,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 			out.append(webPage.getPriority());
 			out.append("</priority>\n");
 		}
-		out.append("</url>\n");
 		return out.toString();
 	}
 

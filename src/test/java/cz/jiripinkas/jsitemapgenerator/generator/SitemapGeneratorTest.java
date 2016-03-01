@@ -14,7 +14,6 @@ import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.ImageBuilder;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.WebPageBuilder;
-import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator.AdditionalNamespace;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 
@@ -52,19 +51,19 @@ public class SitemapGeneratorTest {
 		webPage.addImage(new ImageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
 		String sitemapString = sitemapGenerator.constructSitemapString();
-		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n</url>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</urlset>", sitemapString);
+		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>", sitemapString);
 	}
 
 	@Test
 	public void testConstructUrlEmptyPage() {
 		String url = sitemapGenerator.constructUrl(new WebPage());
-		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/</loc>\n</url>\n", url);
+		Assert.assertEquals("<loc>http://www.javavids.com/</loc>\n", url);
 	}
 
 	@Test
 	public void testConstructUrlNotEmptyPage() {
 		String url = sitemapGenerator.constructUrl(new WebPage().setName("latest.php"));
-		Assert.assertEquals("<url>\n<loc>http://www.javavids.com/latest.php</loc>\n</url>\n", url);
+		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n", url);
 	}
 
 	@Test
