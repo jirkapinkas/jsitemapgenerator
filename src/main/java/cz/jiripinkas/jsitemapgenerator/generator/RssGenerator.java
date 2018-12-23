@@ -103,4 +103,31 @@ public class RssGenerator extends AbstractGenerator {
 		return builder.toString();
 	}
 
+	/**
+	 * Add single page to sitemap
+	 *
+	 * @param webPage
+	 *            single page
+	 */
+	@Override
+	public RssGenerator addPage(WebPage webPage) {
+		urls.put(baseUrl + webPage.getName(), webPage);
+		return this;
+	}
+
+	/**
+	 * Add collection of pages to sitemap
+	 *
+	 * @param webPages
+	 *            Collection of pages
+	 */
+	@Override
+	public RssGenerator addPages(Collection<WebPage> webPages) {
+		for (WebPage webPage : webPages) {
+			addPage(webPage);
+		}
+		return this;
+	}
+
+
 }

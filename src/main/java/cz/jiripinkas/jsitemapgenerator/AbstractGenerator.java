@@ -54,8 +54,9 @@ public abstract class AbstractGenerator {
 	 * @param webPage
 	 *            single page
 	 */
-	public void addPage(WebPage webPage) {
+	public AbstractGenerator addPage(WebPage webPage) {
 		urls.put(baseUrl + webPage.getName(), webPage);
+		return this;
 	}
 
 	/**
@@ -64,10 +65,11 @@ public abstract class AbstractGenerator {
 	 * @param webPages
 	 *            Collection of pages
 	 */
-	public void addPages(Collection<WebPage> webPages) {
+	public AbstractGenerator addPages(Collection<WebPage> webPages) {
 		for (WebPage webPage : webPages) {
 			addPage(webPage);
 		}
+		return this;
 	}
 
 }

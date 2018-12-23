@@ -39,7 +39,6 @@ public class RssGeneratorTest {
 		String rss = rssGenerator.constructRss();
 		ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes("UTF-8"));
 		TestUtil.testSitemapXsd(xml, new File("rss20.xsd"));
-		System.out.println(rss);
 	}
 
 }

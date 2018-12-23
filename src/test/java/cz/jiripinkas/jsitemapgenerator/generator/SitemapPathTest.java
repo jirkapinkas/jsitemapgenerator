@@ -24,13 +24,14 @@ public class SitemapPathTest {
     public void testSitemapPaths() {
         SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com/");
         Date lastModDate = new Date();
-        sitemapGenerator.addPage(new WebPage()
-                .setName("/index.php")
-                .setPriority(1.0)
-                .setChangeFreq(ChangeFreq.NEVER)
-                .setLastMod(lastModDate));
-        sitemapGenerator.addPage(new WebPage().setName("basepath/latest.php"));
-        sitemapGenerator.addPage(new WebPage().setName("/basepath/contact.php"));
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/index.php")
+                .priority(1.0)
+                .changeFreqNever()
+                .lastMod(lastModDate)
+                .build());
+        sitemapGenerator.addPage(WebPage.builder().name("basepath/latest.php").build());
+        sitemapGenerator.addPage(WebPage.builder().name("/basepath/contact.php").build());
 
         String sitemap = sitemapGenerator.constructSitemapString();
         final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"

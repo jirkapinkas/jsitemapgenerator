@@ -4,8 +4,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
+import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
@@ -125,6 +127,32 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 			out.append("</priority>\n");
 		}
 		return out.toString();
+	}
+
+	/**
+	 * Add single page to sitemap
+	 *
+	 * @param webPage
+	 *            single page
+	 */
+	@Override
+	public SitemapGenerator addPage(WebPage webPage) {
+		urls.put(baseUrl + webPage.getName(), webPage);
+		return this;
+	}
+
+	/**
+	 * Add collection of pages to sitemap
+	 *
+	 * @param webPages
+	 *            Collection of pages
+	 */
+	@Override
+	public SitemapGenerator addPages(Collection<WebPage> webPages) {
+		for (WebPage webPage : webPages) {
+			addPage(webPage);
+		}
+		return this;
 	}
 
 }

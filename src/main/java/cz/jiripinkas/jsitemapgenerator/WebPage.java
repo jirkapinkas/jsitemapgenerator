@@ -14,11 +14,12 @@ public class WebPage implements Comparable<WebPage> {
 
     private List<Image> images;
 
-    public void addImage(Image image) {
+    public WebPage addImage(Image image) {
         if (images == null) {
             images = new ArrayList<>();
         }
         images.add(image);
+        return this;
     }
 
     public List<Image> getImages() {
@@ -33,41 +34,35 @@ public class WebPage implements Comparable<WebPage> {
         return shortName;
     }
 
-    public WebPage setShortName(String shortName) {
+    public void setShortName(String shortName) {
         this.shortName = shortName;
-        return this;
     }
 
     public String getShortDescription() {
         return shortDescription;
     }
 
-    public WebPage setShortDescription(String shortDescription) {
+    public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
-        return this;
     }
 
-    public WebPage setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
-    public WebPage setLastMod(Date lastMod) {
+    public void setLastMod(Date lastMod) {
         this.lastMod = lastMod;
-        return this;
     }
 
-    public WebPage setChangeFreq(ChangeFreq changeFreq) {
+    public void setChangeFreq(ChangeFreq changeFreq) {
         this.changeFreq = changeFreq;
-        return this;
     }
 
-    public WebPage setPriority(Double priority) {
+    public void setPriority(Double priority) {
         if (priority < 0.0 || priority > 1.0) {
             throw new InvalidPriorityException("Priority must be between 0 and 1.0");
         }
         this.priority = priority;
-        return this;
     }
 
     public String getName() {
@@ -270,6 +265,11 @@ public class WebPage implements Comparable<WebPage> {
             return this;
         }
 
+        public WebPageBuilder images(List<Image> images) {
+            webPage.setImages(images);
+            return this;
+        }
+
         /**
          * Returns current webPage
          *
@@ -344,6 +344,45 @@ public class WebPage implements Comparable<WebPage> {
          */
         public WebPage build() {
             return webPage;
+        }
+
+    }
+
+    public static ImageBuilder imageBuilder() {
+        return new ImageBuilder();
+    }
+
+    public static class ImageBuilder {
+
+        private Image image = new Image();
+
+        public ImageBuilder caption(String caption) {
+            image.setCaption(caption);
+            return this;
+        }
+
+        public ImageBuilder geoLocation(String geoLoation) {
+            image.setGeoLocation(geoLoation);
+            return this;
+        }
+
+        public ImageBuilder license(String license) {
+            image.setLicense(license);
+            return this;
+        }
+
+        public ImageBuilder loc(String loc) {
+            image.setLoc(loc);
+            return this;
+        }
+
+        public ImageBuilder title(String title) {
+            image.setTitle(title);
+            return this;
+        }
+
+        public Image build() {
+            return image;
         }
 
     }

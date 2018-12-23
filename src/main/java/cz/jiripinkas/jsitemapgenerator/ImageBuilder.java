@@ -1,5 +1,11 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+/**
+ *
+ * Builder for easier WebPage construction.
+ * @deprecated use {@link WebPage.ImageBuilder instead}
+ */
+@Deprecated
 public class ImageBuilder {
 
 	private Image image = new Image();
