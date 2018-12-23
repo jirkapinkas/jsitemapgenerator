@@ -6,6 +6,10 @@ import okhttp3.Response;
 
 public class HttpClientUtil {
 
+    private HttpClientUtil() {
+
+    }
+
     /**
      * HTTP GET to URL, return status
      *

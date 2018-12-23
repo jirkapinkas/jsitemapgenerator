@@ -10,7 +10,7 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 public abstract class AbstractGenerator {
 
-	protected Map<String, WebPage> urls = new TreeMap<String, WebPage>();
+	protected Map<String, WebPage> urls = new TreeMap<>();
 
 	protected String baseUrl;
 
@@ -31,10 +31,8 @@ public abstract class AbstractGenerator {
 			throw new InvalidUrlException(e);
 		}
 
-		if (root) {
-			if (!baseUrl.endsWith("/")) {
-				baseUrl += "/";
-			}
+		if (root && !baseUrl.endsWith("/")) {
+			baseUrl += "/";
 		}
 		this.baseUrl = baseUrl;
 	}

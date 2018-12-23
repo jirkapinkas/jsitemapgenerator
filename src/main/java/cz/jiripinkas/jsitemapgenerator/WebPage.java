@@ -1,10 +1,10 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 
 public class WebPage implements Comparable<WebPage> {
 	private String name;
@@ -18,7 +18,7 @@ public class WebPage implements Comparable<WebPage> {
 
 	public void addImage(Image image) {
 		if (images == null) {
-			images = new ArrayList<Image>();
+			images = new ArrayList<>();
 		}
 		images.add(image);
 	}

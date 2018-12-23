@@ -1,13 +1,13 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
+import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
-import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 public class SitemapIndexGenerator extends AbstractSitemapGenerator {
 
@@ -17,10 +17,10 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator {
 
 	@Override
 	public String[] constructSitemap() {
-		ArrayList<String> out = new ArrayList<String>();
+		ArrayList<String> out = new ArrayList<>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
-		ArrayList<WebPage> values = new ArrayList<WebPage>(urls.values());
+		ArrayList<WebPage> values = new ArrayList<>(urls.values());
 		Collections.sort(values);
 		for (WebPage webPage : values) {
 			out.add(constructUrl(webPage));

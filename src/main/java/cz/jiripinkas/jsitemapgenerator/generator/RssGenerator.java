@@ -1,15 +1,10 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class RssGenerator extends AbstractGenerator {
 
@@ -67,17 +62,12 @@ public class RssGenerator extends AbstractGenerator {
 		builder.append("<link>" + baseUrl + "</link>" + "\n");
 		builder.append("<description>" + webDescription + "</description>" + "\n");
 
-		List<WebPage> webPages = new ArrayList<WebPage>(urls.values());
+		List<WebPage> webPages = new ArrayList<>(urls.values());
 
-		Collections.sort(webPages, new Comparator<WebPage>() {
-
-			public int compare(WebPage o1, WebPage o2) {
-				return -o1.getLastMod().compareTo(o2.getLastMod());
-			}
-		});
+		webPages.sort(Comparator.comparing(WebPage::getLastMod));
 
 		Date latestDate = new Date();
-		if (webPages.size() > 0) {
+		if (!webPages.isEmpty()) {
 			latestDate = webPages.get(0).getLastMod();
 		}
 
