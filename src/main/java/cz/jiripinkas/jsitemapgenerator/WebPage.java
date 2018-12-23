@@ -86,7 +86,7 @@ public class WebPage implements Comparable<WebPage> {
         return priority;
     }
 
-    private Comparator<Double> priorityComparator = (a, b) -> {
+    private static Comparator<Double> PRIORITY_COMPARATOR = (a, b) -> {
         if (a == null && b == null) {
             return 0;
         } else if (a == null) {
@@ -97,7 +97,7 @@ public class WebPage implements Comparable<WebPage> {
         return -Double.compare(a, b);
     };
 
-    private Comparator<String> shortNameComparator = (a, b) -> {
+    private static Comparator<String> SHORT_NAME_COMPARATOR = (a, b) -> {
         if (a == null && b == null) {
             return 0;
         } else if (a == null) {
@@ -117,10 +117,10 @@ public class WebPage implements Comparable<WebPage> {
     public int compareTo(WebPage o) {
         int result;
         // first compare by priority
-        result = priorityComparator.compare(this.getPriority(), o.getPriority());
+        result = PRIORITY_COMPARATOR.compare(this.getPriority(), o.getPriority());
         // next compare by shortName
         if (result == 0) {
-            result = shortNameComparator.compare(this.getShortName(), o.getShortName());
+            result = SHORT_NAME_COMPARATOR.compare(this.getShortName(), o.getShortName());
         }
         return result;
     }
