@@ -86,7 +86,7 @@ public class WebPage implements Comparable<WebPage> {
         return priority;
     }
 
-    private static Comparator<Double> PRIORITY_COMPARATOR = (a, b) -> {
+    private static final Comparator<Double> PRIORITY_COMPARATOR = (a, b) -> {
         if (a == null && b == null) {
             return 0;
         } else if (a == null) {
@@ -97,7 +97,7 @@ public class WebPage implements Comparable<WebPage> {
         return -Double.compare(a, b);
     };
 
-    private static Comparator<String> SHORT_NAME_COMPARATOR = (a, b) -> {
+    private static final Comparator<String> SHORT_NAME_COMPARATOR = (a, b) -> {
         if (a == null && b == null) {
             return 0;
         } else if (a == null) {
