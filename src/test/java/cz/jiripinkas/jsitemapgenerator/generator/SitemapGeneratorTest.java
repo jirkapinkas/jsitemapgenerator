@@ -1,21 +1,19 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.util.Date;
-
+import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
+import cz.jiripinkas.jsitemapgenerator.Image;
+import cz.jiripinkas.jsitemapgenerator.ImageBuilder;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator.AdditionalNamespace;
+import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
-import cz.jiripinkas.jsitemapgenerator.Image;
-import cz.jiripinkas.jsitemapgenerator.ImageBuilder;
-import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.WebPageBuilder;
-import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator.AdditionalNamespace;
-import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.Date;
 
 public class SitemapGeneratorTest {
 
@@ -47,7 +45,7 @@ public class SitemapGeneratorTest {
 	@Test
 	public void testConstructSitemapWithImages() {
 		sitemapGenerator = new SitemapGenerator("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
-		WebPage webPage = new WebPageBuilder().name("").build();
+		WebPage webPage = WebPage.builder().name("").build();
 		webPage.addImage(new ImageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
 		String sitemapString = sitemapGenerator.constructSitemapString();

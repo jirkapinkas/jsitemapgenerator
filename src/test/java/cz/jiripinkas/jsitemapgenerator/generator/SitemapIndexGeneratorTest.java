@@ -1,33 +1,30 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-
+import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.WebPageBuilder;
-import cz.jiripinkas.jsitemapgenerator.generator.SitemapIndexGenerator;
-import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class SitemapIndexGeneratorTest {
 
 	private SitemapIndexGenerator sitemapIndexGenerator;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		sitemapIndexGenerator = new SitemapIndexGenerator("http://javalibs.com");
-		sitemapIndexGenerator.addPage(new WebPageBuilder().name("sitemap-plugins.xml").lastModNow().build());
-		sitemapIndexGenerator.addPage(new WebPageBuilder().name("sitemap-archetypes.xml").lastModNow().build());
+		sitemapIndexGenerator.addPage(WebPage.builder().name("sitemap-plugins.xml").lastModNow().build());
+		sitemapIndexGenerator.addPage(WebPage.builder().name("sitemap-archetypes.xml").lastModNow().build());
 	}
 	
 	@Test
 	public void testConstructUrl() {
-		WebPage webPage = new WebPageBuilder().name("sitemap-plugins.xml").build();
+		WebPage webPage = WebPage.builder().name("sitemap-plugins.xml").build();
 		String constructUrl = sitemapIndexGenerator.constructUrl(webPage);
 		Assert.assertEquals("<sitemap>\n<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n</sitemap>\n", constructUrl);
 	}

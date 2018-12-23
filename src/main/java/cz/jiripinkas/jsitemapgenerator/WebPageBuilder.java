@@ -5,8 +5,9 @@ import java.util.Date;
 /**
  * 
  * Builder for easier WebPage construction.
- *
+ * @deprecated use {@link WebPage.WebPageBuilder instead}
  */
+@Deprecated
 public class WebPageBuilder {
 
 	private WebPage webPage = new WebPage();

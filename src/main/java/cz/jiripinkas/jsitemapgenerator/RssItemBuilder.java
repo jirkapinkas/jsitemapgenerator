@@ -2,6 +2,12 @@ package cz.jiripinkas.jsitemapgenerator;
 
 import java.util.Date;
 
+/**
+ *
+ * Builder for easier WebPage construction.
+ * @deprecated use {@link WebPage.RssItemBuilder instead}
+ */
+@Deprecated
 public class RssItemBuilder {
 
 	private WebPage webPage = new WebPage();

@@ -53,20 +53,24 @@ public class SitemapPathTest {
     @Test
     public void testSitemapPaths2() {
         SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com/");
-        sitemapGenerator.addPage(new WebPage()
-                .setName("/x0")
-                .setPriority(1.0));
-        sitemapGenerator.addPage(new WebPage()
-                .setName("/a0")
-                .setPriority(1.0));
-        sitemapGenerator.addPage(new WebPage()
-                .setName("/x1")
-                .setPriority(0.5));
-        sitemapGenerator.addPage(new WebPage()
-                .setName("/a1")
-                .setPriority(0.5));
-        sitemapGenerator.addPage(new WebPage().setName("x2"));
-        sitemapGenerator.addPage(new WebPage().setName("a2"));
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/x0")
+                .priority(1.0)
+                .build());
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/a0")
+                .priority(1.0)
+                .build());
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/x1")
+                .priority(0.5)
+                .build());
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/a1")
+                .priority(0.5)
+                .build());
+        sitemapGenerator.addPage(WebPage.builder().name("x2").build());
+        sitemapGenerator.addPage(WebPage.builder().name("a2").build());
 
         String sitemap = sitemapGenerator.constructSitemapString();
         final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
