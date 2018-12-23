@@ -44,11 +44,11 @@ public abstract class AbstractSitemapGenerator extends AbstractGenerator {
 	 *             when error
 	 */
 	public void saveSitemap(File file, String[] sitemap) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-		for (String string : sitemap) {
-			writer.write(string);
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+			for (String string : sitemap) {
+				writer.write(string);
+			}
 		}
-		writer.close();
 	}
 
 	/**
