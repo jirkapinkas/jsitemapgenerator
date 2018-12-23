@@ -39,10 +39,10 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 	 */
 	@Override
 	public String[] constructSitemap() {
-		ArrayList<String> out = new ArrayList<String>();
+		ArrayList<String> out = new ArrayList<>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.add("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" + additionalNamespacesStringBuilder.toString() + ">\n");
-		ArrayList<WebPage> values = new ArrayList<WebPage>(urls.values());
+		ArrayList<WebPage> values = new ArrayList<>(urls.values());
 		Collections.sort(values);
 		for (WebPage webPage : values) {
 			out.add("<url>\n");

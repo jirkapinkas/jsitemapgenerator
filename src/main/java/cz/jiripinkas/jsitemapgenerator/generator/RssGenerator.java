@@ -8,6 +8,8 @@ import java.util.*;
 
 public class RssGenerator extends AbstractGenerator {
 
+    private static final String DATE_PATTERN = "EEE, d MMM yyyy HH:mm:ss";
+
 	private String webTitle;
 
 	private String webDescription;
@@ -71,8 +73,8 @@ public class RssGenerator extends AbstractGenerator {
 			latestDate = webPages.get(0).getLastMod();
 		}
 
-		builder.append("<pubDate>" + new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(latestDate) + " +0000</pubDate>" + "\n");
-		builder.append("<lastBuildDate>" + new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(latestDate) + " +0000</lastBuildDate>" + "\n");
+		builder.append("<pubDate>" + new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate) + " +0000</pubDate>" + "\n");
+		builder.append("<lastBuildDate>" + new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate) + " +0000</lastBuildDate>" + "\n");
 		builder.append("<ttl>1800</ttl>" + "\n");
 
 		for (WebPage webPage : webPages) {
@@ -91,7 +93,7 @@ public class RssGenerator extends AbstractGenerator {
 			builder.append("</link>" + "\n");
 
 			builder.append("<pubDate>");
-			builder.append(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.ENGLISH).format(webPage.getLastMod()) + " +0000");
+			builder.append(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(webPage.getLastMod()) + " +0000");
 			builder.append("</pubDate>" + "\n");
 
 			builder.append("</item>" + "\n");
