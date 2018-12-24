@@ -106,8 +106,9 @@ public class WebPage implements Comparable<WebPage> {
     /**
      * Compare WebPage first by priority (in descending order - higher priority is first), then by shortName (in ascending order).
      * Priority and / or shortName can be null. WebPages with null priority are at the end.
-     * @param o
-     * @return
+     *
+     * @param o Other WebPage
+     * @return -1, 0, 1
      */
     public int compareTo(WebPage o) {
         int result;
@@ -130,8 +131,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets WebPage name
          *
-         * @param name
-         *            Name
+         * @param name Name
          * @return this
          */
         public WebPageBuilder name(String name) {
@@ -142,8 +142,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets WebPage priority
          *
-         * @param priority
-         *            Priority
+         * @param priority Priority
          * @return this
          */
         public WebPageBuilder priority(Double priority) {
@@ -154,8 +153,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets WebPage lastMod
          *
-         * @param lastMod
-         *            LastMod
+         * @param lastMod LastMod
          * @return this
          */
         public WebPageBuilder lastMod(Date lastMod) {
@@ -186,8 +184,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets WebPage changeFreq
          *
-         * @param changeFreq
-         *            ChangeFreq
+         * @param changeFreq ChangeFreq
          * @return this
          */
         public WebPageBuilder changeFreq(ChangeFreq changeFreq) {
@@ -292,8 +289,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets pubDate
          *
-         * @param pubDate
-         *            PubDate
+         * @param pubDate PubDate
          * @return this
          */
         public RssItemBuilder pubDate(Date pubDate) {
@@ -304,8 +300,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets Title
          *
-         * @param title
-         *            Title
+         * @param title Title
          * @return this
          */
         public RssItemBuilder title(String title) {
@@ -316,8 +311,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets Description
          *
-         * @param description
-         *            Description
+         * @param description Description
          * @return this
          */
         public RssItemBuilder description(String description) {
@@ -328,8 +322,7 @@ public class WebPage implements Comparable<WebPage> {
         /**
          * Sets Name
          *
-         * @param name
-         *            Name
+         * @param name Name
          * @return this
          */
         public RssItemBuilder name(String name) {

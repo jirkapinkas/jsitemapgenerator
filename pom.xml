@@ -80,7 +80,7 @@
 				<version>2.10.3</version>
 				<executions>
 					<execution>
-						<id></id>
+						<id>javadoc</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>jar</goal>
@@ -97,7 +97,7 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
-						<id></id>
+						<id>source</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>jar</goal>
@@ -111,6 +111,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
