@@ -76,10 +76,14 @@ If you want to use "ping google / bing" functionality, also add this library to 
     System.out.println(rssGenerator.constructRss());
 
 ## My other projects:
-<ul>
-	<li><a href="https://www.javalibs.com" target="_blank" title="javalibs">javalibs: (not only) Maven Central search engine</a></li>
-	<li><a href="https://www.javavids.com" target="_blank" title="Java video tutorials">Java video tutorials</a> (free online tutorials)</li>
-	<li><a href="https://sitemonitoring.sourceforge.net/" target="_blank" title="Website monitoring software">Website monitoring software</a> (free OSS software)</li>
-	<li><a href="https://www.java-skoleni.cz" target="_blank" title="Java skoleni">Java skoleni</a> (in Czech)</li>
-	<li><a href="https://www.sql-skoleni.cz" target="_blank" title="SQL skoleni">SQL skoleni</a> (in Czech)</li>
-</ul>
+
+- [javalibs: (not only) Maven Central search engine](https://javalibs.com)
+- [Java video tutorials](https://javavids.com)
+- [Website monitoring software](http://sitemonitoring.sourceforge.net/)
+- [Java školení](https://www.java-skoleni.cz)
+- [SQL školení](https://www.sql-skoleni.cz)
+
+## What I used to upload jsitemapgenerator to Maven Central:
+
+- https://central.sonatype.org/pages/working-with-pgp-signatures.html
+- https://central.sonatype.org/pages/apache-maven.html
