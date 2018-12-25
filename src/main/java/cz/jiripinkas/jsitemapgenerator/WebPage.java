@@ -140,6 +140,16 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets WebPage name to ""
+         *
+         * @return this
+         */
+        public WebPageBuilder nameRoot() {
+            webPage.setName("");
+            return this;
+        }
+
+        /**
          * Sets WebPage priority
          *
          * @param priority Priority

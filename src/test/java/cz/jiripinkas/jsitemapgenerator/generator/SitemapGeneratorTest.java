@@ -43,7 +43,7 @@ public class SitemapGeneratorTest {
 	@Test
 	public void testConstructSitemapWithImages() {
 		sitemapGenerator = new SitemapGenerator("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
-		WebPage webPage = WebPage.builder().name("").build();
+		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
 		String sitemapString = sitemapGenerator.constructSitemapString();
