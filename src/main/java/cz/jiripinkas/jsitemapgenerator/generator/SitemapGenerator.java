@@ -190,6 +190,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
      * @param mapper Mapper function which transforms some object to WebPage
      * @return this
      */
+    @Override
     public <T> SitemapGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
         for (T element : webPages) {
             addPage(mapper.apply(element));

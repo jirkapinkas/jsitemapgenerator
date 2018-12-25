@@ -171,6 +171,7 @@ public class RssGenerator extends AbstractGenerator {
      * @param mapper Mapper function which transforms some object to WebPage
      * @return this
      */
+    @Override
     public <T> RssGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
         for (T element : webPages) {
             addPage(mapper.apply(element));
