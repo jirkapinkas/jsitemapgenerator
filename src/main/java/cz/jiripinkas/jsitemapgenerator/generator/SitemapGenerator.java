@@ -1,17 +1,16 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
+import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.Image;
+import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-
-import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
-import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
-import cz.jiripinkas.jsitemapgenerator.Image;
-import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 public class SitemapGenerator extends AbstractSitemapGenerator {
 
