@@ -17,7 +17,7 @@ public class SitemapIndexGeneratorTest {
 
 	@Before
 	public void setUp() {
-		sitemapIndexGenerator = new SitemapIndexGenerator("http://javalibs.com");
+		sitemapIndexGenerator = SitemapIndexGenerator.of("http://javalibs.com");
 		sitemapIndexGenerator.addPage(WebPage.builder().name("sitemap-plugins.xml").lastModNow().build());
 		sitemapIndexGenerator.addPage(WebPage.builder().name("sitemap-archetypes.xml").lastModNow().build());
 	}

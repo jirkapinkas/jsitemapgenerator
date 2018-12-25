@@ -19,11 +19,11 @@ public class RssGeneratorTest {
 
 	@Before
 	public void setUp() {
-		rssGenerator = new RssGenerator("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community");
+		rssGenerator = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community");
 	}
 
 	@Test
-	public void testConstructRssEmptyItemsShouldThrowException() throws SAXException, IOException {
+	public void testConstructRssEmptyItemsShouldThrowException() {
 		try {
 			String rss = rssGenerator.constructRss();
 			ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes("UTF-8"));

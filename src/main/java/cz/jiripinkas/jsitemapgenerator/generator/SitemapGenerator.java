@@ -1,6 +1,5 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
@@ -22,15 +21,43 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     private StringBuilder additionalNamespacesStringBuilder = new StringBuilder();
 
+    /**
+     * @deprecated Use {@link #of(String)}
+     * @param baseUrl
+     */
+    @Deprecated
     public SitemapGenerator(String baseUrl) {
         super(baseUrl);
     }
 
+    /**
+     * @deprecated Use {@link #of(String, AdditionalNamespace[])} )}
+     * @param baseUrl
+     */
+    @Deprecated
     public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         this(baseUrl);
         if (Arrays.asList(additionalNamespaces).contains(AdditionalNamespace.IMAGE)) {
             additionalNamespacesStringBuilder.append(" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" ");
         }
+    }
+
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl
+     * @return
+     */
+    public static SitemapGenerator of(String baseUrl) {
+        return new SitemapGenerator(baseUrl);
+    }
+
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl
+     * @return
+     */
+    public static SitemapGenerator of(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
+        return new SitemapGenerator(baseUrl, additionalNamespaces);
     }
 
     /**

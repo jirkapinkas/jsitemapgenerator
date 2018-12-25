@@ -19,7 +19,7 @@ public class SitemapGeneratorTest {
 
 	@Before
 	public void setUp() {
-		sitemapGenerator = new SitemapGenerator("http://www.javavids.com");
+		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().name("index.php").priority(1.0).changeFreqNever().lastMod(new Date()).build());
 		sitemapGenerator.addPage(WebPage.builder().name("latest.php").build());
 		sitemapGenerator.addPage(WebPage.builder().name("contact.php").build());
@@ -35,14 +35,14 @@ public class SitemapGeneratorTest {
 
 	@Test
 	public void testConstructSitemapWithImagesHeader() {
-		sitemapGenerator = new SitemapGenerator("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
+		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
 		String sitemapString = sitemapGenerator.constructSitemapString();
 		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n</urlset>", sitemapString);
 	}
 	
 	@Test
 	public void testConstructSitemapWithImages() {
-		sitemapGenerator = new SitemapGenerator("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
+		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
 		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);

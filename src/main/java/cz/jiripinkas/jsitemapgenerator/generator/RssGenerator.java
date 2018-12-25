@@ -18,12 +18,14 @@ public class RssGenerator extends AbstractGenerator {
     /**
      * Create RssGenerator
      *
+     * @deprecated use {@link #of(String, boolean, String, String)}
      * @param baseUrl        Base URL
      * @param root           If Base URL is root (for example http://www.javavids.com or if
      *                       it's some path like http://www.javalibs.com/blog)
      * @param webTitle       Web title
      * @param webDescription Web description
      */
+    @Deprecated
     public RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
         super(baseUrl, root);
         this.webTitle = webTitle;
@@ -33,15 +35,36 @@ public class RssGenerator extends AbstractGenerator {
     /**
      * Create RssGenerator. Root = true.
      *
+     * @deprecated use {@link #of(String, String, String)}
      * @param baseUrl        Base URL
      * @param webTitle       Web title
      * @param webDescription Web description
      */
+    @Deprecated
     public RssGenerator(String baseUrl, String webTitle, String webDescription) {
         super(baseUrl);
         this.webTitle = webTitle;
         this.webDescription = webDescription;
     }
+
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl
+     * @return
+     */
+    public static RssGenerator of(String baseUrl, boolean root, String webTitle, String webDescription) {
+        return new RssGenerator(baseUrl, root, webTitle, webDescription);
+    }
+
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl
+     * @return
+     */
+    public static RssGenerator of(String baseUrl, String webTitle, String webDescription) {
+        return new RssGenerator(baseUrl, webTitle, webDescription);
+    }
+
 
     /**
      * This will construct RSS from web pages. Web pages are sorted using

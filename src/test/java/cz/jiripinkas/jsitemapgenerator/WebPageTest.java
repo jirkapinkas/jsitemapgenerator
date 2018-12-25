@@ -10,7 +10,7 @@ public class WebPageTest {
 
 	@Test(expected = InvalidUrlException.class)
 	public void testConstruct() {
-		new SitemapGenerator("www.javavids.com");
+		SitemapGenerator.of("www.javavids.com");
 	}
 
 	@Test(expected = InvalidPriorityException.class)

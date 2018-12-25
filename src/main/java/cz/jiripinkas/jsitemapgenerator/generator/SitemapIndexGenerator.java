@@ -11,8 +11,17 @@ import java.util.Collections;
 
 public class SitemapIndexGenerator extends AbstractSitemapGenerator {
 
+	/**
+	 * @deprecated use {@link #of(String)}
+	 * @param baseUrl Base url
+	 */
+	@Deprecated
 	public SitemapIndexGenerator(String baseUrl) {
 		super(baseUrl);
+	}
+
+	public static SitemapIndexGenerator of(String baseUrl) {
+		return new SitemapIndexGenerator(baseUrl);
 	}
 
 	@Override

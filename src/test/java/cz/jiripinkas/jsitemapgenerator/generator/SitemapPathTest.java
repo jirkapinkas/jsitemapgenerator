@@ -22,7 +22,7 @@ public class SitemapPathTest {
 
     @Test
     public void testSitemapPaths() {
-        SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com/");
+        SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
         Date lastModDate = new Date();
         sitemapGenerator.addPage(WebPage.builder()
                 .name("/index.php")
@@ -53,7 +53,7 @@ public class SitemapPathTest {
 
     @Test
     public void testSitemapPaths2() {
-        SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com/");
+        SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
         sitemapGenerator.addPage(WebPage.builder()
                 .name("/x0")
                 .priority(1.0)
