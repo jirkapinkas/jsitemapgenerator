@@ -65,6 +65,24 @@ public class RssGenerator extends AbstractGenerator {
         return new RssGenerator(baseUrl, webTitle, webDescription);
     }
 
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl
+     * @return
+     */
+    public static RssGenerator of(String baseUrl) {
+        return new RssGenerator(baseUrl, null, null);
+    }
+
+    public RssGenerator webTitle(String webTitle) {
+        this.webTitle = webTitle;
+        return this;
+    }
+
+    public RssGenerator webDescription(String webDescription) {
+        this.webDescription = webDescription;
+        return this;
+    }
 
     /**
      * This will construct RSS from web pages. Web pages are sorted using
