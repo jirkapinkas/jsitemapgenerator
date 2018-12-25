@@ -319,6 +319,17 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets Title surrounded by CDATA
+         *
+         * @param title Title
+         * @return this
+         */
+        public RssItemBuilder titleCdata(String title) {
+            webPage.setName("<![CDATA[ " + title + " ]]>");
+            return this;
+        }
+
+        /**
          * Sets Description
          *
          * @param description Description
@@ -328,6 +339,19 @@ public class WebPage implements Comparable<WebPage> {
             webPage.setShortDescription(description);
             return this;
         }
+
+
+        /**
+         * Sets Description surrounded by CDATA
+         *
+         * @param description Description
+         * @return this
+         */
+        public RssItemBuilder descriptionCdata(String description) {
+            webPage.setShortDescription("<![CDATA[ " + description + " ]]>");
+            return this;
+        }
+
 
         /**
          * Sets Name
