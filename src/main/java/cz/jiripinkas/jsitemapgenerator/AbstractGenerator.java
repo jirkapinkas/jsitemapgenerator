@@ -1,12 +1,13 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
-
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+import java.util.function.Function;
 
 public abstract class AbstractGenerator {
 
@@ -65,6 +66,21 @@ public abstract class AbstractGenerator {
     public AbstractGenerator addPages(Collection<WebPage> webPages) {
         for (WebPage webPage : webPages) {
             addPage(webPage);
+        }
+        return this;
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param <T> This is the type parameter
+     * @param webPages Collection of pages
+     * @param mapper Mapper function which transforms some object to WebPage
+     * @return this
+     */
+    public <T> AbstractGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
+        for (T element : webPages) {
+            addPage(mapper.apply(element));
         }
         return this;
     }

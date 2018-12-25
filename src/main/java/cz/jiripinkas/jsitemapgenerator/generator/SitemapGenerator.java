@@ -1,5 +1,6 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
+import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Function;
 
 public class SitemapGenerator extends AbstractSitemapGenerator {
 
@@ -150,6 +152,20 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
     public SitemapGenerator addPages(Collection<WebPage> webPages) {
         for (WebPage webPage : webPages) {
             addPage(webPage);
+        }
+        return this;
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param webPages Collection of pages
+     * @param mapper Mapper function which transforms some object to WebPage
+     * @return this
+     */
+    public <T> SitemapGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
+        for (T element : webPages) {
+            addPage(mapper.apply(element));
         }
         return this;
     }

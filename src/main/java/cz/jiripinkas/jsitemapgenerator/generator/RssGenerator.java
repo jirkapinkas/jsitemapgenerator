@@ -5,6 +5,7 @@ import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 
 public class RssGenerator extends AbstractGenerator {
 
@@ -118,6 +119,20 @@ public class RssGenerator extends AbstractGenerator {
     public RssGenerator addPages(Collection<WebPage> webPages) {
         for (WebPage webPage : webPages) {
             addPage(webPage);
+        }
+        return this;
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param webPages Collection of pages
+     * @param mapper Mapper function which transforms some object to WebPage
+     * @return this
+     */
+    public <T> RssGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
+        for (T element : webPages) {
+            addPage(mapper.apply(element));
         }
         return this;
     }

@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.0</version>
+      <version>3.1</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -25,30 +25,27 @@ If you want to use "ping google / bing" functionality, also add this library to 
 
 ### How to create a sitemap:
 
-
     // create web sitemap for web http://www.javavids.com
-    SitemapGenerator sitemapGenerator = new SitemapGenerator("http://www.javavids.com");
+    SitemapGenerator sg = new SitemapGenerator("http://www.javavids.com");
     // add some URLs
-    sitemapGenerator.addPage(WebPage.builder()
-        .name("index.php")
-        .priorityMax()
-        .changeFreqNever()
-        .lastModNow()
-        .build()
-    );
-    sitemapGenerator.addPage(WebPage.builder()
-        .name("latest.php")
-        .build()
-    );
-    sitemapGenerator.addPage(WebPage.builder()
-        .name("contact.php")
-        .build()
-    );
+    sg.addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+      .addPage(WebPage.builder().name("latest.php").build())
+      .addPage(WebPage.builder().name("contact.php").build());
     // generate sitemap and save it to file /var/www/sitemap.xml
     File file = new File("/var/www/sitemap.xml");
-    sitemapGenerator.constructAndSaveSitemap(file);
+    sg.constructAndSaveSitemap(file);
     // inform Google that this sitemap has changed
-    sitemapGenerator.pingGoogle();
+    sg.pingGoogle();
+
+### How to create a sitemap populated with list of pages:
+
+    File file = new File("/var/www/sitemap.xml");
+    List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
+    // create web sitemap for web http://www.javavids.com
+    new SitemapGenerator("http://www.javavids.com")
+        .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+        .addPages(urls, page -> WebPage.builder().name("dir/" + page).priorityMax().changeFreqNever().lastModNow().build())
+        .constructAndSaveSitemap(file);
 
 ### How to create a sitemap index:
 
