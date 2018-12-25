@@ -101,7 +101,7 @@ public class RssGenerator extends AbstractGenerator {
 
         List<WebPage> webPages = new ArrayList<>(urls.values());
 
-        webPages.sort(Comparator.comparing(WebPage::getLastMod));
+        webPages.sort(Comparator.comparing(WebPage::getLastMod).reversed());
 
         Date latestDate = new Date();
         if (!webPages.isEmpty()) {
