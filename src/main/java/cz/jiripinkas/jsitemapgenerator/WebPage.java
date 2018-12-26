@@ -127,8 +127,8 @@ public class WebPage implements Comparable<WebPage> {
 
     public static class WebPageBuilder {
         private WebPage webPage = new WebPage();
-        private String namePrefixDir;
-        private String nameSuffixExtension;
+        private String dir;
+        private String extension;
 
         /**
          * Sets WebPage name
@@ -157,8 +157,8 @@ public class WebPage implements Comparable<WebPage> {
          * @param dirName Dir name
          * @return this
          */
-        public WebPageBuilder namePrefixDir(String dirName) {
-            this.namePrefixDir = dirName;
+        public WebPageBuilder dir(String dirName) {
+            this.dir = dirName;
             return this;
         }
 
@@ -167,8 +167,8 @@ public class WebPage implements Comparable<WebPage> {
          * @param dirNames Dir names
          * @return this
          */
-        public WebPageBuilder namePrefixDir(String ... dirNames) {
-            this.namePrefixDir = String.join("/", dirNames);
+        public WebPageBuilder dir(String ... dirNames) {
+            this.dir = String.join("/", dirNames);
             return this;
         }
 
@@ -177,8 +177,8 @@ public class WebPage implements Comparable<WebPage> {
          * @param extension Extension
          * @return this
          */
-        public WebPageBuilder nameSuffixExtension(String extension) {
-            this.nameSuffixExtension = extension;
+        public WebPageBuilder extension(String extension) {
+            this.extension = extension;
             return this;
         }
 
@@ -326,11 +326,11 @@ public class WebPage implements Comparable<WebPage> {
          * @return WebPage
          */
         public WebPage build() {
-            if(namePrefixDir != null) {
-                webPage.setName(namePrefixDir + "/" + webPage.getName());
+            if(dir != null) {
+                webPage.setName(dir + "/" + webPage.getName());
             }
-            if(nameSuffixExtension != null) {
-                webPage.setName(webPage.getName() + "." + nameSuffixExtension);
+            if(extension != null) {
+                webPage.setName(webPage.getName() + "." + extension);
             }
             return webPage;
         }
@@ -431,7 +431,7 @@ public class WebPage implements Comparable<WebPage> {
          * @param dirName Dir name
          * @return this
          */
-        public RssItemBuilder namePrefixDir(String dirName) {
+        public RssItemBuilder dir(String dirName) {
             this.namePrefixDir = dirName;
             return this;
         }
@@ -441,7 +441,7 @@ public class WebPage implements Comparable<WebPage> {
          * @param dirNames Dir names
          * @return this
          */
-        public RssItemBuilder namePrefixDir(String ... dirNames) {
+        public RssItemBuilder dir(String ... dirNames) {
             this.namePrefixDir = String.join("/", dirNames);
             return this;
         }
@@ -451,7 +451,7 @@ public class WebPage implements Comparable<WebPage> {
          * @param extension Extension
          * @return this
          */
-        public RssItemBuilder nameSuffixExtension(String extension) {
+        public RssItemBuilder extension(String extension) {
             this.nameSuffixExtension = extension;
             return this;
         }

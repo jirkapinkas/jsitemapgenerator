@@ -27,13 +27,13 @@ public class WebPageTest {
 
 	@Test
 	public void testPrefixDirAndSuffix() {
-		WebPage build = WebPage.builder().namePrefixDir("dir").name("name").nameSuffixExtension("html").build();
+		WebPage build = WebPage.builder().dir("dir").name("name").extension("html").build();
 		assertEquals("dir/name.html", build.getName());
 	}
 
 	@Test
 	public void testPrefixDirs() {
-		WebPage build = WebPage.builder().namePrefixDir("dir1", "dir2", "dir3").name("name").nameSuffixExtension("html").build();
+		WebPage build = WebPage.builder().dir("dir1", "dir2", "dir3").name("name").extension("html").build();
 		assertEquals("dir1/dir2/dir3/name.html", build.getName());
 	}
 

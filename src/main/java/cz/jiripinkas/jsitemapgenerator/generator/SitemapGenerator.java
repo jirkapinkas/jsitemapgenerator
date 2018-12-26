@@ -27,9 +27,9 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     private Double defaultPriority;
 
-    private String nameBasePrefixDir;
+    private String dir;
 
-    private String nameBaseSuffixExtension;
+    private String extension;
 
     /**
      * @deprecated Use {@link #of(String)}
@@ -88,11 +88,11 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
         Collections.sort(values);
         for (WebPage webPage : values) {
             out.add("<url>\n");
-            if(nameBasePrefixDir != null) {
-                webPage.setName(nameBasePrefixDir + "/" + webPage.getName());
+            if(dir != null) {
+                webPage.setName(dir + "/" + webPage.getName());
             }
-            if(nameBaseSuffixExtension != null) {
-                webPage.setName(webPage.getName() + "." + nameBaseSuffixExtension);
+            if(extension != null) {
+                webPage.setName(webPage.getName() + "." + extension);
             }
             if(defaultPriority != null && webPage.getPriority() == null) {
                 webPage.setPriority(defaultPriority);
@@ -228,8 +228,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
      * @param dirName Dir name
      * @return this
      */
-    public SitemapGenerator nameBasePrefixDir(String dirName) {
-        nameBasePrefixDir = dirName;
+    public SitemapGenerator dir(String dirName) {
+        dir = dirName;
         return this;
     }
 
@@ -238,8 +238,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
      * @param dirNames Dir names
      * @return this
      */
-    public SitemapGenerator nameBasePrefixDir(String ... dirNames) {
-        nameBasePrefixDir = String.join("/", dirNames);
+    public SitemapGenerator dir(String ... dirNames) {
+        dir = String.join("/", dirNames);
         return this;
     }
 
@@ -248,8 +248,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
      * @param extension Extension
      * @return this
      */
-    public SitemapGenerator nameBaseSuffixExtension(String extension) {
-        nameBaseSuffixExtension = extension;
+    public SitemapGenerator extension(String extension) {
+        this.extension = extension;
         return this;
     }
 
