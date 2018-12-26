@@ -117,4 +117,19 @@ public abstract class AbstractSitemapGenerator extends AbstractGenerator {
 		pingBing(baseUrl + "sitemap.xml");
 	}
 
+	/**
+	 * Escape special characters in XML
+	 * @param url Url to be escaped
+	 * @return Escaped url
+	 */
+	protected String escapeXmlSpecialCharacters(String url) {
+		// https://stackoverflow.com/questions/1091945/what-characters-do-i-need-to-escape-in-xml-documents
+		return url
+				.replace("&", "&amp;") // must be escaped first!!!
+				.replace("\"", "&quot;")
+				.replace("'", "&apos;")
+				.replace("<", "&lt;")
+				.replace(">", "&gt;");
+	}
+
 }

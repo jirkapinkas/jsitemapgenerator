@@ -102,4 +102,22 @@ public class SitemapPathTest {
         assertEquals(sitemap, expected);
     }
 
+    @Test
+    public void testSitemapPathWithSpecialCharacters() {
+        SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
+        sitemapGenerator.addPage(WebPage.builder()
+                .name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")
+                .build());
+
+        String sitemap = sitemapGenerator.constructSitemapString();
+        String expectedSitemap =
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+                "<url>\n" +
+                "<loc>http://www.javavids.com/page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;</loc>\n" +
+                "</url>\n" +
+                "</urlset>";
+        assertEquals(expectedSitemap, sitemap);
+    }
+
 }

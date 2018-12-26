@@ -133,9 +133,9 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
                         wpName = wpName.substring(1);
                     }
                 }
-                out.append(new URL(baseUrl + wpName).toString());
+                out.append(escapeXmlSpecialCharacters(new URL(baseUrl + wpName).toString()));
             } else {
-                out.append(new URL(baseUrl).toString());
+                out.append(escapeXmlSpecialCharacters(new URL(baseUrl).toString()));
             }
         } catch (MalformedURLException e) {
             throw new InvalidUrlException(e);
