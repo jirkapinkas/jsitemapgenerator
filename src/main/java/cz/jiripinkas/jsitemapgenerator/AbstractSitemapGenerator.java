@@ -1,10 +1,9 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.GZIPOutputStream;
 
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 
@@ -30,6 +29,35 @@ public abstract class AbstractSitemapGenerator extends AbstractGenerator {
 			result.append(line);
 		}
 		return result.toString();
+	}
+
+	private ByteArrayOutputStream gzipIt(InputStream inputStream) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		try {
+			try(GZIPOutputStream gzos = new GZIPOutputStream(outputStream);
+				InputStream in = inputStream) {
+				int len;
+				while ((len = in.read(buffer)) > 0) {
+					gzos.write(buffer, 0, len);
+				}
+			}
+		} catch (IOException ex) {
+			throw new RuntimeException("Cannot perform gzip", ex);
+		}
+		return outputStream;
+	}
+
+	/**
+	 * Construct sitemap into gzipped file
+	 *
+	 * @return byte array
+	 */
+	public byte[] constructSitemapGzip() {
+		String sitemap = constructSitemapString();
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(sitemap.getBytes(StandardCharsets.UTF_8));
+		ByteArrayOutputStream outputStream = gzipIt(inputStream);
+		return outputStream.toByteArray();
 	}
 
 	/**
