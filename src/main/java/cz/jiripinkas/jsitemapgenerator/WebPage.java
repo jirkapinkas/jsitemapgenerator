@@ -142,6 +142,17 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets WebPage name
+         *
+         * @param nameAndDirs Dirs and name, for example: ["a", "b", "xxx"] will be transformed to name: "a/b/xxx"
+         * @return this
+         */
+        public WebPageBuilder name(String ... nameAndDirs) {
+            webPage.setName(String.join("/", nameAndDirs));
+            return this;
+        }
+
+        /**
          * Sets prefix dir to name. Final name will be "dirName/name"
          * @param dirName Dir name
          * @return this
@@ -401,6 +412,17 @@ public class WebPage implements Comparable<WebPage> {
          */
         public RssItemBuilder name(String name) {
             webPage.setShortName(name);
+            return this;
+        }
+
+        /**
+         * Sets WebPage name
+         *
+         * @param nameAndDirs Dirs and name, for example: ["a", "b", "xxx"] will be transformed to name: "a/b/xxx"
+         * @return this
+         */
+        public RssItemBuilder name(String ... nameAndDirs) {
+            webPage.setName(String.join("/", nameAndDirs));
             return this;
         }
 
