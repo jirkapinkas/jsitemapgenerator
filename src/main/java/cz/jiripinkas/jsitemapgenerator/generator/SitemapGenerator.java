@@ -23,7 +23,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     /**
      * @deprecated Use {@link #of(String)}
-     * @param baseUrl
+     * @param baseUrl Base URL
      */
     @Deprecated
     public SitemapGenerator(String baseUrl) {
@@ -32,7 +32,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     /**
      * @deprecated Use {@link #of(String, AdditionalNamespace[])} )}
-     * @param baseUrl
+     * @param baseUrl Base URL
+     * @param additionalNamespaces Additional parameters
      */
     @Deprecated
     public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
@@ -44,8 +45,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     /**
      * Helper method to create an instance of SitemapGenerator
-     * @param baseUrl
-     * @return
+     * @param baseUrl Base URL
+     * @return Instance of SitemapGenerator
      */
     public static SitemapGenerator of(String baseUrl) {
         return new SitemapGenerator(baseUrl);
@@ -53,8 +54,9 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
 
     /**
      * Helper method to create an instance of SitemapGenerator
-     * @param baseUrl
-     * @return
+     * @param baseUrl Base URL
+     * @param additionalNamespaces Additional parameters
+     * @return Instance of SitemapGenerator
      */
     public static SitemapGenerator of(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         return new SitemapGenerator(baseUrl, additionalNamespaces);
