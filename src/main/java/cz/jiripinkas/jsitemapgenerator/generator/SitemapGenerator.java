@@ -1,8 +1,10 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 import java.net.MalformedURLException;
@@ -20,6 +22,14 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
     }
 
     private StringBuilder additionalNamespacesStringBuilder = new StringBuilder();
+
+    private ChangeFreq defaultChangeFreq;
+
+    private Double defaultPriority;
+
+    private String nameBasePrefixDir;
+
+    private String nameBaseSuffixExtension;
 
     /**
      * @deprecated Use {@link #of(String)}
@@ -78,6 +88,18 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
         Collections.sort(values);
         for (WebPage webPage : values) {
             out.add("<url>\n");
+            if(nameBasePrefixDir != null) {
+                webPage.setName(nameBasePrefixDir + "/" + webPage.getName());
+            }
+            if(nameBaseSuffixExtension != null) {
+                webPage.setName(webPage.getName() + "." + nameBaseSuffixExtension);
+            }
+            if(defaultPriority != null && webPage.getPriority() == null) {
+                webPage.setPriority(defaultPriority);
+            }
+            if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
+                webPage.setChangeFreq(defaultChangeFreq);
+            }
             out.add(constructUrl(webPage));
             if (webPage.getImages() != null) {
                 for (Image image : webPage.getImages()) {
@@ -197,6 +219,140 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
         for (T element : webPages) {
             addPage(mapper.apply(element));
         }
+        return this;
+    }
+
+
+    /**
+     * Sets default prefix dir to name. Final name will be "dirName/name"
+     * @param dirName Dir name
+     * @return this
+     */
+    public SitemapGenerator nameBasePrefixDir(String dirName) {
+        nameBasePrefixDir = dirName;
+        return this;
+    }
+
+    /**
+     * Sets default prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+     * @param dirNames Dir names
+     * @return this
+     */
+    public SitemapGenerator nameBasePrefixDir(String ... dirNames) {
+        nameBasePrefixDir = String.join("/", dirNames);
+        return this;
+    }
+
+    /**
+     * Sets default suffix extension. Final name will be "name.extension"
+     * @param extension Extension
+     * @return this
+     */
+    public SitemapGenerator nameBaseSuffixExtension(String extension) {
+        nameBaseSuffixExtension = extension;
+        return this;
+    }
+
+    /**
+     * Sets default priority to maximum (1.0)
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultPriorityMax() {
+        defaultPriority = 1.0;
+        return this;
+    }
+
+    /**
+     * Sets default priority
+     * @param priority Default priority
+     */
+    public void setDefaultPriority(Double priority) {
+        if (priority < 0.0 || priority > 1.0) {
+            throw new InvalidPriorityException("Priority must be between 0 and 1.0");
+        }
+        defaultPriority = priority;
+    }
+
+
+    /**
+     * Sets default changeFreq
+     *
+     * @param changeFreq ChangeFreq
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreq(ChangeFreq changeFreq) {
+        defaultChangeFreq = changeFreq;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to ALWAYS
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqAlways() {
+        defaultChangeFreq = ChangeFreq.ALWAYS;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to HOURLY
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqHourly() {
+        defaultChangeFreq = ChangeFreq.HOURLY;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to DAILY
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqDaily() {
+        defaultChangeFreq = ChangeFreq.DAILY;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to WEEKLY
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqWeekly() {
+        defaultChangeFreq = ChangeFreq.WEEKLY;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to MONTHLY
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqMonthly() {
+        defaultChangeFreq = ChangeFreq.MONTHLY;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to YEARLY
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqYearly() {
+        defaultChangeFreq = ChangeFreq.YEARLY;
+        return this;
+    }
+
+    /**
+     * Sets default changeFreq to NEVER
+     *
+     * @return this
+     */
+    public SitemapGenerator defaultChangeFreqNever() {
+        defaultChangeFreq = ChangeFreq.NEVER;
         return this;
     }
 
