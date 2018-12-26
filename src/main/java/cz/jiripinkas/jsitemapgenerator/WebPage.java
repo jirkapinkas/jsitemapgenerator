@@ -127,6 +127,8 @@ public class WebPage implements Comparable<WebPage> {
 
     public static class WebPageBuilder {
         private WebPage webPage = new WebPage();
+        private String namePrefixDir;
+        private String nameSuffixExtension;
 
         /**
          * Sets WebPage name
@@ -136,6 +138,36 @@ public class WebPage implements Comparable<WebPage> {
          */
         public WebPageBuilder name(String name) {
             webPage.setName(name);
+            return this;
+        }
+
+        /**
+         * Sets prefix dir to name. Final name will be "dirName/name"
+         * @param dirName Dir name
+         * @return this
+         */
+        public WebPageBuilder namePrefixDir(String dirName) {
+            this.namePrefixDir = dirName;
+            return this;
+        }
+
+        /**
+         * Sets prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+         * @param dirNames Dir names
+         * @return this
+         */
+        public WebPageBuilder namePrefixDir(String ... dirNames) {
+            this.namePrefixDir = String.join("/", dirNames);
+            return this;
+        }
+
+        /**
+         * Sets suffix extension. Final name will be "name.extension"
+         * @param extension Extension
+         * @return this
+         */
+        public WebPageBuilder nameSuffixExtension(String extension) {
+            this.nameSuffixExtension = extension;
             return this;
         }
 
@@ -283,6 +315,12 @@ public class WebPage implements Comparable<WebPage> {
          * @return WebPage
          */
         public WebPage build() {
+            if(namePrefixDir != null) {
+                webPage.setName(namePrefixDir + "/" + webPage.getName());
+            }
+            if(nameSuffixExtension != null) {
+                webPage.setName(webPage.getName() + "." + nameSuffixExtension);
+            }
             return webPage;
         }
 
@@ -295,6 +333,8 @@ public class WebPage implements Comparable<WebPage> {
     public static class RssItemBuilder {
 
         private WebPage webPage = new WebPage();
+        private String namePrefixDir;
+        private String nameSuffixExtension;
 
         /**
          * Sets pubDate
@@ -365,11 +405,47 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets prefix dir to name. Final name will be "dirName/name"
+         * @param dirName Dir name
+         * @return this
+         */
+        public RssItemBuilder namePrefixDir(String dirName) {
+            this.namePrefixDir = dirName;
+            return this;
+        }
+
+        /**
+         * Sets prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+         * @param dirNames Dir names
+         * @return this
+         */
+        public RssItemBuilder namePrefixDir(String ... dirNames) {
+            this.namePrefixDir = String.join("/", dirNames);
+            return this;
+        }
+
+        /**
+         * Sets suffix extension. Final name will be "name.extension"
+         * @param extension Extension
+         * @return this
+         */
+        public RssItemBuilder nameSuffixExtension(String extension) {
+            this.nameSuffixExtension = extension;
+            return this;
+        }
+
+        /**
          * Returns current webPage
          *
          * @return WebPage
          */
         public WebPage build() {
+            if(namePrefixDir != null) {
+                webPage.setName(namePrefixDir + "/" + webPage.getName());
+            }
+            if(nameSuffixExtension != null) {
+                webPage.setName(webPage.getName() + "." + nameSuffixExtension);
+            }
             return webPage;
         }
 
