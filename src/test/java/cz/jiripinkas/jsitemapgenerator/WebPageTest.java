@@ -6,6 +6,8 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
 
+import static org.junit.Assert.*;
+
 public class WebPageTest {
 
 	@Test(expected = InvalidUrlException.class)
@@ -21,6 +23,30 @@ public class WebPageTest {
 	@Test(expected = InvalidPriorityException.class)
 	public void testHighPriority() {
 		new WebPage().setPriority(10.0);
+	}
+
+	@Test
+	public void testPrefixDirAndSuffix() {
+		WebPage build = WebPage.builder().namePrefixDir("dir").name("name").nameSuffixExtension("html").build();
+		assertEquals("dir/name.html", build.getName());
+	}
+
+	@Test
+	public void testPrefixDirs() {
+		WebPage build = WebPage.builder().namePrefixDir("dir1", "dir2", "dir3").name("name").nameSuffixExtension("html").build();
+		assertEquals("dir1/dir2/dir3/name.html", build.getName());
+	}
+
+	@Test
+	public void testDirs() {
+		WebPage build = WebPage.builder().name("dir1", "dir2", "dir3", "name").build();
+		assertEquals("dir1/dir2/dir3/name", build.getName());
+	}
+
+	@Test
+	public void testNameRoot() {
+		WebPage build = WebPage.builder().nameRoot().build();
+		assertEquals("", build.getName());
 	}
 
 }
