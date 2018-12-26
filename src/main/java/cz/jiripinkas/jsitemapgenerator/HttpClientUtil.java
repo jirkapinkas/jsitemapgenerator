@@ -22,10 +22,11 @@ public class HttpClientUtil {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Response response = client.newCall(request).execute();
-        if (!response.isSuccessful()) {
-            throw new Exception("error sending HTTP GET to this URL: " + url);
+        try(Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new Exception("error sending HTTP GET to this URL: " + url);
+            }
+            return response.code();
         }
-        return response.code();
     }
 }
