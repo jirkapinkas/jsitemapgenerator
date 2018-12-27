@@ -9,10 +9,7 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 import java.util.function.Function;
 
 public class SitemapGenerator extends AbstractSitemapGenerator {
@@ -163,6 +160,15 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
             throw new InvalidUrlException(e);
         }
         out.append("</loc>\n");
+        if (webPage.getAlternateNames() != null) {
+            for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
+                out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
+                out.append(entry.getKey());
+                out.append("\" href=\"");
+                out.append(entry.getValue());
+                out.append("\"/>\n");
+            }
+        }
         if (webPage.getLastMod() != null) {
             out.append("<lastmod>");
             out.append(dateFormat.format(webPage.getLastMod()));
