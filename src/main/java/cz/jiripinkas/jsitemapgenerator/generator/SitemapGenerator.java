@@ -154,7 +154,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
             try {
                 for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
                     out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
-                    out.append(entry.getKey());
+                    out.append(escapeXmlSpecialCharacters(entry.getKey()));
                     out.append("\" href=\"");
                     out.append(toUrl(baseUrl, entry.getValue()));
                     out.append("\"/>\n");
