@@ -6,6 +6,7 @@ import java.util.*;
 
 public class WebPage implements Comparable<WebPage> {
     private String name;
+    private Map<String, String> alternateNames;
     private Date lastMod;
     private ChangeFreq changeFreq;
     private Double priority;
@@ -19,6 +20,14 @@ public class WebPage implements Comparable<WebPage> {
             images = new ArrayList<>();
         }
         images.add(image);
+        return this;
+    }
+
+    public WebPage addAlternateName(String language, String name) {
+        if (alternateNames == null) {
+            alternateNames = new HashMap<>();
+        }
+        alternateNames.put(language, name);
         return this;
     }
 
@@ -50,6 +59,10 @@ public class WebPage implements Comparable<WebPage> {
         this.name = name;
     }
 
+    public void setAlternateNames(Map<String, String> alternateNames) {
+        this.alternateNames = alternateNames;
+    }
+
     public void setLastMod(Date lastMod) {
         this.lastMod = lastMod;
     }
@@ -67,6 +80,10 @@ public class WebPage implements Comparable<WebPage> {
 
     public String getName() {
         return name;
+    }
+
+    public Map<String, String> getAlternateNames() {
+        return alternateNames;
     }
 
     public Date getLastMod() {
@@ -149,6 +166,18 @@ public class WebPage implements Comparable<WebPage> {
          */
         public WebPageBuilder name(String ... nameAndDirs) {
             webPage.setName(String.join("/", nameAndDirs));
+            return this;
+        }
+
+        /**
+         * Sets WebPage alternate name
+         *
+         * @param language Alternate language
+         * @param name     Name
+         * @return this
+         */
+        public WebPageBuilder alternateName(String language, String name) {
+            webPage.addAlternateName(language, name);
             return this;
         }
 
