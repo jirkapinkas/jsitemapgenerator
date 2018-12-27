@@ -145,28 +145,22 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
         StringBuilder out = new StringBuilder();
         out.append("<loc>");
         try {
-            if (webPage.getName() != null) {
-                String wpName = webPage.getName();
-                if (baseUrl.endsWith("/")) {
-                    while (wpName.startsWith("/")) {
-                        wpName = wpName.substring(1);
-                    }
-                }
-                out.append(escapeXmlSpecialCharacters(new URL(baseUrl + wpName).toString()));
-            } else {
-                out.append(escapeXmlSpecialCharacters(new URL(baseUrl).toString()));
-            }
+            out.append(toUrl(baseUrl, webPage.getName()));
         } catch (MalformedURLException e) {
             throw new InvalidUrlException(e);
         }
         out.append("</loc>\n");
         if (webPage.getAlternateNames() != null) {
-            for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
-                out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
-                out.append(entry.getKey());
-                out.append("\" href=\"");
-                out.append(entry.getValue());
-                out.append("\"/>\n");
+            try {
+                for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
+                    out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
+                    out.append(entry.getKey());
+                    out.append("\" href=\"");
+                    out.append(toUrl(baseUrl, entry.getValue()));
+                    out.append("\"/>\n");
+                }
+            } catch (MalformedURLException e) {
+                throw new InvalidUrlException(e);
             }
         }
         if (webPage.getLastMod() != null) {
@@ -185,6 +179,18 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
             out.append("</priority>\n");
         }
         return out.toString();
+    }
+
+    private String toUrl(String baseUrl, String name) throws MalformedURLException {
+        if (name == null) {
+            return escapeXmlSpecialCharacters(new URL(baseUrl).toString());
+        }
+        if (baseUrl.endsWith("/")) {
+            while (name.startsWith("/")) {
+                name = name.substring(1);
+            }
+        }
+        return escapeXmlSpecialCharacters(new URL(baseUrl + name).toString());
     }
 
     /**

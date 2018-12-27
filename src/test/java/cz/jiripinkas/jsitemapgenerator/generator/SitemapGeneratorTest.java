@@ -66,8 +66,8 @@ public class SitemapGeneratorTest {
 	public void testConstructAlternateUrls() {
 		String url = sitemapGenerator.constructUrl(WebPage.builder().name("latest.php").alternateName("de", "latest-de.php")
 				.alternateName("es", "latest-es.php").build());
-		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"latest-de.php\"/>\n" +
-				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"latest-es.php\"/>\n", url);
+		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
+				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n", url);
 	}
 
 	@Test
