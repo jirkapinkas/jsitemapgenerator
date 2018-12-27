@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class SitemapGenerator extends AbstractSitemapGenerator {
 
     public enum AdditionalNamespace {
-        IMAGE
+        IMAGE, XHTML
     }
 
     private StringBuilder additionalNamespacesStringBuilder = new StringBuilder();
@@ -45,8 +45,13 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
     @Deprecated
     public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         this(baseUrl);
-        if (Arrays.asList(additionalNamespaces).contains(AdditionalNamespace.IMAGE)) {
+
+        List<AdditionalNamespace> additionalNamespaceList = Arrays.asList(additionalNamespaces);
+        if (additionalNamespaceList.contains(AdditionalNamespace.IMAGE)) {
             additionalNamespacesStringBuilder.append(" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" ");
+        }
+        if (additionalNamespaceList.contains(AdditionalNamespace.XHTML)) {
+            additionalNamespacesStringBuilder.append(" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" ");
         }
     }
 
