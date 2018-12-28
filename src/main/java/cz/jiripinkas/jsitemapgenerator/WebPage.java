@@ -13,6 +13,7 @@ public class WebPage implements Comparable<WebPage> {
     private Date lastMod;
     private ChangeFreq changeFreq;
     private Double priority;
+    private static final double MIN_PRIORITY = 0.0, MAX_PRIORITY = 1.0;
     private String shortDescription;
     private String shortName;
 
@@ -75,8 +76,8 @@ public class WebPage implements Comparable<WebPage> {
     }
 
     public void setPriority(Double priority) {
-        if (priority < 0.0 || priority > 1.0) {
-            throw new InvalidPriorityException("Priority must be between 0 and 1.0");
+        if (priority < MIN_PRIORITY || priority > MAX_PRIORITY) {
+            throw new InvalidPriorityException("Priority must be between " + MIN_PRIORITY + " and " + MAX_PRIORITY);
         }
         this.priority = priority;
     }
@@ -247,13 +248,13 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
-         * Sets WebPage name to "" and priority to 1.0
+         * Sets WebPage name to "" and priority to MAX_PRIORITY (1.0)
          *
          * @return this
          */
         public WebPageBuilder maxPriorityRoot() {
             webPage.setName("");
-            webPage.setPriority(1.0);
+            webPage.setPriority(MAX_PRIORITY);
             return this;
         }
 
@@ -308,7 +309,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public WebPageBuilder priorityMax() {
-            webPage.setPriority(1.0);
+            webPage.setPriority(MAX_PRIORITY);
             return this;
         }
 
