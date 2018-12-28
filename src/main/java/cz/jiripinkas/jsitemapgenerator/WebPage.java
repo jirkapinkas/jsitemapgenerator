@@ -2,6 +2,8 @@ package cz.jiripinkas.jsitemapgenerator;
 
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class WebPage implements Comparable<WebPage> {
@@ -244,6 +246,18 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets lastMod
+         *
+         * @param lastMod LastMod
+         * @return this
+         */
+        public WebPageBuilder lastMod(LocalDateTime lastMod) {
+            webPage.setLastMod(Timestamp.valueOf(lastMod));
+            return this;
+        }
+
+
+        /**
          * Sets WebPage lastMod to current date (new Date())
          *
          * @return this
@@ -384,6 +398,17 @@ public class WebPage implements Comparable<WebPage> {
          */
         public RssItemBuilder pubDate(Date pubDate) {
             webPage.setLastMod(pubDate);
+            return this;
+        }
+
+        /**
+         * Sets pubDate
+         *
+         * @param pubDate PubDate
+         * @return this
+         */
+        public RssItemBuilder pubDate(LocalDateTime pubDate) {
+            webPage.setLastMod(Timestamp.valueOf(pubDate));
             return this;
         }
 
