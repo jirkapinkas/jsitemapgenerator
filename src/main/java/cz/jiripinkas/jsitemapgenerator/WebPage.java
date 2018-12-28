@@ -13,11 +13,26 @@ public class WebPage implements Comparable<WebPage> {
     private Date lastMod;
     private ChangeFreq changeFreq;
     private Double priority;
-    private static final double MIN_PRIORITY = 0.0, MAX_PRIORITY = 1.0;
+    private static final double MIN_PRIORITY = 0.0;
+    private static final double MAX_PRIORITY = 1.0;
     private String shortDescription;
     private String shortName;
 
     private List<Image> images;
+
+    /**
+     * Method for creating WebPage only with name
+     * (this can be useful for really simple sitemaps
+     * or with combination of default settings
+     * set on SitemapGenerator)
+     * @param name Name
+     * @return WebPage instance
+     */
+    public static WebPage of(String name) {
+        WebPage webPage = new WebPage();
+        webPage.setName(name);
+        return webPage;
+    }
 
     public WebPage addImage(Image image) {
         if (images == null) {
