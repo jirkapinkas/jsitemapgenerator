@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.6</version>
+      <version>3.7</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
