@@ -5,6 +5,7 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Supplier;
 
 public class WebPage implements Comparable<WebPage> {
     private String name;
@@ -162,6 +163,16 @@ public class WebPage implements Comparable<WebPage> {
 
         /**
          * Sets WebPage name
+         * @param supplier Supplier
+         * @return this
+         */
+        public WebPageBuilder name(Supplier<String> supplier) {
+            webPage.setName(supplier.get());
+            return this;
+        }
+
+        /**
+         * Sets WebPage name
          *
          * @param nameAndDirs Dirs and name, for example: ["a", "b", "xxx"] will be transformed to name: "a/b/xxx"
          * @return this
@@ -180,6 +191,18 @@ public class WebPage implements Comparable<WebPage> {
          */
         public WebPageBuilder alternateName(String language, String name) {
             webPage.addAlternateName(language, name);
+            return this;
+        }
+
+        /**
+         * Sets WebPage alternate name
+         *
+         * @param language Alternate language
+         * @param supplier Supplier
+         * @return this
+         */
+        public WebPageBuilder alternateName(String language, Supplier<String> supplier) {
+            webPage.addAlternateName(language, supplier.get());
             return this;
         }
 
