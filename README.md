@@ -97,10 +97,10 @@ String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best
 
 ### How to create robots.txt:
 
-... robots.txt ISN'T sitemap :-), but inside you reference your sitemap and if you need sitemap, then you probably need robots.txt as well
+... robots.txt ISN'T sitemap :-), but inside it you reference your sitemap and if you need sitemap, then you probably need robots.txt as well :-)
 
 ```java
-return RobotsTxtGenerator.of("https://example.com")
+String robotsTxt = RobotsTxtGenerator.of("https://example.com")
         .addSitemap("sitemap.xml")
         .addRule(RobotsRule.builder().userAgentAll().allowAll().build())
         .constructRobotsTxtString();
