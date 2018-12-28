@@ -27,9 +27,10 @@ If you want to use "ping google / bing" functionality, also add this library to 
 
 ```java
 String sitemap = SitemapGenerator.of("https://example.com")
-    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-    .addPage(WebPage.builder().name("foo.html").build())
-    .addPage(WebPage.builder().name("bar.html").build())
+    .defaultChangeFreqWeekly() // optional default settings for all WebPages
+    .addPage(WebPage.builder().maxPriorityRoot().build())
+    .addPage(WebPage.of("foo.html")) // simplest way of creating web page
+    .addPage(WebPage.builder().name("bar.html").build()) // builder is more complex
     .constructSitemapString();
 ```
 
@@ -37,9 +38,9 @@ or sitemap in gzip format:
 
 ```java
 byte[] sitemap = SitemapGenerator.of("https://example.com")
-    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-    .addPage(WebPage.builder().name("foo.html").build())
-    .addPage(WebPage.builder().name("bar.html").build())
+    .addPage(WebPage.builder().maxPriorityRoot().build())
+    .addPage(WebPage.of("foo.html"))
+    .addPage(WebPage.of("bar.html"))
     .constructSitemapGzip();
 ```
 
@@ -49,9 +50,9 @@ or to store it to file & ping google:
 // create web sitemap for web http://www.javavids.com
 SitemapGenerator sg = SitemapGenerator.of("https://example.com");
 // add some URLs
-sg.addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-  .addPage(WebPage.builder().name("foo.html").build())
-  .addPage(WebPage.builder().name("bar.html").build());
+sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
+  .addPage(WebPage.of("foo.html"))
+  .addPage(WebPage.of("bar.html"));
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 sg.constructAndSaveSitemap(file);
@@ -75,8 +76,8 @@ SitemapGenerator.of("http://example.com")
 
 ```java
 String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
-    .addPage(WebPage.builder().name("sitemap-plugins.xml").build())
-    .addPage(WebPage.builder().name("sitemap-archetypes.xml").build())
+    .addPage(WebPage.of("sitemap-plugins.xml"))
+    .addPage(WebPage.of("sitemap-archetypes.xml"))
     .constructSitemapString();
 ```
 
