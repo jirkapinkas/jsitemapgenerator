@@ -35,7 +35,13 @@ public class RssGeneratorTest {
 
 	@Test
 	public void testConstructRssWithItems() throws SAXException, IOException {
-		rssGenerator.addPage(WebPage.rssBuilder().name("latest-news").description("description").pubDate(new Date()).title("latest news").build());
+		rssGenerator.addPage(WebPage.rssBuilder()
+				.title("latest news")
+				.description("description")
+				.link("latest-news")
+				.pubDate(new Date())
+				.build()
+		);
 		String rss = rssGenerator.constructRss();
 		ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes(StandardCharsets.UTF_8));
 		TestUtil.testSitemapXsd(xml, new File("rss20.xsd"));
