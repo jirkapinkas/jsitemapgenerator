@@ -50,8 +50,8 @@ or to store it to file & ping google:
 SitemapGenerator sg = SitemapGenerator.of("https://example.com");
 // add some URLs
 sg.addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-    .addPage(WebPage.builder().name("foo.html").build())
-    .addPage(WebPage.builder().name("bar.html").build());
+  .addPage(WebPage.builder().name("foo.html").build())
+  .addPage(WebPage.builder().name("bar.html").build());
 // generate sitemap and save it to file /var/www/sitemap.xml
 File file = new File("/var/www/sitemap.xml");
 sg.constructAndSaveSitemap(file);
