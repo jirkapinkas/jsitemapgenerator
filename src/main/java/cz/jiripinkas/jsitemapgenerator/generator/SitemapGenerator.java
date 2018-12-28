@@ -23,9 +23,9 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
 
     private Double defaultPriority;
 
-    private String dir;
+    private String defaultDir;
 
-    private String extension;
+    private String defaultExtension;
 
     /**
      * @deprecated Use {@link #of(String)}
@@ -89,18 +89,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         Collections.sort(values);
         for (WebPage webPage : values) {
             out.add("<url>\n");
-            if(dir != null) {
-                webPage.setName(dir + "/" + webPage.getName());
-            }
-            if(extension != null) {
-                webPage.setName(webPage.getName() + "." + extension);
-            }
-            if(defaultPriority != null && webPage.getPriority() == null) {
-                webPage.setPriority(defaultPriority);
-            }
-            if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
-                webPage.setChangeFreq(defaultChangeFreq);
-            }
             out.add(constructUrl(webPage));
             if (webPage.getImages() != null) {
                 for (Image image : webPage.getImages()) {
@@ -111,6 +99,22 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         }
         out.add("</urlset>");
         return out.toArray(new String[]{});
+    }
+
+    @Override
+    protected void beforeAddPageEvent(WebPage webPage) {
+        if(defaultDir != null && webPage.getDir() == null) {
+            webPage.setName(defaultDir + "/" + webPage.constructName());
+        }
+        if(defaultExtension != null && webPage.getExtension() == null) {
+            webPage.setName(webPage.constructName() + "." + defaultExtension);
+        }
+        if(defaultPriority != null && webPage.getPriority() == null) {
+            webPage.setPriority(defaultPriority);
+        }
+        if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
+            webPage.setChangeFreq(defaultChangeFreq);
+        }
     }
 
     String constructImage(Image image) {
@@ -149,7 +153,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         StringBuilder out = new StringBuilder();
         out.append("<loc>");
         try {
-            out.append(toUrl(baseUrl, webPage.getName()));
+            out.append(toUrl(baseUrl, webPage.constructName()));
         } catch (MalformedURLException e) {
             throw new InvalidUrlException(e);
         }
@@ -198,37 +202,55 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default prefix dir to name. Final name will be "dirName/name"
+     * Sets default prefix dir to name for all following WebPages. Final name will be "dirName/name"
      * @param dirName Dir name
      * @return this
      */
-    public SitemapGenerator dir(String dirName) {
-        dir = dirName;
+    public SitemapGenerator defaultDir(String dirName) {
+        defaultDir = dirName;
         return this;
     }
 
     /**
-     * Sets default prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+     * Sets default prefix dirs to name for all following WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
      * @param dirNames Dir names
      * @return this
      */
-    public SitemapGenerator dir(String ... dirNames) {
-        dir = String.join("/", dirNames);
+    public SitemapGenerator defaultDir(String ... dirNames) {
+        defaultDir = String.join("/", dirNames);
         return this;
     }
 
     /**
-     * Sets default suffix extension. Final name will be "name.extension"
+     * Reset default dir value
+     * @return this
+     */
+    public SitemapGenerator resetDefaultDir() {
+        defaultDir = null;
+        return this;
+    }
+
+    /**
+     * Sets default suffix extension for all following WebPages. Final name will be "name.extension"
      * @param extension Extension
      * @return this
      */
-    public SitemapGenerator extension(String extension) {
-        this.extension = extension;
+    public SitemapGenerator defaultExtension(String extension) {
+        defaultExtension = extension;
         return this;
     }
 
     /**
-     * Sets default priority to maximum (1.0)
+     * Reset default extension value
+     * @return this
+     */
+    public SitemapGenerator resetDefaultExtension() {
+        defaultExtension = null;
+        return this;
+    }
+
+    /**
+     * Sets default priority for all following WebPages to maximum (1.0)
      *
      * @return this
      */
@@ -238,19 +260,29 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default priority
+     * Sets default priority for all following WebPages
      * @param priority Default priority
+     * @return this
      */
-    public void setDefaultPriority(Double priority) {
+    public SitemapGenerator defaultPriority(Double priority) {
         if (priority < 0.0 || priority > 1.0) {
             throw new InvalidPriorityException("Priority must be between 0 and 1.0");
         }
         defaultPriority = priority;
+        return this;
     }
 
+    /**
+     * Reset default priority
+     * @return this
+     */
+    public SitemapGenerator resetDefaultPriority() {
+        defaultPriority = null;
+        return this;
+    }
 
     /**
-     * Sets default changeFreq
+     * Sets default changeFreq for all following WebPages
      *
      * @param changeFreq ChangeFreq
      * @return this
@@ -261,7 +293,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to ALWAYS
+     * Sets default changeFreq to ALWAYS for all following WebPages
      *
      * @return this
      */
@@ -271,7 +303,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to HOURLY
+     * Sets default changeFreq to HOURLY for all following WebPages
      *
      * @return this
      */
@@ -281,7 +313,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to DAILY
+     * Sets default changeFreq to DAILY for all following WebPages
      *
      * @return this
      */
@@ -291,7 +323,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to WEEKLY
+     * Sets default changeFreq to WEEKLY for all following WebPages
      *
      * @return this
      */
@@ -301,7 +333,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to MONTHLY
+     * Sets default changeFreq to MONTHLY for all following WebPages
      *
      * @return this
      */
@@ -311,7 +343,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to YEARLY
+     * Sets default changeFreq to YEARLY for all following WebPages
      *
      * @return this
      */
@@ -321,12 +353,21 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to NEVER
+     * Sets default changeFreq to NEVER for all following WebPages
      *
      * @return this
      */
     public SitemapGenerator defaultChangeFreqNever() {
         defaultChangeFreq = ChangeFreq.NEVER;
+        return this;
+    }
+
+    /**
+     * Reset default changeFreq
+     * @return this
+     */
+    public SitemapGenerator resetDefaultChangeFreq() {
+        defaultChangeFreq = null;
         return this;
     }
 

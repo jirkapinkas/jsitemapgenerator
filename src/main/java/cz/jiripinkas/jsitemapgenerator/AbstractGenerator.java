@@ -58,8 +58,18 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      * @return this
      */
     public I addPage(WebPage webPage) {
-        urls.put(baseUrl + webPage.getName(), webPage);
+        beforeAddPageEvent(webPage);
+        urls.put(baseUrl + webPage.constructName(), webPage);
         return getThis();
+    }
+
+    /**
+     * This method is called before adding a page to urls.
+     * It can be used to change webPage attributes
+     * @param webPage WebPage
+     */
+    protected void beforeAddPageEvent(WebPage webPage) {
+
     }
 
     /**

@@ -9,6 +9,14 @@ import java.util.function.Supplier;
 
 public class WebPage implements Comparable<WebPage> {
     private String name;
+    /**
+     * Optional dir. In getName() it's added to name: "dir/name"
+     */
+    private String dir;
+    /**
+     * Optional dir. In getName() it's added to name: "name.extension"
+     */
+    private String extension;
     private Map<String, String> alternateNames;
     private Date lastMod;
     private ChangeFreq changeFreq;
@@ -97,8 +105,19 @@ public class WebPage implements Comparable<WebPage> {
         this.priority = priority;
     }
 
-    public String getName() {
-        return name;
+    /**
+     * Constructs name from dir and extension (if available)
+     * @return Name
+     */
+    public String constructName() {
+        String result = name;
+        if(dir != null) {
+            result = dir + "/" + result;
+        }
+        if(extension != null) {
+            result = result + "." + extension;
+        }
+        return result;
     }
 
     public Map<String, String> getAlternateNames() {
@@ -115,6 +134,22 @@ public class WebPage implements Comparable<WebPage> {
 
     public Double getPriority() {
         return priority;
+    }
+
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String dir) {
+        this.dir = dir;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     private static final Comparator<Double> PRIORITY_COMPARATOR = (a, b) -> {
@@ -163,8 +198,6 @@ public class WebPage implements Comparable<WebPage> {
 
     public static class WebPageBuilder {
         private WebPage webPage = new WebPage();
-        private String dir;
-        private String extension;
 
         /**
          * Sets WebPage name
@@ -228,7 +261,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public WebPageBuilder dir(String dirName) {
-            this.dir = dirName;
+            webPage.setDir(dirName);
             return this;
         }
 
@@ -238,7 +271,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public WebPageBuilder dir(String ... dirNames) {
-            this.dir = String.join("/", dirNames);
+            webPage.setDir(String.join("/", dirNames));
             return this;
         }
 
@@ -248,7 +281,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public WebPageBuilder extension(String extension) {
-            this.extension = extension;
+            webPage.setExtension(extension);
             return this;
         }
 
@@ -420,12 +453,6 @@ public class WebPage implements Comparable<WebPage> {
          * @return WebPage
          */
         public WebPage build() {
-            if(dir != null) {
-                webPage.setName(dir + "/" + webPage.getName());
-            }
-            if(extension != null) {
-                webPage.setName(webPage.getName() + "." + extension);
-            }
             return webPage;
         }
 
@@ -438,8 +465,6 @@ public class WebPage implements Comparable<WebPage> {
     public static class RssItemBuilder {
 
         private WebPage webPage = new WebPage();
-        private String namePrefixDir;
-        private String nameSuffixExtension;
 
         /**
          * Sets pubDate
@@ -550,7 +575,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public RssItemBuilder dir(String dirName) {
-            this.namePrefixDir = dirName;
+            webPage.setDir(dirName);
             return this;
         }
 
@@ -560,7 +585,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public RssItemBuilder dir(String ... dirNames) {
-            this.namePrefixDir = String.join("/", dirNames);
+            webPage.setDir(String.join("/", dirNames));
             return this;
         }
 
@@ -570,7 +595,7 @@ public class WebPage implements Comparable<WebPage> {
          * @return this
          */
         public RssItemBuilder extension(String extension) {
-            this.nameSuffixExtension = extension;
+            webPage.setExtension(extension);
             return this;
         }
 
@@ -580,12 +605,6 @@ public class WebPage implements Comparable<WebPage> {
          * @return WebPage
          */
         public WebPage build() {
-            if(namePrefixDir != null) {
-                webPage.setName(namePrefixDir + "/" + webPage.getName());
-            }
-            if(nameSuffixExtension != null) {
-                webPage.setName(webPage.getName() + "." + nameSuffixExtension);
-            }
             return webPage;
         }
 

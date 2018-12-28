@@ -14,6 +14,8 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import static org.junit.Assert.*;
+
 public class SitemapGeneratorTest {
 
 	private SitemapGenerator sitemapGenerator;
@@ -112,6 +114,46 @@ public class SitemapGeneratorTest {
 		} finally {
 			tmpFile.delete();
 		}
+	}
+
+	@Test
+	public void test() {
+		String sitemap = SitemapGenerator.of("https://javalibs.com")
+				.defaultDir("dir1")
+				.defaultChangeFreqWeekly()
+				.addPage(WebPage.of("a"))
+				.addPage(WebPage.of("b"))
+				.defaultDir("dir2")
+				.defaultChangeFreqYearly()
+				.addPage(WebPage.of("x"))
+				.addPage(WebPage.of("y"))
+				.addPage(WebPage.builder().dir("dir3").name("z").changeFreqNever().build())
+				.constructSitemapString();
+		System.out.println(sitemap);
+		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/dir1/a</loc>\n" +
+				"<changefreq>weekly</changefreq>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/dir1/b</loc>\n" +
+				"<changefreq>weekly</changefreq>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/dir2/x</loc>\n" +
+				"<changefreq>yearly</changefreq>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/dir2/y</loc>\n" +
+				"<changefreq>yearly</changefreq>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/dir3/z</loc>\n" +
+				"<changefreq>never</changefreq>\n" +
+				"</url>\n" +
+				"</urlset>";
+		assertEquals(expected, sitemap);
 	}
 
 	@Ignore

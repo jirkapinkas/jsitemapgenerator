@@ -142,7 +142,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
             builder.append("<item>" + "\n");
 
             builder.append("<title>");
-            builder.append(webPage.getName());
+            builder.append(webPage.constructName());
             builder.append("</title>" + "\n");
 
             builder.append("<description>");

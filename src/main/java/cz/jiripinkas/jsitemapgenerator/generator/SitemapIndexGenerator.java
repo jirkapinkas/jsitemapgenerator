@@ -43,8 +43,8 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		out.append("<sitemap>\n");
 		out.append("<loc>");
 		try {
-			if (webPage.getName() != null) {
-				out.append(new URL(baseUrl + webPage.getName()).toString());
+			if (webPage.constructName() != null) {
+				out.append(new URL(baseUrl + webPage.constructName()).toString());
 			} else {
 				out.append(new URL(baseUrl).toString());
 			}

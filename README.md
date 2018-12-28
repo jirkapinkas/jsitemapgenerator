@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.7</version>
+      <version>3.8</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -27,7 +27,6 @@ If you want to use "ping google / bing" functionality, also add this library to 
 
 ```java
 String sitemap = SitemapGenerator.of("https://example.com")
-    .defaultChangeFreqWeekly() // optional default settings for all WebPages
     .addPage(WebPage.builder().maxPriorityRoot().build())
     .addPage(WebPage.of("foo.html")) // simplest way of creating web page
     .addPage(WebPage.builder().name("bar.html").build()) // builder is more complex
@@ -42,6 +41,26 @@ byte[] sitemap = SitemapGenerator.of("https://example.com")
     .addPage(WebPage.of("foo.html"))
     .addPage(WebPage.of("bar.html"))
     .constructSitemapGzip();
+```
+
+you can set default settings (for the following WebPages):
+
+```java
+String sitemap = SitemapGenerator.of("https://example.com")
+    .addPage(WebPage.builder().maxPriorityRoot().build()) // URL will be: "/"
+    .defaultExtension("html")
+    .defaultDir("dir1")
+    .addPage(WebPage.of("foo")) // URL will be: "dir1/foo.html"
+    .addPage(WebPage.of("bar"))) // URL will be: "dir1/bar.html"
+    .defaultDir("dir2")
+    .addPage(WebPage.of("hello")) // URL will be: "dir2/hello.html"
+    .addPage(WebPage.of("yello"))) // URL will be: "dir2/yello.html"
+    // btw. specifying dir and / or extension on WebPage overrides default settings
+    .addPage(WebPage.builder().dir("dir3").extension(null).name("test").build()) // "dir3/test"
+    .resetDefaultDir() // resets default dir
+    .resetDefaultExtension() // resets default extension
+    .addPage(WebPage.of("mypage")) // URL will be: "mypage"
+    .constructSitemapString();
 ```
 
 or to store it to file & ping google:
