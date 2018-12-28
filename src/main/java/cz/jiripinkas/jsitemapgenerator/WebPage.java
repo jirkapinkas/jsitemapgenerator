@@ -247,6 +247,18 @@ public class WebPage implements Comparable<WebPage> {
         }
 
         /**
+         * Sets WebPage name to "" and priority to 1.0
+         *
+         * @return this
+         */
+        public WebPageBuilder maxPriorityRoot() {
+            webPage.setName("");
+            webPage.setPriority(1.0);
+            return this;
+        }
+
+
+        /**
          * Sets WebPage priority
          *
          * @param priority Priority
