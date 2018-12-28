@@ -82,6 +82,8 @@ String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
 
 ### How to create RSS channel:
 
+... because RSS ISN'T sitemap :-), but it's basically just a list of links (like sitemap) and if you need sitemap, then probably you also need RSS
+
 ```java
 String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best Java Blogs")
     .addPage(WebPage.rssBuilder()
