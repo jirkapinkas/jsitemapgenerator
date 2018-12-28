@@ -10,9 +10,8 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.function.Function;
 
-public class SitemapGenerator extends AbstractSitemapGenerator {
+public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator> {
 
     public enum AdditionalNamespace {
         IMAGE, XHTML
@@ -197,48 +196,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator {
         }
         return escapeXmlSpecialCharacters(new URL(baseUrl + name).toString());
     }
-
-    /**
-     * Add single page to sitemap
-     *
-     * @param webPage single page
-     * @return this
-     */
-    @Override
-    public SitemapGenerator addPage(WebPage webPage) {
-        urls.put(baseUrl + webPage.getName(), webPage);
-        return this;
-    }
-
-    /**
-     * Add collection of pages to sitemap
-     *
-     * @param webPages Collection of pages
-     * @return this
-     */
-    @Override
-    public SitemapGenerator addPages(Collection<WebPage> webPages) {
-        for (WebPage webPage : webPages) {
-            addPage(webPage);
-        }
-        return this;
-    }
-
-    /**
-     * Add collection of pages to sitemap
-     *
-     * @param webPages Collection of pages
-     * @param mapper Mapper function which transforms some object to WebPage
-     * @return this
-     */
-    @Override
-    public <T> SitemapGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
-        for (T element : webPages) {
-            addPage(mapper.apply(element));
-        }
-        return this;
-    }
-
 
     /**
      * Sets default prefix dir to name. Final name will be "dirName/name"

@@ -7,7 +7,7 @@ import java.util.zip.GZIPOutputStream;
 
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 
-public abstract class AbstractSitemapGenerator extends AbstractGenerator {
+public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> extends AbstractGenerator <T> {
 
 	protected W3CDateFormat dateFormat = new W3CDateFormat();
 

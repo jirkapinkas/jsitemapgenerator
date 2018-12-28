@@ -9,7 +9,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
 
-public abstract class AbstractGenerator {
+/**
+ * Abstract Generator
+ * @param <I> Concrete implementation of AbstractGenerator, for example SitemapGenerator
+ */
+public abstract class AbstractGenerator <I extends AbstractGenerator> {
 
     protected Map<String, WebPage> urls = new TreeMap<>();
 
@@ -52,9 +56,9 @@ public abstract class AbstractGenerator {
      * @param webPage single page
      * @return this
      */
-    public AbstractGenerator addPage(WebPage webPage) {
+    public I addPage(WebPage webPage) {
         urls.put(baseUrl + webPage.getName(), webPage);
-        return this;
+        return getThis();
     }
 
     /**
@@ -63,11 +67,11 @@ public abstract class AbstractGenerator {
      * @param webPages Collection of pages
      * @return this
      */
-    public AbstractGenerator addPages(Collection<WebPage> webPages) {
+    public I addPages(Collection<WebPage> webPages) {
         for (WebPage webPage : webPages) {
             addPage(webPage);
         }
-        return this;
+        return getThis();
     }
 
     /**
@@ -78,11 +82,17 @@ public abstract class AbstractGenerator {
      * @param mapper Mapper function which transforms some object to WebPage
      * @return this
      */
-    public <T> AbstractGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
+    public <T> I addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
         for (T element : webPages) {
             addPage(mapper.apply(element));
         }
-        return this;
+        return getThis();
     }
+
+    @SuppressWarnings("unchecked")
+    I getThis() {
+        return (I)this;
+    }
+
 
 }

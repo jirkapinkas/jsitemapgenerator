@@ -5,9 +5,8 @@ import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Function;
 
-public class RssGenerator extends AbstractGenerator {
+public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     private static final String DATE_PATTERN = "EEE, d MMM yyyy HH:mm:ss";
 
@@ -115,7 +114,7 @@ public class RssGenerator extends AbstractGenerator {
         builder.append("<link>" + baseUrl + "</link>" + "\n");
         builder.append("<description>" + webDescription + "</description>" + "\n");
 
-        List<WebPage> webPages = new ArrayList<>(urls.values());
+        List<WebPage> webPages = new ArrayList<WebPage>(urls.values());
 
         webPages.sort(Comparator.comparing(WebPage::getLastMod).reversed());
 
@@ -153,47 +152,5 @@ public class RssGenerator extends AbstractGenerator {
         builder.append("</rss>" + "\n");
         return builder.toString();
     }
-
-    /**
-     * Add single page to sitemap
-     *
-     * @param webPage single page
-     * @return this
-     */
-    @Override
-    public RssGenerator addPage(WebPage webPage) {
-        urls.put(baseUrl + webPage.getName(), webPage);
-        return this;
-    }
-
-    /**
-     * Add collection of pages to sitemap
-     *
-     * @param webPages Collection of pages
-     * @return this
-     */
-    @Override
-    public RssGenerator addPages(Collection<WebPage> webPages) {
-        for (WebPage webPage : webPages) {
-            addPage(webPage);
-        }
-        return this;
-    }
-
-    /**
-     * Add collection of pages to sitemap
-     *
-     * @param webPages Collection of pages
-     * @param mapper Mapper function which transforms some object to WebPage
-     * @return this
-     */
-    @Override
-    public <T> RssGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
-        for (T element : webPages) {
-            addPage(mapper.apply(element));
-        }
-        return this;
-    }
-
 
 }

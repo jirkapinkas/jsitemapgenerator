@@ -7,11 +7,9 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.function.Function;
 
-public class SitemapIndexGenerator extends AbstractSitemapGenerator {
+public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapIndexGenerator> {
 
 	/**
 	 * @deprecated use {@link #of(String)}
@@ -61,47 +59,6 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator {
 		}
 		out.append("</sitemap>\n");
 		return out.toString();
-	}
-
-	/**
-	 * Add single page to sitemap
-	 *
-	 * @param webPage single page
-	 * @return this
-	 */
-	@Override
-	public SitemapIndexGenerator addPage(WebPage webPage) {
-		urls.put(baseUrl + webPage.getName(), webPage);
-		return this;
-	}
-
-	/**
-	 * Add collection of pages to sitemap
-	 *
-	 * @param webPages Collection of pages
-	 * @return this
-	 */
-	@Override
-	public SitemapIndexGenerator addPages(Collection<WebPage> webPages) {
-		for (WebPage webPage : webPages) {
-			addPage(webPage);
-		}
-		return this;
-	}
-
-	/**
-	 * Add collection of pages to sitemap
-	 *
-	 * @param webPages Collection of pages
-	 * @param mapper Mapper function which transforms some object to WebPage
-	 * @return this
-	 */
-	@Override
-	public <T> SitemapIndexGenerator addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
-		for (T element : webPages) {
-			addPage(mapper.apply(element));
-		}
-		return this;
 	}
 
 
