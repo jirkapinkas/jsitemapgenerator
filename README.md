@@ -82,7 +82,7 @@ String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
 
 ### How to create RSS channel:
 
-... because RSS ISN'T sitemap :-), but it's basically just a list of links (like sitemap) and if you need sitemap, then probably you also need RSS
+... RSS ISN'T sitemap :-), but it's basically just a list of links (like sitemap) and if you need sitemap, then probably you also need RSS
 
 ```java
 String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best Java Blogs")
@@ -93,6 +93,17 @@ String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best
         .name("page-name")
         .build())
     .constructRss();
+```
+
+### How to create robots.txt:
+
+... robots.txt ISN'T sitemap :-), but inside you reference your sitemap and if you need sitemap, then you probably need robots.txt as well
+
+```java
+return RobotsTxtGenerator.of(baseUrl)
+        .addSitemap("sitemap.xml")
+        .addRule(RobotsRule.builder().userAgentAll().allowAll().build())
+        .constructRobotsTxtString();
 ```
 
 ## My other projects:
