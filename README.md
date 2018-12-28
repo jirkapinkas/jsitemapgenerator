@@ -23,54 +23,75 @@ If you want to use "ping google / bing" functionality, also add this library to 
         <version>3.12.0</version>
     </dependency>
 
-### How to create a sitemap:
+### Typical usage (web sitemap):
 
-    // create web sitemap for web http://www.javavids.com
-    SitemapGenerator sg = SitemapGenerator.of("http://www.javavids.com");
-    // add some URLs
-    sg.addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-      .addPage(WebPage.builder().name("latest.php").build())
-      .addPage(WebPage.builder().name("contact.php").build());
-    // generate sitemap and save it to file /var/www/sitemap.xml
-    File file = new File("/var/www/sitemap.xml");
-    sg.constructAndSaveSitemap(file);
-    // inform Google that this sitemap has changed
-    sg.pingGoogle();
+```java
+String sitemap = SitemapGenerator.of("https://example.com")
+    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+    .addPage(WebPage.builder().name("foo.html").build())
+    .addPage(WebPage.builder().name("bar.html").build())
+    .constructSitemapString();
+```
 
-### How to create a sitemap populated with list of pages:
+or sitemap in gzip format:
 
-    File file = new File("/var/www/sitemap.xml");
-    List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
-    // create web sitemap for web http://www.javavids.com
-    SitemapGenerator.of("http://www.javavids.com")
-        .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-        .addPages(urls, page -> WebPage.builder().name("dir/" + page).priorityMax().changeFreqNever().lastModNow().build())
-        .constructAndSaveSitemap(file);
+```java
+byte[] sitemap = SitemapGenerator.of("https://example.com")
+    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+    .addPage(WebPage.builder().name("foo.html").build())
+    .addPage(WebPage.builder().name("bar.html").build())
+    .constructSitemapGzip();
+```
 
-### How to create a sitemap index:
+or to store it to file & ping google:
 
-    SitemapIndexGenerator sitemapIndexGenerator = SitemapIndexGenerator.of("http://javalibs.com");
-    sitemapIndexGenerator.addPage(WebPage.builder()
-        .name("sitemap-plugins.xml")
-        .build()
-    );
-    sitemapIndexGenerator.addPage(WebPage.builder()
-        .name("sitemap-archetypes.xml")
-        .build()
-    );
-    System.out.println(sitemapIndexGenerator.constructSitemapString());
+```java
+// create web sitemap for web http://www.javavids.com
+SitemapGenerator sg = SitemapGenerator.of("https://example.com");
+// add some URLs
+sg.addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+    .addPage(WebPage.builder().name("foo.html").build())
+    .addPage(WebPage.builder().name("bar.html").build());
+// generate sitemap and save it to file /var/www/sitemap.xml
+File file = new File("/var/www/sitemap.xml");
+sg.constructAndSaveSitemap(file);
+// inform Google that this sitemap has changed
+sg.pingGoogle(); // this requires okhttp in classpath!!!
+```
+
+or with list of pages:
+
+```java
+File file = new File("/var/www/sitemap.xml");
+List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
+// create web sitemap for web http://www.javavids.com
+SitemapGenerator.of("http://example.com")
+    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
+    .addPages(urls, page -> WebPage.builder().dir("dirName").name(page).priorityMax().changeFreqNever().lastModNow().build())
+    .constructAndSaveSitemap(file);
+```
+
+### How to create sitemap index:
+
+```java
+String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
+    .addPage(WebPage.builder().name("sitemap-plugins.xml").build())
+    .addPage(WebPage.builder().name("sitemap-archetypes.xml").build())
+    .constructSitemapString();
+```
 
 ### How to create RSS channel:
 
-    RssGenerator rssGenerator = RssGenerator.of("http://www.topjavablogs", "Top Java Blogs", "Best Java Blogs");
-    rssGenerator.addPage(WebPage.rssBuilder()
+```java
+String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best Java Blogs")
+    .addPage(WebPage.rssBuilder()
         .pubDate(new Date())
         .title("News Title")
         .description("News Description")
         .name("page-name")
-        .build()
-    );
-    System.out.println(rssGenerator.constructRss());
+        .build())
+    .constructRss();
+```
 
 ## My other projects:
 
