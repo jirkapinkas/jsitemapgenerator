@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Abstract Generator
@@ -77,6 +78,19 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     /**
      * Add collection of pages to sitemap
      *
+     * @param webPagesSupplier Collection of pages supplier
+     * @return this
+     */
+    public I addPages(Supplier<Collection<WebPage>> webPagesSupplier) {
+        for (WebPage webPage : webPagesSupplier.get()) {
+            addPage(webPage);
+        }
+        return getThis();
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
      * @param <T> This is the type parameter
      * @param webPages Collection of pages
      * @param mapper Mapper function which transforms some object to WebPage
@@ -84,6 +98,21 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      */
     public <T> I addPages(Collection<T> webPages, Function<T, WebPage> mapper) {
         for (T element : webPages) {
+            addPage(mapper.apply(element));
+        }
+        return getThis();
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param <T> This is the type parameter
+     * @param webPagesSupplier Collection of pages supplier
+     * @param mapper Mapper function which transforms some object to WebPage
+     * @return this
+     */
+    public <T> I addPages(Supplier<Collection<T>> webPagesSupplier, Function<T, WebPage> mapper) {
+        for (T element : webPagesSupplier.get()) {
             addPage(mapper.apply(element));
         }
         return getThis();
