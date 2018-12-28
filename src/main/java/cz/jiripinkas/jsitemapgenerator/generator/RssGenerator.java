@@ -62,6 +62,17 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     /**
      * Helper method to create an instance of SitemapGenerator
      * @param baseUrl Base URL
+     * @param root If Base URL is root (for example http://www.javavids.com or if
+     *             it's some path like http://www.javalibs.com/blog)
+     * @return Instance of RssGenerator
+     */
+    public static RssGenerator of(String baseUrl, boolean root) {
+        return new RssGenerator(baseUrl, root, null, null);
+    }
+
+    /**
+     * Helper method to create an instance of SitemapGenerator
+     * @param baseUrl Base URL
      * @param webTitle Web title
      * @param webDescription Web description
      * @return Instance of RssGenerator
