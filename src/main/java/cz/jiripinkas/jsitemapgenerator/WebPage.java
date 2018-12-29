@@ -42,6 +42,20 @@ public class WebPage implements Comparable<WebPage> {
         return webPage;
     }
 
+    /**
+     * Method for creating WebPage only with name
+     * (this can be useful for really simple sitemaps
+     * or with combination of default settings
+     * set on SitemapGenerator)
+     * @param nameSupplier Name supplier
+     * @return WebPage instance
+     */
+    public static WebPage of(Supplier<String> nameSupplier) {
+        WebPage webPage = new WebPage();
+        webPage.setName(nameSupplier.get());
+        return webPage;
+    }
+
     public WebPage addImage(Image image) {
         if (images == null) {
             images = new ArrayList<>();

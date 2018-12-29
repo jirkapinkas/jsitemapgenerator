@@ -63,6 +63,33 @@ String sitemap = SitemapGenerator.of("https://example.com")
     .constructSitemapString();
 ```
 
+or with list of pages:
+
+```java
+List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
+String sitemap = SitemapGenerator.of("http://example.com")
+        .addPage(WebPage.builder().nameRoot().priorityMax().build())
+        .defaultDir("dirName")
+        .addPages(pages, page -> WebPage.of(page))
+        .constructSitemapString();
+```
+
+or list of pages in complex data type:
+
+```java
+class News {
+    private String name;
+    public News(String name) { this.name = name; }
+    public String getName() { return name; }
+}
+List<News> newsList = Arrays.asList(new News("a"), new News("b"), new News("c"));
+String sitemap = SitemapGenerator.of("http://example.com")
+        .addPage(WebPage.builder().nameRoot().priorityMax().build())
+        .defaultDir("news")
+        .addPages(newsList, news -> WebPage.of(news::getName))
+        .constructSitemapString();
+```
+
 or to store it to file & ping google:
 
 ```java
@@ -77,18 +104,6 @@ File file = new File("/var/www/sitemap.xml");
 sg.constructAndSaveSitemap(file);
 // inform Google that this sitemap has changed
 sg.pingGoogle(); // this requires okhttp in classpath!!!
-```
-
-or with list of pages:
-
-```java
-File file = new File("/var/www/sitemap.xml");
-List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
-// create web sitemap for web http://www.javavids.com
-SitemapGenerator.of("http://example.com")
-    .addPage(WebPage.builder().nameRoot().priorityMax().changeFreqNever().lastModNow().build())
-    .addPages(urls, page -> WebPage.builder().dir("dirName").name(page).priorityMax().changeFreqNever().lastModNow().build())
-    .constructAndSaveSitemap(file);
 ```
 
 ### How to create sitemap index:
