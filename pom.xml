@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 	<name>Java sitemap generator</name>
 	<description>This library generates a web sitemap and can ping Google that it has changed. This project has been inspired by sitemapgen4j, but is much more focused on traditional web sitemap and ease of use.</description>
-	<url>http://jsitemapgenerator.jiripinkas.cz/</url>
+	<url>https://github.com/jirkapinkas/jsitemapgenerator</url>
 	<licenses>
 		<license>
 			<name>FreeBSD License</name>
