@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.8</version>
+      <version>3.9</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -20,16 +20,16 @@ If you want to use "ping google / bing" functionality, also add this library to 
     <dependency>
         <groupId>com.squareup.okhttp3</groupId>
         <artifactId>okhttp</artifactId>
-        <version>3.12.0</version>
+        <version>3.12.1</version> <!-- latest version should be fine -->
     </dependency>
 
 ### Typical usage (web sitemap):
 
 ```java
 String sitemap = SitemapGenerator.of("https://example.com")
-    .addPage(WebPage.builder().maxPriorityRoot().build())
     .addPage(WebPage.of("foo.html")) // simplest way of creating web page
     .addPage(WebPage.builder().name("bar.html").build()) // builder is more complex
+    .addPage(WebPage.builder().maxPriorityRoot().build()) // builder has lots of useful methods
     .constructSitemapString();
 ```
 
@@ -125,7 +125,7 @@ String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best
         .pubDate(new Date())
         .title("News Title")
         .description("News Description")
-        .name("page-name")
+        .link("page-name")
         .build())
     .constructRss();
 ```
