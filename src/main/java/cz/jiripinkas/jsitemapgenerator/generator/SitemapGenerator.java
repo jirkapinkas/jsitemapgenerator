@@ -202,7 +202,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default prefix dir to name for all following WebPages. Final name will be "dirName/name"
+     * Sets default prefix dir to name for all subsequent WebPages. Final name will be "dirName/name"
      * @param dirName Dir name
      * @return this
      */
@@ -212,7 +212,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default prefix dirs to name for all following WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+     * Sets default prefix dirs to name for all subsequent WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
      * @param dirNames Dir names
      * @return this
      */
@@ -231,7 +231,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default suffix extension for all following WebPages. Final name will be "name.extension"
+     * Sets default suffix extension for all subsequent WebPages. Final name will be "name.extension"
      * @param extension Extension
      * @return this
      */
@@ -250,7 +250,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default priority for all following WebPages to maximum (1.0)
+     * Sets default priority for all subsequent WebPages to maximum (1.0)
      *
      * @return this
      */
@@ -260,7 +260,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default priority for all following WebPages
+     * Sets default priority for all subsequent WebPages
      * @param priority Default priority
      * @return this
      */
@@ -282,7 +282,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq for all following WebPages
+     * Sets default changeFreq for all subsequent WebPages
      *
      * @param changeFreq ChangeFreq
      * @return this
@@ -293,7 +293,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to ALWAYS for all following WebPages
+     * Sets default changeFreq to ALWAYS for all subsequent WebPages
      *
      * @return this
      */
@@ -303,7 +303,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to HOURLY for all following WebPages
+     * Sets default changeFreq to HOURLY for all subsequent WebPages
      *
      * @return this
      */
@@ -313,7 +313,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to DAILY for all following WebPages
+     * Sets default changeFreq to DAILY for all subsequent WebPages
      *
      * @return this
      */
@@ -323,7 +323,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to WEEKLY for all following WebPages
+     * Sets default changeFreq to WEEKLY for all subsequent WebPages
      *
      * @return this
      */
@@ -333,7 +333,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to MONTHLY for all following WebPages
+     * Sets default changeFreq to MONTHLY for all subsequent WebPages
      *
      * @return this
      */
@@ -343,7 +343,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to YEARLY for all following WebPages
+     * Sets default changeFreq to YEARLY for all subsequent WebPages
      *
      * @return this
      */
@@ -353,7 +353,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * Sets default changeFreq to NEVER for all following WebPages
+     * Sets default changeFreq to NEVER for all subsequent WebPages
      *
      * @return this
      */
