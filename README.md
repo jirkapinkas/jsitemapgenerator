@@ -43,7 +43,7 @@ byte[] sitemap = SitemapGenerator.of("https://example.com")
     .constructSitemapGzip();
 ```
 
-you can set default settings (for the following WebPages):
+you can set default settings (for the subsequent WebPages):
 
 ```java
 String sitemap = SitemapGenerator.of("https://example.com")
