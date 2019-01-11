@@ -107,14 +107,13 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	/**
 	 * Ping Google that sitemap has changed. Will call this URL:
-	 * http://www.google
-	 * .com/webmasters/tools/ping?sitemap=URL_Encoded_sitemapUrl
+	 * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
 	 * 
 	 * @param sitemapUrl
 	 *            sitemap url
 	 */
 	public void pingGoogle(String sitemapUrl) {
-		ping("http://www.google.com/webmasters/tools/ping?sitemap=", sitemapUrl);
+		ping("https://www.google.com/ping?sitemap=", sitemapUrl, "Google");
 	}
 
 	/**
@@ -126,19 +125,19 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * 
 	 */
 	public void pingBing(String sitemapUrl) {
-		ping("http://www.bing.com/ping?sitemap=", sitemapUrl);
+		ping("http://www.bing.com/ping?sitemap=", sitemapUrl, "Bing");
 	}
 
-	private void ping(String resourceUrl, String sitemapUrl) {
+	private void ping(String resourceUrl, String sitemapUrl, String serviceName) {
 		try {
 			String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
 			// ping Bing
 			int returnCode = HttpClientUtil.get(pingUrl);
 			if (returnCode != 200) {
-				throw new GWTException("Google could not be informed about new sitemap!");
+				throw new GWTException(serviceName + " could not be informed about new sitemap!");
 			}
 		} catch (Exception ex) {
-			throw new GWTException("Google could not be informed about new sitemap!");
+			throw new GWTException(serviceName + " could not be informed about new sitemap!");
 		}
 	}
 
