@@ -3,6 +3,7 @@ package cz.jiripinkas.jsitemapgenerator;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
 
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
@@ -81,7 +82,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	/**
 	 * Construct and save sitemap to output file
-	 * 
+	 *
 	 * @param file
 	 *            Output file
 	 * @throws IOException
@@ -90,6 +91,18 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	public void constructAndSaveSitemap(File file) throws IOException {
 		String[] sitemap = constructSitemap();
 		saveSitemap(file, sitemap);
+	}
+
+	/**
+	 * Construct and save sitemap to output file
+	 *
+	 * @param path
+	 *            Output file
+	 * @throws IOException
+	 *             when error
+	 */
+	public void constructAndSaveSitemap(Path path) throws IOException {
+		constructAndSaveSitemap(path.toFile());
 	}
 
 	/**
