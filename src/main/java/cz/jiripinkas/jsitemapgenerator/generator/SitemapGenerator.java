@@ -117,7 +117,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         }
     }
 
-    String constructImage(Image image) {
+    protected String constructImage(Image image) {
         StringBuilder out = new StringBuilder();
         out.append("<image:image>\n");
         if (image.getLoc() != null) {
@@ -149,7 +149,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         return out.toString();
     }
 
-    String constructUrl(WebPage webPage) {
+    protected String constructUrl(WebPage webPage) {
         StringBuilder out = new StringBuilder();
         out.append("<loc>");
         try {

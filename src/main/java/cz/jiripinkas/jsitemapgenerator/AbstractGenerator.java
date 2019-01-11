@@ -129,7 +129,7 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     }
 
     @SuppressWarnings("unchecked")
-    I getThis() {
+    protected I getThis() {
         return (I)this;
     }
 

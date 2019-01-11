@@ -38,7 +38,7 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		return out.toArray(new String[] {});
 	}
 	
-	String constructUrl(WebPage webPage) {
+	protected String constructUrl(WebPage webPage) {
 		StringBuilder out = new StringBuilder();
 		out.append("<sitemap>\n");
 		out.append("<loc>");
