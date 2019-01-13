@@ -17,8 +17,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         IMAGE, XHTML
     }
 
-    private StringBuilder additionalNamespacesStringBuilder = new StringBuilder();
-
     private ChangeFreq defaultChangeFreq;
 
     private Double defaultPriority;
@@ -44,14 +42,22 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     @Deprecated
     public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         this(baseUrl);
+    }
 
-        List<AdditionalNamespace> additionalNamespaceList = Arrays.asList(additionalNamespaces);
+    /**
+     * Construct additional namespaces string
+     * @param additionalNamespaceList
+     * @return
+     */
+    private String constructAdditionalNamespacesString(List<AdditionalNamespace> additionalNamespaceList) {
+        String result = "";
         if (additionalNamespaceList.contains(AdditionalNamespace.IMAGE)) {
-            additionalNamespacesStringBuilder.append(" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" ");
+            result += " xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" ";
         }
         if (additionalNamespaceList.contains(AdditionalNamespace.XHTML)) {
-            additionalNamespacesStringBuilder.append(" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" ");
+            result += " xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" ";
         }
+        return result;
     }
 
     /**
@@ -69,6 +75,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
      * @param additionalNamespaces Additional parameters
      * @return Instance of SitemapGenerator
      */
+    @Deprecated
     public static SitemapGenerator of(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         return new SitemapGenerator(baseUrl, additionalNamespaces);
     }
@@ -82,9 +89,22 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
      */
     @Override
     public String[] constructSitemap() {
+        // auto-detect additional namespaces
+        List<AdditionalNamespace> additionalNamespaces = new ArrayList<>();
+        boolean hasImages = urls.values().stream()
+                .anyMatch(webPage -> webPage.getImages() != null);
+        if(hasImages) {
+            additionalNamespaces.add(AdditionalNamespace.IMAGE);
+        }
+        boolean hasAlternateNames = urls.values().stream()
+                .anyMatch(webPage -> webPage.getAlternateNames() != null);
+        if(hasAlternateNames) {
+            additionalNamespaces.add(AdditionalNamespace.XHTML);
+        }
+
         ArrayList<String> out = new ArrayList<>();
         out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        out.add("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" + additionalNamespacesStringBuilder.toString() + ">\n");
+        out.add("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" + constructAdditionalNamespacesString(additionalNamespaces) + ">\n");
         ArrayList<WebPage> values = new ArrayList<>(urls.values());
         Collections.sort(values);
         for (WebPage webPage : values) {

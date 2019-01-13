@@ -2,7 +2,6 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator.AdditionalNamespace;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,9 +11,10 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SitemapGeneratorTest {
 
@@ -38,14 +38,21 @@ public class SitemapGeneratorTest {
 
 	@Test
 	public void testConstructSitemapWithImagesHeader() {
-		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
+		sitemapGenerator.addPage(WebPage.builder().images(new ArrayList<>()).build());
 		String sitemapString = sitemapGenerator.constructSitemapString();
-		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n</urlset>", sitemapString);
+		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n" +
+				"<url>\n" +
+				"<loc>http://www.javavids.com/</loc>\n" +
+				"</url>\n" +
+				"</urlset>";
+		Assert.assertEquals(expected, sitemapString);
 	}
 	
 	@Test
 	public void testConstructSitemapWithImages() {
-		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com", new AdditionalNamespace[] { AdditionalNamespace.IMAGE });
+		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
@@ -67,7 +74,8 @@ public class SitemapGeneratorTest {
 
 	@Test
 	public void testConstructAlternateUrls() {
-		String url = sitemapGenerator.constructUrl(WebPage.builder()
+		String url = SitemapGenerator.of("http://www.javavids.com")
+				.constructUrl(WebPage.builder()
 				.name("latest.php")
 				.alternateName("de", "latest-de.php")
 				.alternateName("es", "latest-es.php")
@@ -78,7 +86,7 @@ public class SitemapGeneratorTest {
 
 	@Test
 	public void testConstructAlternateUrls2() {
-		String url = sitemapGenerator.constructUrl(WebPage.builder()
+		String url = SitemapGenerator.of("http://www.javavids.com").constructUrl(WebPage.builder()
 				.name("latest.php")
 				.alternateName("de", () -> "latest-de.php")
 				.alternateName("es", () -> "latest-es.php")
