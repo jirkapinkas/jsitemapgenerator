@@ -51,10 +51,10 @@ String sitemap = SitemapGenerator.of("https://example.com")
     .defaultExtension("html")
     .defaultDir("dir1")
     .addPage(WebPage.of("foo")) // URL will be: "dir1/foo.html"
-    .addPage(WebPage.of("bar"))) // URL will be: "dir1/bar.html"
+    .addPage(WebPage.of("bar")) // URL will be: "dir1/bar.html"
     .defaultDir("dir2")
     .addPage(WebPage.of("hello")) // URL will be: "dir2/hello.html"
-    .addPage(WebPage.of("yello"))) // URL will be: "dir2/yello.html"
+    .addPage(WebPage.of("yello")) // URL will be: "dir2/yello.html"
     // btw. specifying dir and / or extension on WebPage overrides default settings
     .addPage(WebPage.builder().dir("dir3").extension(null).name("test").build()) // "dir3/test"
     .resetDefaultDir() // resets default dir
@@ -99,9 +99,8 @@ SitemapGenerator sg = SitemapGenerator.of("https://example.com");
 sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
   .addPage(WebPage.of("foo.html"))
   .addPage(WebPage.of("bar.html"));
-// generate sitemap and save it to file /var/www/sitemap.xml
-File file = new File("/var/www/sitemap.xml");
-sg.constructAndSaveSitemap(file);
+// generate sitemap and save it to file ./sitemap.xml
+sg.constructAndSaveSitemap(Paths.get("sitemap.xml"));
 // inform Google that this sitemap has changed
 sg.pingGoogle(); // this requires okhttp in classpath!!!
 ```
@@ -122,7 +121,7 @@ String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
 ```java
 String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best Java Blogs")
     .addPage(WebPage.rssBuilder()
-        .pubDate(new Date())
+        .pubDate(LocalDateTime.now())
         .title("News Title")
         .description("News Description")
         .link("page-name")
