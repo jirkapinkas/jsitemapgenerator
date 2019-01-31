@@ -30,7 +30,7 @@ String sitemap = SitemapGenerator.of("https://example.com")
     .addPage(WebPage.of("foo.html")) // simplest way of creating web page
     .addPage(WebPage.builder().name("bar.html").build()) // builder is more complex
     .addPage(WebPage.builder().maxPriorityRoot().build()) // builder has lots of useful methods
-    .constructSitemapString();
+    .toString();
 ```
 
 or sitemap in gzip format:
@@ -40,7 +40,7 @@ byte[] sitemap = SitemapGenerator.of("https://example.com")
     .addPage(WebPage.builder().maxPriorityRoot().build())
     .addPage(WebPage.of("foo.html"))
     .addPage(WebPage.of("bar.html"))
-    .constructSitemapGzip();
+    .toGzipByteArray();
 ```
 
 you can set default settings (for the subsequent WebPages):
@@ -60,7 +60,7 @@ String sitemap = SitemapGenerator.of("https://example.com")
     .resetDefaultDir() // resets default dir
     .resetDefaultExtension() // resets default extension
     .addPage(WebPage.of("mypage")) // URL will be: "mypage"
-    .constructSitemapString();
+    .toString();
 ```
 
 or with list of pages:
@@ -71,7 +71,7 @@ String sitemap = SitemapGenerator.of("http://example.com")
         .addPage(WebPage.builder().nameRoot().priorityMax().build())
         .defaultDir("dirName")
         .addPages(pages, page -> WebPage.of(page))
-        .constructSitemapString();
+        .toString();
 ```
 
 or list of pages in complex data type:
@@ -87,7 +87,7 @@ String sitemap = SitemapGenerator.of("http://example.com")
         .addPage(WebPage.builder().nameRoot().priorityMax().build())
         .defaultDir("news")
         .addPages(newsList, news -> WebPage.of(news::getName))
-        .constructSitemapString();
+        .toString();
 ```
 
 or to store it to file & ping google:
@@ -111,7 +111,7 @@ sg.pingGoogle(); // this requires okhttp in classpath!!!
 String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
     .addPage(WebPage.of("sitemap-plugins.xml"))
     .addPage(WebPage.of("sitemap-archetypes.xml"))
-    .constructSitemapString();
+    .toString();
 ```
 
 ### How to create RSS channel:
@@ -126,7 +126,7 @@ String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best
         .description("News Description")
         .link("page-name")
         .build())
-    .constructRss();
+    .toString();
 ```
 
 ### How to create robots.txt:
@@ -137,7 +137,7 @@ String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best
 String robotsTxt = RobotsTxtGenerator.of("https://example.com")
         .addSitemap("sitemap.xml")
         .addRule(RobotsRule.builder().userAgentAll().allowAll().build())
-        .constructRobotsTxtString();
+        .toString();
 ```
 
 ## My other projects:

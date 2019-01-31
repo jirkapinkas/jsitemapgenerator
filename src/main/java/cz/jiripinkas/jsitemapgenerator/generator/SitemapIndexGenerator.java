@@ -24,8 +24,22 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		return new SitemapIndexGenerator(baseUrl);
 	}
 
-	@Override
+	/**
+	 * Construct sitemap to String array
+	 * @return String array
+	 * @deprecated Use {@link #toStringArray()} instead
+	 */
+	@Deprecated
 	public String[] constructSitemap() {
+		return toStringArray();
+	}
+
+	/**
+	 * Construct sitemap to String array
+	 * @return String array
+	 */
+	@Override
+	public String[] toStringArray() {
 		ArrayList<String> out = new ArrayList<>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");

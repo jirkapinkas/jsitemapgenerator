@@ -86,9 +86,22 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
      * top).
      *
      * @return sitemap
+     * @deprecated Use {@link #toStringArray()} instead
+     */
+    @Deprecated
+    public String[] constructSitemap() {
+        return toStringArray();
+    }
+
+    /**
+     * Construct sitemap into array of Strings. The URLs will be ordered using
+     * priority in descending order (URLs with higher priority will be at the
+     * top).
+     *
+     * @return sitemap
      */
     @Override
-    public String[] constructSitemap() {
+    public String[] toStringArray() {
         // auto-detect additional namespaces
         List<AdditionalNamespace> additionalNamespaces = new ArrayList<>();
         boolean hasImages = urls.values().stream()

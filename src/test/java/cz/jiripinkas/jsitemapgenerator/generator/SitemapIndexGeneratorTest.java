@@ -31,7 +31,7 @@ public class SitemapIndexGeneratorTest {
 
 	@Test
 	public void testConstructSitemapIndex() throws SAXException, IOException {
-		String sitemapIndex = sitemapIndexGenerator.constructSitemapString();
+		String sitemapIndex = sitemapIndexGenerator.toString();
 		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemapIndex.getBytes("UTF-8"));
 		TestUtil.testSitemapXsd(sitemapXml, new File("siteindex.xsd"));
 	}
@@ -39,7 +39,7 @@ public class SitemapIndexGeneratorTest {
 	@Test
 	public void testConstructAndSaveSitemap() throws SAXException, IOException {
 		File tmpFile = File.createTempFile("test", "sitemap");
-		sitemapIndexGenerator.constructAndSaveSitemap(tmpFile);
+		sitemapIndexGenerator.toFile(tmpFile);
 		try {
 			TestUtil.testSitemapXsdFile(tmpFile, new File("siteindex.xsd"));
 		} finally {

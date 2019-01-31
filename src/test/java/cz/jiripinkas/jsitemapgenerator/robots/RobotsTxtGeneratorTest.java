@@ -11,7 +11,7 @@ public class RobotsTxtGeneratorTest {
         String robotsTxtString = RobotsTxtGenerator.of("https://example.com")
                 .addSitemap("sitemap.xml")
                 .addRule(RobotsRule.builder().userAgentAll().allowAll().build())
-                .constructRobotsTxtString();
+                .toString();
         String expected = "Sitemap: https://example.com/sitemap.xml\n" +
                 "User-agent: *\n" +
                 "Allow: /";

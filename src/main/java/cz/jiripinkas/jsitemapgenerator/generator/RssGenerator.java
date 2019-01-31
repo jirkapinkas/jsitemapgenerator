@@ -115,17 +115,35 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
      * lastMod in descending order (latest is first)
      *
      * @return Constructed RSS
+     * @deprecated Use {@link #toString()} instead
      */
+    @Deprecated
     public String constructRss() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n");
-        builder.append("<rss version=\"2.0\">" + "\n");
-        builder.append("<channel>" + "\n");
-        builder.append("<title>" + webTitle + "</title>" + "\n");
-        builder.append("<link>" + baseUrl + "</link>" + "\n");
-        builder.append("<description>" + webDescription + "</description>" + "\n");
+        return this.toString();
+    }
 
-        List<WebPage> webPages = new ArrayList<WebPage>(urls.values());
+    /**
+     * This will construct RSS from web pages. Web pages are sorted using
+     * lastMod in descending order (latest is first)
+     *
+     * @return Constructed RSS
+     */
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" + "\n")
+                .append("<rss version=\"2.0\">" + "\n")
+                .append("<channel>" + "\n")
+                .append("<title>")
+                .append(webTitle)
+                .append("</title>" + "\n")
+                .append("<link>")
+                .append(baseUrl)
+                .append("</link>" + "\n")
+                .append("<description>")
+                .append(webDescription)
+                .append("</description>" + "\n");
+
+        List<WebPage> webPages = new ArrayList<>(urls.values());
 
         webPages.sort(Comparator.comparing(WebPage::getLastMod).reversed());
 
@@ -134,33 +152,39 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
             latestDate = webPages.get(0).getLastMod();
         }
 
-        builder.append("<pubDate>" + new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate) + " +0000</pubDate>" + "\n");
-        builder.append("<lastBuildDate>" + new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate) + " +0000</lastBuildDate>" + "\n");
-        builder.append("<ttl>1800</ttl>" + "\n");
+        builder.append("<pubDate>")
+                .append(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate))
+                .append(" +0000</pubDate>" + "\n")
+                .append("<lastBuildDate>")
+                .append(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(latestDate))
+                .append(" +0000</lastBuildDate>" + "\n")
+                .append("<ttl>1800</ttl>" + "\n");
 
         for (WebPage webPage : webPages) {
-            builder.append("<item>" + "\n");
+            builder.append("<item>" + "\n")
 
-            builder.append("<title>");
-            builder.append(webPage.constructName());
-            builder.append("</title>" + "\n");
+                    .append("<title>")
+                    .append(webPage.constructName())
+                    .append("</title>" + "\n")
 
-            builder.append("<description>");
-            builder.append(webPage.getShortDescription());
-            builder.append("</description>" + "\n");
+                    .append("<description>")
+                    .append(webPage.getShortDescription())
+                    .append("</description>" + "\n")
 
-            builder.append("<link>");
-            builder.append(baseUrl + webPage.getShortName());
-            builder.append("</link>" + "\n");
+                    .append("<link>")
+                    .append(baseUrl)
+                    .append(webPage.getShortName())
+                    .append("</link>" + "\n")
 
-            builder.append("<pubDate>");
-            builder.append(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(webPage.getLastMod()) + " +0000");
-            builder.append("</pubDate>" + "\n");
+                    .append("<pubDate>")
+                    .append(new SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH).format(webPage.getLastMod()))
+                    .append(" +0000")
+                    .append("</pubDate>" + "\n")
 
-            builder.append("</item>" + "\n");
+                    .append("</item>" + "\n");
         }
-        builder.append("</channel>" + "\n");
-        builder.append("</rss>" + "\n");
+        builder.append("</channel>" + "\n")
+                .append("</rss>" + "\n");
         return builder.toString();
     }
 

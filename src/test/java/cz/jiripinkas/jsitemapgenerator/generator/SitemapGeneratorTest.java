@@ -40,7 +40,7 @@ public class SitemapGeneratorTest {
 	public void testConstructSitemapWithImagesHeader() {
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().images(new ArrayList<>()).build());
-		String sitemapString = sitemapGenerator.constructSitemapString();
+		String sitemapString = sitemapGenerator.toString();
 		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n" +
 				"<url>\n" +
@@ -56,7 +56,7 @@ public class SitemapGeneratorTest {
 		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
-		String sitemapString = sitemapGenerator.constructSitemapString();
+		String sitemapString = sitemapGenerator.toString();
 		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>", sitemapString);
 	}
 
@@ -97,7 +97,7 @@ public class SitemapGeneratorTest {
 
 	@Test
 	public void testConstructSitemap() throws Exception {
-		String sitemap = sitemapGenerator.constructSitemapString();
+		String sitemap = sitemapGenerator.toString();
 		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemap.getBytes(StandardCharsets.UTF_8));
 		TestUtil.testSitemapXsd(sitemapXml, new File("sitemap.xsd"));
 	}
@@ -105,7 +105,7 @@ public class SitemapGeneratorTest {
 	@Test
 	public void testSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
-		sitemapGenerator.saveSitemap(tmpFile, sitemapGenerator.constructSitemap());
+		sitemapGenerator.saveSitemap(tmpFile, sitemapGenerator.toStringArray());
 		try {
 			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
@@ -116,7 +116,7 @@ public class SitemapGeneratorTest {
 	@Test
 	public void testConstructAndSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
-		sitemapGenerator.constructAndSaveSitemap(tmpFile);
+		sitemapGenerator.toFile(tmpFile);
 		try {
 			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
@@ -136,8 +136,7 @@ public class SitemapGeneratorTest {
 				.addPage(WebPage.of("x"))
 				.addPage(WebPage.of("y"))
 				.addPage(WebPage.builder().dir("dir3").name("z").changeFreqNever().build())
-				.constructSitemapString();
-		System.out.println(sitemap);
+				.toString();
 		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
 				"<url>\n" +

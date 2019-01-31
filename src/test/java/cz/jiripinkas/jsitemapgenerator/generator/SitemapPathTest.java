@@ -33,7 +33,7 @@ public class SitemapPathTest {
         sitemapGenerator.addPage(WebPage.builder().name("basepath/latest.php").build());
         sitemapGenerator.addPage(WebPage.builder().name("/basepath/contact.php").build());
 
-        String sitemap = sitemapGenerator.constructSitemapString();
+        String sitemap = sitemapGenerator.toString();
         final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
                 + "<url>\n"
@@ -73,7 +73,7 @@ public class SitemapPathTest {
         sitemapGenerator.addPage(WebPage.builder().name("x2").build());
         sitemapGenerator.addPage(WebPage.builder().name("a2").build());
 
-        String sitemap = sitemapGenerator.constructSitemapString();
+        String sitemap = sitemapGenerator.toString();
         final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
                 "<url>\n" +
@@ -109,7 +109,7 @@ public class SitemapPathTest {
                 .name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")
                 .build());
 
-        String sitemap = sitemapGenerator.constructSitemapString();
+        String sitemap = sitemapGenerator.toString();
         String expectedSitemap =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +

@@ -28,7 +28,7 @@ public class RssGeneratorTest {
     @Test
     public void testConstructRssEmptyItemsShouldThrowException() {
         try {
-            String rss = rssGenerator.constructRss();
+            String rss = rssGenerator.toString();
             ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes(StandardCharsets.UTF_8));
             TestUtil.testSitemapXsd(xml, new File("rss20.xsd"));
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class RssGeneratorTest {
                 .pubDate(new Date())
                 .build()
         );
-        String rss = rssGenerator.constructRss();
+        String rss = rssGenerator.toString();
         ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes(StandardCharsets.UTF_8));
         TestUtil.testSitemapXsd(xml, new File("rss20.xsd"));
     }
@@ -59,7 +59,7 @@ public class RssGeneratorTest {
                         .link("latest-news")
                         .pubDate(LocalDateTime.of(2000, 1, 1, 1, 0))
                         .build())
-                .constructRss();
+                .toString();
         String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                 "<rss version=\"2.0\">\n" +
                 "<channel>\n" +
