@@ -1,16 +1,25 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
+
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
 
-import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
-
 public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> extends AbstractGenerator <T> {
 
 	protected W3CDateFormat dateFormat = new W3CDateFormat();
+
+	private ChangeFreq defaultChangeFreq;
+
+	private Double defaultPriority;
+
+	private String defaultDir;
+
+	private String defaultExtension;
 
 	public AbstractSitemapGenerator(String baseUrl) {
 		super(baseUrl);
@@ -226,6 +235,192 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 				.replace("'", "&apos;")
 				.replace("<", "&lt;")
 				.replace(">", "&gt;");
+	}
+
+	@Override
+	protected void beforeAddPageEvent(WebPage webPage) {
+		if(defaultDir != null && webPage.getDir() == null) {
+			webPage.setName(defaultDir + "/" + webPage.constructName());
+		}
+		if(defaultExtension != null && webPage.getExtension() == null) {
+			webPage.setName(webPage.constructName() + "." + defaultExtension);
+		}
+		if(defaultPriority != null && webPage.getPriority() == null) {
+			webPage.setPriority(defaultPriority);
+		}
+		if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
+			webPage.setChangeFreq(defaultChangeFreq);
+		}
+	}
+
+	/**
+	 * Sets default prefix dir to name for all subsequent WebPages. Final name will be "dirName/name"
+	 * @param dirName Dir name
+	 * @return this
+	 */
+	public T defaultDir(String dirName) {
+		defaultDir = dirName;
+		return getThis();
+	}
+
+	/**
+	 * Sets default prefix dirs to name for all subsequent WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+	 * @param dirNames Dir names
+	 * @return this
+	 */
+	public T defaultDir(String ... dirNames) {
+		defaultDir = String.join("/", dirNames);
+		return getThis();
+	}
+
+	/**
+	 * Reset default dir value
+	 * @return this
+	 */
+	public T resetDefaultDir() {
+		defaultDir = null;
+		return getThis();
+	}
+
+	/**
+	 * Sets default suffix extension for all subsequent WebPages. Final name will be "name.extension"
+	 * @param extension Extension
+	 * @return this
+	 */
+	public T defaultExtension(String extension) {
+		defaultExtension = extension;
+		return getThis();
+	}
+
+	/**
+	 * Reset default extension value
+	 * @return this
+	 */
+	public T resetDefaultExtension() {
+		defaultExtension = null;
+		return getThis();
+	}
+
+	/**
+	 * Sets default priority for all subsequent WebPages to maximum (1.0)
+	 *
+	 * @return this
+	 */
+	public T defaultPriorityMax() {
+		defaultPriority = 1.0;
+		return getThis();
+	}
+
+	/**
+	 * Sets default priority for all subsequent WebPages
+	 * @param priority Default priority
+	 * @return this
+	 */
+	public T defaultPriority(Double priority) {
+		if (priority < 0.0 || priority > 1.0) {
+			throw new InvalidPriorityException("Priority must be between 0 and 1.0");
+		}
+		defaultPriority = priority;
+		return getThis();
+	}
+
+	/**
+	 * Reset default priority
+	 * @return this
+	 */
+	public T resetDefaultPriority() {
+		defaultPriority = null;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq for all subsequent WebPages
+	 *
+	 * @param changeFreq ChangeFreq
+	 * @return this
+	 */
+	public T defaultChangeFreq(ChangeFreq changeFreq) {
+		defaultChangeFreq = changeFreq;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to ALWAYS for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqAlways() {
+		defaultChangeFreq = ChangeFreq.ALWAYS;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to HOURLY for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqHourly() {
+		defaultChangeFreq = ChangeFreq.HOURLY;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to DAILY for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqDaily() {
+		defaultChangeFreq = ChangeFreq.DAILY;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to WEEKLY for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqWeekly() {
+		defaultChangeFreq = ChangeFreq.WEEKLY;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to MONTHLY for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqMonthly() {
+		defaultChangeFreq = ChangeFreq.MONTHLY;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to YEARLY for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqYearly() {
+		defaultChangeFreq = ChangeFreq.YEARLY;
+		return getThis();
+	}
+
+	/**
+	 * Sets default changeFreq to NEVER for all subsequent WebPages
+	 *
+	 * @return this
+	 */
+	public T defaultChangeFreqNever() {
+		defaultChangeFreq = ChangeFreq.NEVER;
+		return getThis();
+	}
+
+	/**
+	 * Reset default changeFreq
+	 * @return this
+	 */
+	public T resetDefaultChangeFreq() {
+		defaultChangeFreq = null;
+		return getThis();
 	}
 
 }

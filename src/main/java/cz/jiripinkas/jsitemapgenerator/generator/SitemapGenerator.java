@@ -1,29 +1,22 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
-import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator> {
 
     public enum AdditionalNamespace {
         IMAGE, XHTML
     }
-
-    private ChangeFreq defaultChangeFreq;
-
-    private Double defaultPriority;
-
-    private String defaultDir;
-
-    private String defaultExtension;
 
     /**
      * @deprecated Use {@link #of(String)}
@@ -134,22 +127,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         return out.toArray(new String[]{});
     }
 
-    @Override
-    protected void beforeAddPageEvent(WebPage webPage) {
-        if(defaultDir != null && webPage.getDir() == null) {
-            webPage.setName(defaultDir + "/" + webPage.constructName());
-        }
-        if(defaultExtension != null && webPage.getExtension() == null) {
-            webPage.setName(webPage.constructName() + "." + defaultExtension);
-        }
-        if(defaultPriority != null && webPage.getPriority() == null) {
-            webPage.setPriority(defaultPriority);
-        }
-        if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
-            webPage.setChangeFreq(defaultChangeFreq);
-        }
-    }
-
     protected String constructImage(Image image) {
         StringBuilder out = new StringBuilder();
         out.append("<image:image>\n");
@@ -232,176 +209,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
             }
         }
         return escapeXmlSpecialCharacters(new URL(baseUrl + name).toString());
-    }
-
-    /**
-     * Sets default prefix dir to name for all subsequent WebPages. Final name will be "dirName/name"
-     * @param dirName Dir name
-     * @return this
-     */
-    public SitemapGenerator defaultDir(String dirName) {
-        defaultDir = dirName;
-        return this;
-    }
-
-    /**
-     * Sets default prefix dirs to name for all subsequent WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
-     * @param dirNames Dir names
-     * @return this
-     */
-    public SitemapGenerator defaultDir(String ... dirNames) {
-        defaultDir = String.join("/", dirNames);
-        return this;
-    }
-
-    /**
-     * Reset default dir value
-     * @return this
-     */
-    public SitemapGenerator resetDefaultDir() {
-        defaultDir = null;
-        return this;
-    }
-
-    /**
-     * Sets default suffix extension for all subsequent WebPages. Final name will be "name.extension"
-     * @param extension Extension
-     * @return this
-     */
-    public SitemapGenerator defaultExtension(String extension) {
-        defaultExtension = extension;
-        return this;
-    }
-
-    /**
-     * Reset default extension value
-     * @return this
-     */
-    public SitemapGenerator resetDefaultExtension() {
-        defaultExtension = null;
-        return this;
-    }
-
-    /**
-     * Sets default priority for all subsequent WebPages to maximum (1.0)
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultPriorityMax() {
-        defaultPriority = 1.0;
-        return this;
-    }
-
-    /**
-     * Sets default priority for all subsequent WebPages
-     * @param priority Default priority
-     * @return this
-     */
-    public SitemapGenerator defaultPriority(Double priority) {
-        if (priority < 0.0 || priority > 1.0) {
-            throw new InvalidPriorityException("Priority must be between 0 and 1.0");
-        }
-        defaultPriority = priority;
-        return this;
-    }
-
-    /**
-     * Reset default priority
-     * @return this
-     */
-    public SitemapGenerator resetDefaultPriority() {
-        defaultPriority = null;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq for all subsequent WebPages
-     *
-     * @param changeFreq ChangeFreq
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreq(ChangeFreq changeFreq) {
-        defaultChangeFreq = changeFreq;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to ALWAYS for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqAlways() {
-        defaultChangeFreq = ChangeFreq.ALWAYS;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to HOURLY for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqHourly() {
-        defaultChangeFreq = ChangeFreq.HOURLY;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to DAILY for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqDaily() {
-        defaultChangeFreq = ChangeFreq.DAILY;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to WEEKLY for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqWeekly() {
-        defaultChangeFreq = ChangeFreq.WEEKLY;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to MONTHLY for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqMonthly() {
-        defaultChangeFreq = ChangeFreq.MONTHLY;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to YEARLY for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqYearly() {
-        defaultChangeFreq = ChangeFreq.YEARLY;
-        return this;
-    }
-
-    /**
-     * Sets default changeFreq to NEVER for all subsequent WebPages
-     *
-     * @return this
-     */
-    public SitemapGenerator defaultChangeFreqNever() {
-        defaultChangeFreq = ChangeFreq.NEVER;
-        return this;
-    }
-
-    /**
-     * Reset default changeFreq
-     * @return this
-     */
-    public SitemapGenerator resetDefaultChangeFreq() {
-        defaultChangeFreq = null;
-        return this;
     }
 
 }
