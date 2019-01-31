@@ -117,6 +117,21 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      * Add collection of pages to sitemap
      *
      * @param <T> This is the type parameter
+     * @param webPages Collection of pages
+     * @param mapper Mapper function which transforms some object to String. This will be passed to WebPage.of(name)
+     * @return this
+     */
+    public <T> I addPageNames(Collection<T> webPages, Function<T, String> mapper) {
+        for (T element : webPages) {
+            addPage(WebPage.of(mapper.apply(element)));
+        }
+        return getThis();
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param <T> This is the type parameter
      * @param webPagesSupplier Collection of pages supplier
      * @param mapper Mapper function which transforms some object to WebPage
      * @return this
@@ -124,6 +139,21 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     public <T> I addPages(Supplier<Collection<T>> webPagesSupplier, Function<T, WebPage> mapper) {
         for (T element : webPagesSupplier.get()) {
             addPage(mapper.apply(element));
+        }
+        return getThis();
+    }
+
+    /**
+     * Add collection of pages to sitemap
+     *
+     * @param <T> This is the type parameter
+     * @param webPagesSupplier Collection of pages supplier
+     * @param mapper Mapper function which transforms some object to String. This will be passed to WebPage.of(name)
+     * @return this
+     */
+    public <T> I addPageNames(Supplier<Collection<T>> webPagesSupplier, Function<T, String> mapper) {
+        for (T element : webPagesSupplier.get()) {
+            addPage(WebPage.of(mapper.apply(element)));
         }
         return getThis();
     }
