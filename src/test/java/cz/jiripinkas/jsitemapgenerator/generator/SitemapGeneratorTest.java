@@ -105,7 +105,7 @@ public class SitemapGeneratorTest {
 	@Test
 	public void testSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
-		sitemapGenerator.saveSitemap(tmpFile, sitemapGenerator.toStringArray());
+		sitemapGenerator.toFile(tmpFile);
 		try {
 			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
