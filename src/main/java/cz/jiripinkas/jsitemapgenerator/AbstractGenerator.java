@@ -134,7 +134,7 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      *                 https://www.baeldung.com/java-sneaky-throws
      *                 Usage:
      *                 SitemapIndexGenerator.of(homepage)
-     *                      .run(() -> methodToCall())
+     *                      .run(() -&gt; methodToCall())
      *                      .addPage(WebPage.of("test))
      *                      .toString()
      * @return this
@@ -155,7 +155,7 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      *                 https://www.baeldung.com/java-sneaky-throws
      *                 Usage:
      *                 SitemapIndexGenerator.of(homepage)
-     *                      .run(currentGenerator -> { ... })
+     *                      .run(currentGenerator -&gt; { ... })
      *                      .addPage(WebPage.of("test))
      *                      .toString()
      * @return this
