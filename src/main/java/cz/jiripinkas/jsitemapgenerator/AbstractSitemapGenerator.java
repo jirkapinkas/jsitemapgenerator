@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.zip.GZIPOutputStream;
 
 public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> extends AbstractGenerator <T> {
@@ -20,6 +23,8 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	private String defaultDir;
 
 	private String defaultExtension;
+
+	private Date defaultLastMod;
 
 	public AbstractSitemapGenerator(String baseUrl) {
 		super(baseUrl);
@@ -251,6 +256,9 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 		if(defaultChangeFreq != null && webPage.getChangeFreq() == null) {
 			webPage.setChangeFreq(defaultChangeFreq);
 		}
+		if(defaultLastMod != null && webPage.getLastMod() == null) {
+			webPage.setLastMod(defaultLastMod);
+		}
 	}
 
 	/**
@@ -420,6 +428,44 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 */
 	public T resetDefaultChangeFreq() {
 		defaultChangeFreq = null;
+		return getThis();
+	}
+
+	/**
+	 * Sets default lastMod for all subsequent WebPages
+	 * @param lastMod lastMod
+	 * @return this
+	 */
+	public T defaultLastMod(Date lastMod) {
+		defaultLastMod = lastMod;
+		return getThis();
+	}
+
+	/**
+	 * Sets default lastMod for all subsequent WebPages
+	 * @param lastMod lastMod
+	 * @return this
+	 */
+	public T defaultLastMod(LocalDateTime lastMod) {
+		defaultLastMod = Timestamp.valueOf(lastMod);
+		return getThis();
+	}
+
+	/**
+	 * Sets default lastMod = new Date() for all subsequent WebPages
+	 * @return this
+	 */
+	public T defaultLastModNow() {
+		defaultLastMod = new Date();
+		return getThis();
+	}
+
+	/**
+	 * Reset default lastMod
+	 * @return this
+	 */
+	public T resetDefaultLastMod() {
+		defaultLastMod = null;
 		return getThis();
 	}
 
