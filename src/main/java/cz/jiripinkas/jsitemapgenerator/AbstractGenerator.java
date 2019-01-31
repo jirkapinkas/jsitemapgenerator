@@ -128,11 +128,15 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
         return getThis();
     }
 
-
     /**
      * Run some method
      * @param runnable Runnable method which sneaks any checked exception
      *                 https://www.baeldung.com/java-sneaky-throws
+     *                 Usage:
+     *                 SitemapIndexGenerator.of(homepage)
+     *                      .run(() -> methodToCall())
+     *                      .addPage(WebPage.of("test))
+     *                      .toString()
      * @return this
      */
     public I run(RunnableWithException runnable) {
@@ -144,6 +148,28 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
         return getThis();
     }
 
+    /**
+     * Run some method. Argument is current generator,
+     * which allows to access current generator in run() method.
+     * @param consumer Consumer method which sneaks any checked exception
+     *                 https://www.baeldung.com/java-sneaky-throws
+     *                 Usage:
+     *                 SitemapIndexGenerator.of(homepage)
+     *                      .run(currentGenerator -> { ... })
+     *                      .addPage(WebPage.of("test))
+     *                      .toString()
+     * @return this
+     */
+    public I run(GeneratorConsumerWithException<I> consumer) {
+        try {
+            consumer.accept(getThis());
+        } catch (Exception e) {
+            sneakyThrow(e);
+        }
+        return getThis();
+    }
+
+
     @SuppressWarnings("unchecked")
     protected I getThis() {
         return (I)this;
@@ -151,6 +177,10 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
 
     public interface RunnableWithException {
         void run() throws Exception;
+    }
+
+    public interface GeneratorConsumerWithException<T> {
+        void accept(T t) throws Exception;
     }
 
     /**
