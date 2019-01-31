@@ -128,10 +128,40 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
         return getThis();
     }
 
+
+    /**
+     * Run some method
+     * @param runnable Runnable method which sneaks any checked exception
+     *                 https://www.baeldung.com/java-sneaky-throws
+     * @return this
+     */
+    public I run(RunnableWithException runnable) {
+        try {
+            runnable.run();
+        } catch (Exception e) {
+            sneakyThrow(e);
+        }
+        return getThis();
+    }
+
     @SuppressWarnings("unchecked")
     protected I getThis() {
         return (I)this;
     }
 
+    public interface RunnableWithException {
+        void run() throws Exception;
+    }
+
+    /**
+     * Sneak exception https://www.baeldung.com/java-sneaky-throws
+     * @param e Exception
+     * @param <E> Type parameter
+     * @throws E Sneaked exception
+     */
+    @SuppressWarnings("unchecked")
+    private static <E extends Throwable> void sneakyThrow(Throwable e) throws E {
+        throw (E) e;
+    }
 
 }
