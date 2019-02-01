@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.12</version>
+      <version>3.13</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -27,7 +27,8 @@ If you want to use "ping google / bing" functionality, also add this library to 
 
 ```java
 String sitemap = SitemapGenerator.of("https://example.com")
-    .addPage(WebPage.of("foo.html")) // simplest way of creating web page
+    .addPage("foo2.html") // simplest way how to add page - shorthand for addPage(WebPage.of("foo2.html"))
+    .addPage(WebPage.of("foo1.html")) // same as addPage("foo1.html")
     .addPage(WebPage.builder().name("bar.html").build()) // builder is more complex
     .addPage(WebPage.builder().maxPriorityRoot().build()) // builder has lots of useful methods
     .toString();
@@ -38,8 +39,8 @@ or sitemap in gzip format:
 ```java
 byte[] sitemap = SitemapGenerator.of("https://example.com")
     .addPage(WebPage.builder().maxPriorityRoot().build())
-    .addPage(WebPage.of("foo.html"))
-    .addPage(WebPage.of("bar.html"))
+    .addPage("foo.html")
+    .addPage("bar.html")
     .toGzipByteArray();
 ```
 
@@ -50,11 +51,11 @@ String sitemap = SitemapGenerator.of("https://example.com")
     .addPage(WebPage.builder().maxPriorityRoot().build()) // URL will be: "/"
     .defaultExtension("html")
     .defaultDir("dir1")
-    .addPage(WebPage.of("foo")) // URL will be: "dir1/foo.html"
-    .addPage(WebPage.of("bar")) // URL will be: "dir1/bar.html"
+    .addPage("foo") // URL will be: "dir1/foo.html"
+    .addPage("bar") // URL will be: "dir1/bar.html"
     .defaultDir("dir2")
-    .addPage(WebPage.of("hello")) // URL will be: "dir2/hello.html"
-    .addPage(WebPage.of("yello")) // URL will be: "dir2/yello.html"
+    .addPage("hello") // URL will be: "dir2/hello.html"
+    .addPage("yello") // URL will be: "dir2/yello.html"
     // btw. specifying dir and / or extension on WebPage overrides default settings
     .addPage(WebPage.builder().dir("dir3").extension(null).name("test").build()) // "dir3/test"
     .resetDefaultDir() // resets default dir
@@ -97,8 +98,8 @@ or to store it to file & ping google:
 SitemapGenerator sg = SitemapGenerator.of("https://example.com");
 // add some URLs
 sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
-  .addPage(WebPage.of("foo.html"))
-  .addPage(WebPage.of("bar.html"));
+  .addPage("foo.html")
+  .addPage("bar.html");
 // generate sitemap and save it to file ./sitemap.xml
 sg.constructAndSaveSitemap(Paths.get("sitemap.xml"));
 // inform Google that this sitemap has changed
@@ -109,8 +110,8 @@ sg.pingGoogle(); // this requires okhttp in classpath!!!
 
 ```java
 String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
-    .addPage(WebPage.of("sitemap-plugins.xml"))
-    .addPage(WebPage.of("sitemap-archetypes.xml"))
+    .addPage("sitemap-plugins.xml")
+    .addPage("sitemap-archetypes.xml")
     .toString();
 ```
 
