@@ -64,6 +64,16 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     }
 
     /**
+     * Add single page to sitemap. This method calls WebPage.of(name)
+     *
+     * @param name single page
+     * @return this
+     */
+    public I addPage(String name) {
+        return addPage(WebPage.of(name));
+    }
+
+    /**
      * This method is called before adding a page to urls.
      * It can be used to change webPage attributes
      * @param webPage WebPage
