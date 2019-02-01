@@ -74,6 +74,23 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     }
 
     /**
+     * Add single page to sitemap.
+     * @param supplier Supplier method which sneaks any checked exception
+     *                 https://www.baeldung.com/java-sneaky-throws
+     *                 Allows for calling method which performs some operation and then returns name of page.
+     * @return this
+     */
+    public I addPage(StringSupplierWithException<String> supplier) {
+        try {
+            addPage(supplier.get());
+        } catch (Exception e) {
+            sneakyThrow(e);
+        }
+        return getThis();
+    }
+
+
+    /**
      * This method is called before adding a page to urls.
      * It can be used to change webPage attributes
      * @param webPage WebPage
@@ -221,6 +238,10 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
 
     public interface GeneratorConsumerWithException<T> {
         void accept(T t) throws Exception;
+    }
+
+    public interface StringSupplierWithException<String> {
+        String get() throws Exception;
     }
 
     /**
