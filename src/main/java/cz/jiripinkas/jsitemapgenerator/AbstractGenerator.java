@@ -64,7 +64,7 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
     }
 
     /**
-     * Add single page to sitemap. This method calls WebPage.of(name)
+     * Add single page to sitemap. This method calls addPage(WebPage.of(name))
      *
      * @param name single page
      * @return this
