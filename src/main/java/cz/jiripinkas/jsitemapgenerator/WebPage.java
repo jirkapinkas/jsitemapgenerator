@@ -120,7 +120,7 @@ public class WebPage implements Comparable<WebPage> {
     }
 
     /**
-     * Constructs name from dir and extension (if available)
+     * Constructs name from dir and extension (if available), used in SitemapGenerators
      * @return Name
      */
     public String constructName() {
@@ -132,6 +132,25 @@ public class WebPage implements Comparable<WebPage> {
             result = result + "." + extension;
         }
         return result;
+    }
+
+    /**
+     * Constructs shortName from dir and extension (if available), used in RssGenerator
+     * @return Name
+     */
+    public String constructShortName() {
+        String result = shortName;
+        if(dir != null) {
+            result = dir + "/" + result;
+        }
+        if(extension != null) {
+            result = result + "." + extension;
+        }
+        return result;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Map<String, String> getAlternateNames() {

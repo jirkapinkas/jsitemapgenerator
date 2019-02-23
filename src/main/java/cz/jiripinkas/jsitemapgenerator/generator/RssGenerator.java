@@ -14,6 +14,10 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     private String webDescription;
 
+    private String defaultDir;
+
+    private String defaultExtension;
+
     /**
      * Create RssGenerator
      *
@@ -164,7 +168,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
             builder.append("<item>" + "\n")
 
                     .append("<title>")
-                    .append(webPage.constructName())
+                    .append(webPage.getName())
                     .append("</title>" + "\n")
 
                     .append("<description>")
@@ -173,7 +177,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
                     .append("<link>")
                     .append(baseUrl)
-                    .append(webPage.getShortName())
+                    .append(webPage.constructShortName())
                     .append("</link>" + "\n")
 
                     .append("<pubDate>")
@@ -186,6 +190,64 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
         builder.append("</channel>" + "\n")
                 .append("</rss>" + "\n");
         return builder.toString();
+    }
+
+    @Override
+    protected void beforeAddPageEvent(WebPage webPage) {
+        if(defaultDir != null && webPage.getDir() == null) {
+            webPage.setShortName(defaultDir + "/" + webPage.getShortName());
+        }
+        if(defaultExtension != null && webPage.getExtension() == null) {
+            webPage.setShortName(webPage.getShortName() + "." + defaultExtension);
+        }
+    }
+
+    /**
+     * Sets default prefix dir to name for all subsequent WebPages. Final name will be "dirName/name"
+     * @param dirName Dir name
+     * @return this
+     */
+    public RssGenerator defaultDir(String dirName) {
+        defaultDir = dirName;
+        return getThis();
+    }
+
+    /**
+     * Sets default prefix dirs to name for all subsequent WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+     * @param dirNames Dir names
+     * @return this
+     */
+    public RssGenerator defaultDir(String ... dirNames) {
+        defaultDir = String.join("/", dirNames);
+        return getThis();
+    }
+
+    /**
+     * Reset default dir value
+     * @return this
+     */
+    public RssGenerator resetDefaultDir() {
+        defaultDir = null;
+        return getThis();
+    }
+
+    /**
+     * Sets default suffix extension for all subsequent WebPages. Final name will be "name.extension"
+     * @param extension Extension
+     * @return this
+     */
+    public RssGenerator defaultExtension(String extension) {
+        defaultExtension = extension;
+        return getThis();
+    }
+
+    /**
+     * Reset default extension value
+     * @return this
+     */
+    public RssGenerator resetDefaultExtension() {
+        defaultExtension = null;
+        return getThis();
     }
 
 }
