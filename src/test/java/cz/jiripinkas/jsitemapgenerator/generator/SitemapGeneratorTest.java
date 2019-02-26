@@ -1,12 +1,14 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
+import cz.jiripinkas.jsitemapgenerator.HttpClient;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -163,10 +165,31 @@ public class SitemapGeneratorTest {
 		assertEquals(expected, sitemap);
 	}
 
-	@Ignore
+//	@Rule
+//	public MockitoRule mockitoRule = MockitoJUnit.rule();
+
 	@Test
-	public void testPingGoogle() throws Exception {
-		sitemapGenerator.pingGoogle("http://jsitemapgenerator.jiripinkas.cz/sitemap.xml");
+	public void testPingGoogleSuccess() throws Exception {
+		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+		sitemapGenerator.setHttpClient(httpClientMock);
+		Mockito.when(httpClientMock.get(Mockito.anyString()))
+				.thenReturn(500);
+		Mockito.when(httpClientMock.get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml"))
+				.thenReturn(200);
+		sitemapGenerator.pingGoogle();
+		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml");
+	}
+
+	@Test(expected = GWTException.class)
+	public void testPingGoogleError() throws Exception {
+		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+		sitemapGenerator.setHttpClient(httpClientMock);
+		Mockito.when(httpClientMock.get(Mockito.anyString()))
+				.thenReturn(500);
+//		Mockito.doReturn(500).when(httpClientMock).get(Mockito.any());
+		sitemapGenerator.pingGoogle();
 	}
 
 }

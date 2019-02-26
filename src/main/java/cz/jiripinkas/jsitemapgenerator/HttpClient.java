@@ -4,11 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HttpClientUtil {
-
-    private HttpClientUtil() {
-
-    }
+public class HttpClient {
 
     /**
      * HTTP GET to URL, return status
@@ -17,7 +13,7 @@ public class HttpClientUtil {
      * @return status code (for example 200)
      * @throws Exception When error
      */
-    public static int get(String url) throws Exception {
+    public int get(String url) throws Exception {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

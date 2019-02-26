@@ -26,8 +26,11 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	private Date defaultLastMod;
 
+	private HttpClient httpClient;
+
 	public AbstractSitemapGenerator(String baseUrl) {
 		super(baseUrl);
+		httpClient = new HttpClient();
 	}
 
 	public abstract String[] toStringArray();
@@ -201,8 +204,8 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	private void ping(String resourceUrl, String sitemapUrl, String serviceName) {
 		try {
 			String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
-			// ping Bing
-			int returnCode = HttpClientUtil.get(pingUrl);
+			// ping Google / Bing
+			int returnCode = httpClient.get(pingUrl);
 			if (returnCode != 200) {
 				throw new GWTException(serviceName + " could not be informed about new sitemap!");
 			}
@@ -469,4 +472,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 		return getThis();
 	}
 
+	public void setHttpClient(HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
 }
