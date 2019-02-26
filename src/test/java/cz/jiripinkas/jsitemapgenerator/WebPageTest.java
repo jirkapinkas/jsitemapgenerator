@@ -1,12 +1,12 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import org.junit.Test;
-
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class WebPageTest {
 
@@ -47,6 +47,18 @@ public class WebPageTest {
 	public void testNameRoot() {
 		WebPage build = WebPage.builder().nameRoot().build();
 		assertEquals("", build.constructName());
+	}
+
+	@Test
+	public void of_name_is_not_null() {
+		WebPage webPage = WebPage.of("test");
+		assertThat(webPage.getName()).isEqualTo("test");
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void of_name_cannot_be_null() {
+		String nullString = null;
+		WebPage webPage = WebPage.of(nullString);
 	}
 
 }
