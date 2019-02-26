@@ -49,10 +49,13 @@ public class WebPage implements Comparable<WebPage> {
      * (this can be useful for really simple sitemaps
      * or with combination of default settings
      * set on SitemapGenerator)
-     * @param nameSupplier Name supplier
+     * @param nameSupplier Name supplier (cannot return null!!!)
      * @return WebPage instance
+     * @throws NullPointerException When nameSupplier or nameSupplier.get() returns null
      */
     public static WebPage of(Supplier<String> nameSupplier) {
+        Objects.requireNonNull(nameSupplier);
+        Objects.requireNonNull(nameSupplier.get());
         WebPage webPage = new WebPage();
         webPage.setName(nameSupplier.get());
         return webPage;
