@@ -132,27 +132,27 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         out.append("<image:image>\n");
         if (image.getLoc() != null) {
             out.append("<image:loc>");
-            out.append(image.getLoc());
+            out.append(escapeXmlSpecialCharacters(image.getLoc()));
             out.append("</image:loc>\n");
         }
         if (image.getCaption() != null) {
             out.append("<image:caption>");
-            out.append(image.getCaption());
+            out.append(escapeXmlSpecialCharacters(image.getCaption()));
             out.append("</image:caption>\n");
         }
         if (image.getGeoLocation() != null) {
             out.append("<image:geo_location>");
-            out.append(image.getGeoLocation());
+            out.append(escapeXmlSpecialCharacters(image.getGeoLocation()));
             out.append("</image:geo_location>\n");
         }
         if (image.getTitle() != null) {
             out.append("<image:title>");
-            out.append(image.getTitle());
+            out.append(escapeXmlSpecialCharacters(image.getTitle()));
             out.append("</image:title>\n");
         }
         if (image.getLicense() != null) {
             out.append("<image:license>");
-            out.append(image.getLicense());
+            out.append(escapeXmlSpecialCharacters(image.getLicense()));
             out.append("</image:license>\n");
         }
         out.append("</image:image>\n");
