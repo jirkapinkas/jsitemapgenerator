@@ -37,7 +37,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	/**
 	 * Construct sitemap into single String
-	 * 
+	 *
 	 * @return sitemap
 	 * @deprecated Use {@link #toString()} instead
 	 */
@@ -102,7 +102,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	/**
 	 * Save sitemap to output file
-	 * 
+	 *
 	 * @param file
 	 *            Output file
 	 * @param sitemap
@@ -130,6 +130,19 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 *             when error
 	 */
 	public void toFile(File file) throws IOException {
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				throw new IOException("File '" + file + "' exists but is a directory");
+			}
+			if (!file.canWrite()) {
+				throw new IOException("File '" + file + "' cannot be written to");
+			}
+		} else {
+			final File parent = file.getParentFile();
+			if (parent != null && (!parent.mkdirs() && !parent.isDirectory())) {
+				throw new IOException("Directory '" + parent + "' could not be created");
+			}
+		}
 		String[] sitemap = toStringArray();
 		try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			for (String string : sitemap) {
@@ -181,7 +194,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	/**
 	 * Ping Google that sitemap has changed. Will call this URL:
 	 * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
-	 * 
+	 *
 	 * @param sitemapUrl
 	 *            sitemap url
 	 */
@@ -192,10 +205,10 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	/**
 	 * Ping Bing that sitemap has changed. Will call this URL:
 	 * http://www.bing.com/ping?sitemap=URL_Encoded_sitemapUrl
-	 * 
+	 *
 	 * @param sitemapUrl
 	 *            sitemap url
-	 * 
+	 *
 	 */
 	public void pingBing(String sitemapUrl) {
 		ping("http://www.bing.com/ping?sitemap=", sitemapUrl, "Bing");
