@@ -2,13 +2,13 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Sitemap index generator
+ * https://www.sitemaps.org/protocol.html#index
+ */
 public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapIndexGenerator> {
 
 	/**
@@ -51,20 +51,17 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		out.add("</sitemapindex>");
 		return out.toArray(new String[] {});
 	}
-	
+
+	/**
+	 * Construct URL from WebPage
+	 * @param webPage WebPage object
+	 * @return String URL
+	 */
 	protected String constructUrl(WebPage webPage) {
 		StringBuilder out = new StringBuilder();
 		out.append("<sitemap>\n");
 		out.append("<loc>");
-		try {
-			if (webPage.constructName() != null) {
-				out.append(new URL(baseUrl + webPage.constructName()).toString());
-			} else {
-				out.append(new URL(baseUrl).toString());
-			}
-		} catch (MalformedURLException e) {
-			throw new InvalidUrlException(e);
-		}
+		out.append(getAbsoluteUrl(escapeXmlSpecialCharacters(webPage.constructName())));
 		out.append("</loc>\n");
 		if (webPage.getLastMod() != null) {
 			out.append("<lastmod>");
@@ -74,6 +71,5 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		out.append("</sitemap>\n");
 		return out.toString();
 	}
-
 
 }

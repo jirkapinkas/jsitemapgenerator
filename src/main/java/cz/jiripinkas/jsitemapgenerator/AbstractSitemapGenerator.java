@@ -2,9 +2,10 @@ package cz.jiripinkas.jsitemapgenerator;
 
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
+import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
 import java.io.*;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -488,4 +489,34 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	public void setHttpClient(HttpClient httpClient) {
 		this.httpClient = httpClient;
 	}
+
+	/**
+	 * Get absolute URL:
+	 * If webPageName is null, return baseUrl.
+	 * If webPageName is not null, check if webPageName is absolute (can be URL from CDN) or relative URL.
+	 * If it's relative URL, prepend baseUrl and return result
+	 * @param webPageName WebPageName
+	 * @return Correct URL
+	 */
+	protected String getAbsoluteUrl(String webPageName) {
+		try {
+			String resultString;
+			if (webPageName != null) {
+				URI uri = new URI(webPageName);
+				String stringUrl;
+				if(uri.isAbsolute()) {
+					stringUrl = webPageName;
+				} else {
+					stringUrl = baseUrl + webPageName;
+				}
+				resultString = stringUrl;
+			} else {
+				resultString = baseUrl;
+			}
+			return new URL(resultString).toString();
+		} catch (MalformedURLException | URISyntaxException e) {
+			throw new InvalidUrlException(e);
+		}
+	}
+
 }
