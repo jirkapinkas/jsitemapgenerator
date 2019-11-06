@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class SitemapIndexGeneratorTest {
 
@@ -28,7 +28,7 @@ public class SitemapIndexGeneratorTest {
 	public void testConstructUrl() {
 		WebPage webPage = WebPage.builder().name("sitemap-plugins.xml").build();
 		String constructUrl = sitemapIndexGenerator.constructUrl(webPage);
-		Assert.assertEquals("<sitemap>\n<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n</sitemap>\n", constructUrl);
+		assertEquals("<sitemap>\n<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n</sitemap>\n", constructUrl);
 	}
 
 	@Test

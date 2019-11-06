@@ -32,7 +32,7 @@ public class RssGeneratorTest {
             ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes(StandardCharsets.UTF_8));
             TestUtil.testSitemapXsd(xml, new File("rss20.xsd"));
         } catch (Exception e) {
-            Assert.assertEquals("cvc-complex-type.2.4.b: The content of element 'channel' is not complete. One of '{image, textInput, skipHours, skipDays, item}' is expected.", e.getMessage());
+            assertEquals("cvc-complex-type.2.4.b: The content of element 'channel' is not complete. One of '{image, textInput, skipHours, skipDays, item}' is expected.", e.getMessage());
         }
     }
 

@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class SitemapGeneratorTest {
 
@@ -35,7 +35,7 @@ public class SitemapGeneratorTest {
 		Image image = new Image();
 		image.setLoc("http://example.com/image");
 		String imageString = sitemapGenerator.constructImage(image);
-		Assert.assertEquals("<image:image>\n<image:loc>http://example.com/image</image:loc>\n</image:image>\n", imageString);
+		assertEquals("<image:image>\n<image:loc>http://example.com/image</image:loc>\n</image:image>\n", imageString);
 	}
 
 	@Test
@@ -49,7 +49,7 @@ public class SitemapGeneratorTest {
 				"<loc>http://www.javavids.com/</loc>\n" +
 				"</url>\n" +
 				"</urlset>";
-		Assert.assertEquals(expected, sitemapString);
+		assertEquals(expected, sitemapString);
 	}
 	
 	@Test
@@ -59,19 +59,19 @@ public class SitemapGeneratorTest {
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
 		String sitemapString = sitemapGenerator.toString();
-		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>", sitemapString);
+		assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>", sitemapString);
 	}
 
 	@Test
 	public void testConstructUrlEmptyPage() {
 		String url = sitemapGenerator.constructUrl(new WebPage());
-		Assert.assertEquals("<loc>http://www.javavids.com/</loc>\n", url);
+		assertEquals("<loc>http://www.javavids.com/</loc>\n", url);
 	}
 
 	@Test
 	public void testConstructUrlNotEmptyPage() {
 		String url = sitemapGenerator.constructUrl(WebPage.builder().name("latest.php").build());
-		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n", url);
+		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n", url);
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class SitemapGeneratorTest {
 				.alternateName("de", "latest-de.php")
 				.alternateName("es", "latest-es.php")
 				.build());
-		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
+		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
 				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n", url);
 	}
 
@@ -93,7 +93,7 @@ public class SitemapGeneratorTest {
 				.alternateName("de", () -> "latest-de.php")
 				.alternateName("es", () -> "latest-es.php")
 				.build());
-		Assert.assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
+		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
 				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n", url);
 	}
 

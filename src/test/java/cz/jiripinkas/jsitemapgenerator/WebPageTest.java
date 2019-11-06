@@ -5,8 +5,8 @@ import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class WebPageTest {
 
