@@ -2,7 +2,6 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -55,12 +54,12 @@ public class SitemapIndexGeneratorTest {
 				.name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")
 				.build());
 
-		String sitemap = sitemapIndexGenerator.toString();
+		String actualSitemap = sitemapIndexGenerator.toString();
 		String expectedSitemap =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 						"<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
 						"<sitemap>\n" +
-						"<loc>http://javalibs.com//page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;</loc>\n" +
+						"<loc>http://javalibs.com/page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;</loc>\n" +
 						"</sitemap>\n" +
 						"<sitemap>\n" +
 						"<loc>http://javalibs.com/sitemap-archetypes.xml</loc>\n" +
@@ -69,7 +68,26 @@ public class SitemapIndexGeneratorTest {
 						"<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n" +
 						"</sitemap>\n" +
 						"</sitemapindex>";
-		assertEquals(expectedSitemap, sitemap);
+		assertEquals(expectedSitemap, actualSitemap);
+	}
+
+	@Test
+	public void testConstructSitemapIndexWithRedundantSlash() throws SAXException, IOException {
+		sitemapIndexGenerator.addPage("/test");
+		String actualSitemapIndex = sitemapIndexGenerator.toString();
+		String expectedSitemapIndex = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+				"<sitemap>\n" +
+				"<loc>http://javalibs.com/sitemap-archetypes.xml</loc>\n" +
+				"</sitemap>\n" +
+				"<sitemap>\n" +
+				"<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n" +
+				"</sitemap>\n" +
+				"<sitemap>\n" +
+				"<loc>http://javalibs.com/test</loc>\n" +
+				"</sitemap>\n" +
+				"</sitemapindex>";
+		assertEquals(expectedSitemapIndex, actualSitemapIndex);
 	}
 
 }

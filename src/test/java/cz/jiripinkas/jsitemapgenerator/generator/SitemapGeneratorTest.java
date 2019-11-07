@@ -192,4 +192,33 @@ public class SitemapGeneratorTest {
 		sitemapGenerator.pingGoogle();
 	}
 
+	@Test
+	public void testRemoveRedundantSlashes1() {
+		String actualSitemap = SitemapGenerator.of("https://javalibs.com/")
+				.addPage(WebPage.of("/test"))
+				.toString();
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/test</loc>\n" +
+				"</url>\n" +
+				"</urlset>";
+		assertEquals(expectedSitemap, actualSitemap);
+	}
+
+	@Test
+	public void testRemoveRedundantSlashes2() {
+		String actualSitemap = SitemapGenerator.of("https://javalibs.com/")
+				.defaultDir("testDir")
+				.addPage(WebPage.of("/testPage"))
+				.toString();
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+				"<url>\n" +
+				"<loc>https://javalibs.com/testDir/testPage</loc>\n" +
+				"</url>\n" +
+				"</urlset>";
+		assertEquals(expectedSitemap, actualSitemap);
+	}
+
 }

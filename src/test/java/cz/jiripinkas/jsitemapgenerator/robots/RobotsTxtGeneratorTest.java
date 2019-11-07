@@ -18,4 +18,16 @@ public class RobotsTxtGeneratorTest {
         assertEquals(expected, robotsTxtString);
     }
 
+    @Test
+    public void constructRobotsTxtStringWithRedundantSlash() {
+        String robotsTxtString = RobotsTxtGenerator.of("https://example.com")
+                .addSitemap("/sitemap.xml")
+                .addRule(RobotsRule.builder().userAgentAll().allowAll().build())
+                .toString();
+        String expected = "Sitemap: https://example.com/sitemap.xml\n" +
+                "User-agent: *\n" +
+                "Allow: /";
+        assertEquals(expected, robotsTxtString);
+    }
+
 }

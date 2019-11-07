@@ -1,5 +1,7 @@
 package cz.jiripinkas.jsitemapgenerator.robots;
 
+import cz.jiripinkas.jsitemapgenerator.UrlUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class RobotsTxtGenerator {
 
     public String[] constructRobotsTxt() {
         ArrayList<String> out = new ArrayList<>();
-        sitemaps.forEach(sitemap -> out.add("Sitemap: " + baseUrl + sitemap));
+        sitemaps.forEach(sitemap -> out.add("Sitemap: " + UrlUtil.connectUrlParts(baseUrl, sitemap)));
         rules.forEach(rule -> {
             out.add("User-agent: " + rule.getUserAgent());
             rule.getAllows().forEach(allow -> out.add("Allow: " + allow));

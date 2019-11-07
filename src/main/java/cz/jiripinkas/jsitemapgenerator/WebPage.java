@@ -131,7 +131,7 @@ public class WebPage implements Comparable<WebPage> {
     public String constructName() {
         String result = name;
         if(dir != null) {
-            result = dir + "/" + result;
+            result = UrlUtil.connectUrlParts(dir, result);
         }
         if(extension != null) {
             result = result + "." + extension;
@@ -146,7 +146,7 @@ public class WebPage implements Comparable<WebPage> {
     public String constructShortName() {
         String result = shortName;
         if(dir != null) {
-            result = dir + "/" + result;
+            result = UrlUtil.connectUrlParts(dir, result);
         }
         if(extension != null) {
             result = result + "." + extension;

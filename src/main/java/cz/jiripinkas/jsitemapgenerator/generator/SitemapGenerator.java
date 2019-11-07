@@ -2,6 +2,7 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.Image;
+import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
@@ -203,12 +204,8 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         if (name == null) {
             return escapeXmlSpecialCharacters(new URL(baseUrl).toString());
         }
-        if (baseUrl.endsWith("/")) {
-            while (name.startsWith("/")) {
-                name = name.substring(1);
-            }
-        }
-        return escapeXmlSpecialCharacters(new URL(baseUrl + name).toString());
+        String urlString = UrlUtil.connectUrlParts(baseUrl, name);
+        return escapeXmlSpecialCharacters(new URL(urlString).toString());
     }
 
 }

@@ -59,7 +59,7 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
      */
     public I addPage(WebPage webPage) {
         beforeAddPageEvent(webPage);
-        urls.put(baseUrl + webPage.constructName(), webPage);
+        urls.put(UrlUtil.connectUrlParts(baseUrl, webPage.constructName()), webPage);
         return getThis();
     }
 

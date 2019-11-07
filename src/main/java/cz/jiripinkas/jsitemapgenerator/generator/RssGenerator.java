@@ -1,6 +1,7 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractGenerator;
+import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 
 import java.text.SimpleDateFormat;
@@ -176,8 +177,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
                     .append("</description>" + "\n")
 
                     .append("<link>")
-                    .append(baseUrl)
-                    .append(webPage.constructShortName())
+                    .append(UrlUtil.connectUrlParts(baseUrl, webPage.constructShortName()))
                     .append("</link>" + "\n")
 
                     .append("<pubDate>")
@@ -195,7 +195,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     @Override
     protected void beforeAddPageEvent(WebPage webPage) {
         if(defaultDir != null && webPage.getDir() == null) {
-            webPage.setShortName(defaultDir + "/" + webPage.getShortName());
+            webPage.setShortName(UrlUtil.connectUrlParts(defaultDir, webPage.getShortName()));
         }
         if(defaultExtension != null && webPage.getExtension() == null) {
             webPage.setShortName(webPage.getShortName() + "." + defaultExtension);

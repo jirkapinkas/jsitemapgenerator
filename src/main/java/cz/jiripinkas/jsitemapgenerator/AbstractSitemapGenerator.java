@@ -262,7 +262,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	@Override
 	protected void beforeAddPageEvent(WebPage webPage) {
 		if(defaultDir != null && webPage.getDir() == null) {
-			webPage.setName(defaultDir + "/" + webPage.constructName());
+			webPage.setName(UrlUtil.connectUrlParts(defaultDir, webPage.constructName()));
 		}
 		if(defaultExtension != null && webPage.getExtension() == null) {
 			webPage.setName(webPage.constructName() + "." + defaultExtension);
@@ -507,7 +507,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 				if(uri.isAbsolute()) {
 					stringUrl = webPageName;
 				} else {
-					stringUrl = baseUrl + webPageName;
+					stringUrl = UrlUtil.connectUrlParts(baseUrl, webPageName);
 				}
 				resultString = stringUrl;
 			} else {
