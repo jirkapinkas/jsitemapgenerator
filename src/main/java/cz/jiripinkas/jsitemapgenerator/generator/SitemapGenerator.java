@@ -29,7 +29,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * @deprecated Use {@link #of(String, AdditionalNamespace[])} )}
+     * @deprecated Additional namespaces are automatically resolved since 3.11
      * @param baseUrl Base URL
      * @param additionalNamespaces Additional parameters
      */
@@ -68,6 +68,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
      * @param baseUrl Base URL
      * @param additionalNamespaces Additional parameters
      * @return Instance of SitemapGenerator
+     * @deprecated Additional namespaces are automatically resolved since 3.11
      */
     @Deprecated
     public static SitemapGenerator of(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
