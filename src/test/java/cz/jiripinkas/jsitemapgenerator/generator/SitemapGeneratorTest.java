@@ -5,7 +5,6 @@ import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

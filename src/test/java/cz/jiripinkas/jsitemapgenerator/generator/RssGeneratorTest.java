@@ -2,7 +2,6 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;

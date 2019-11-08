@@ -1,6 +1,5 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import cz.jiripinkas.jsitemapgenerator.ChangeFreq;
 import cz.jiripinkas.jsitemapgenerator.W3CDateFormat;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import org.junit.Before;

@@ -1,7 +1,6 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
-import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import java.util.ArrayList;
 import java.util.Collections;
