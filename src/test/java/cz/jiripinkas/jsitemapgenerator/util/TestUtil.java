@@ -25,14 +25,8 @@ public class TestUtil {
 	}
 
 	public static void testSitemapXsdFile(File file, File xsd) throws IOException, SAXException {
-		FileInputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(file);
+		try (FileInputStream inputStream = new FileInputStream(file)) {
 			testSitemapXsd(inputStream, xsd);
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
 		}
 	}
 
