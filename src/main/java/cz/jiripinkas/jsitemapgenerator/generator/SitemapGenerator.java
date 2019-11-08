@@ -131,7 +131,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         out.append("<image:image>\n");
         if (image.getLoc() != null) {
             out.append("<image:loc>");
-            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getLoc()));
+            out.append(getAbsoluteUrl(image.getLoc()));
             out.append("</image:loc>\n");
         }
         if (image.getCaption() != null) {

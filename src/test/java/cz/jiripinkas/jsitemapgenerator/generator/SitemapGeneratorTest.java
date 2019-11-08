@@ -39,6 +39,14 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
+	public void testConstructImageWithBaseUrl() {
+		Image image = new Image();
+		image.setLoc("/image");
+		String imageString = sitemapGenerator.constructImage(image);
+		assertEquals("<image:image>\n<image:loc>http://www.javavids.com/image</image:loc>\n</image:image>\n", imageString);
+	}
+
+	@Test
 	public void testConstructSitemapWithImagesHeader() {
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().images(new ArrayList<>()).build());
