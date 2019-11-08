@@ -109,7 +109,7 @@ public class SitemapGeneratorTest {
 	public void testConstructSitemap() throws Exception {
 		String sitemap = sitemapGenerator.toString();
 		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemap.getBytes(StandardCharsets.UTF_8));
-		TestUtil.testSitemapXsd(sitemapXml, new File("sitemap.xsd"));
+		TestUtil.testSitemapXsd(sitemapXml, new File("src/test/resources/sitemap.xsd"));
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class SitemapGeneratorTest {
 				"</urlset>";
 		assertEquals(expectedSitemap, actualSitemap);
 		try {
-			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
+			TestUtil.testSitemapXsdFile(tmpFile, new File("src/test/resources/sitemap.xsd"));
 		} finally {
 			tmpFile.delete();
 		}
@@ -145,7 +145,7 @@ public class SitemapGeneratorTest {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		sitemapGenerator.toFile(tmpFile);
 		try {
-			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
+			TestUtil.testSitemapXsdFile(tmpFile, new File("src/test/resources/sitemap.xsd"));
 		} finally {
 			tmpFile.delete();
 		}
