@@ -22,15 +22,13 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     /**
      * Create RssGenerator
      *
-     * @deprecated use {@link #of(String, boolean, String, String)}
      * @param baseUrl        Base URL
      * @param root           If Base URL is root (for example http://www.javavids.com or if
      *                       it's some path like http://www.javalibs.com/blog)
      * @param webTitle       Web title
      * @param webDescription Web description
      */
-    @Deprecated
-    public RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
+    private RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
         super(baseUrl, root);
         this.webTitle = webTitle;
         this.webDescription = webDescription;
@@ -39,13 +37,11 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     /**
      * Create RssGenerator. Root = true.
      *
-     * @deprecated use {@link #of(String, String, String)}
      * @param baseUrl        Base URL
      * @param webTitle       Web title
      * @param webDescription Web description
      */
-    @Deprecated
-    public RssGenerator(String baseUrl, String webTitle, String webDescription) {
+    private RssGenerator(String baseUrl, String webTitle, String webDescription) {
         super(baseUrl);
         this.webTitle = webTitle;
         this.webDescription = webDescription;
@@ -113,18 +109,6 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     public RssGenerator webDescription(String webDescription) {
         this.webDescription = webDescription;
         return this;
-    }
-
-    /**
-     * This will construct RSS from web pages. Web pages are sorted using
-     * lastMod in descending order (latest is first)
-     *
-     * @return Constructed RSS
-     * @deprecated Use {@link #toString()} instead
-     */
-    @Deprecated
-    public String constructRss() {
-        return this.toString();
     }
 
     /**

@@ -17,21 +17,17 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * @deprecated Use {@link #of(String)}
      * @param baseUrl Base URL
      */
-    @Deprecated
-    public SitemapGenerator(String baseUrl) {
+    private SitemapGenerator(String baseUrl) {
         super(baseUrl);
     }
 
     /**
-     * @deprecated Additional namespaces are automatically resolved since 3.11
      * @param baseUrl Base URL
      * @param additionalNamespaces Additional parameters
      */
-    @Deprecated
-    public SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
+    private SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
         this(baseUrl);
     }
 
@@ -58,31 +54,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
      */
     public static SitemapGenerator of(String baseUrl) {
         return new SitemapGenerator(baseUrl);
-    }
-
-    /**
-     * Helper method to create an instance of SitemapGenerator
-     * @param baseUrl Base URL
-     * @param additionalNamespaces Additional parameters
-     * @return Instance of SitemapGenerator
-     * @deprecated Additional namespaces are automatically resolved since 3.11
-     */
-    @Deprecated
-    public static SitemapGenerator of(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
-        return new SitemapGenerator(baseUrl, additionalNamespaces);
-    }
-
-    /**
-     * Construct sitemap into array of Strings. The URLs will be ordered using
-     * priority in descending order (URLs with higher priority will be at the
-     * top).
-     *
-     * @return sitemap
-     * @deprecated Use {@link #toStringArray()} instead
-     */
-    @Deprecated
-    public String[] constructSitemap() {
-        return toStringArray();
     }
 
     /**

@@ -12,27 +12,15 @@ import java.util.List;
  */
 public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapIndexGenerator> {
 
-	/**
-	 * @deprecated use {@link #of(String)}
-	 * @param baseUrl Base url
-	 */
-	@Deprecated
-	public SitemapIndexGenerator(String baseUrl) {
+    /**
+     * @param baseUrl Base url
+     */
+	private SitemapIndexGenerator(String baseUrl) {
 		super(baseUrl);
 	}
 
 	public static SitemapIndexGenerator of(String baseUrl) {
 		return new SitemapIndexGenerator(baseUrl);
-	}
-
-	/**
-	 * Construct sitemap to String array
-	 * @return String array
-	 * @deprecated Use {@link #toStringArray()} instead
-	 */
-	@Deprecated
-	public String[] constructSitemap() {
-		return toStringArray();
 	}
 
 	/**

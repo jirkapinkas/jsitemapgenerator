@@ -585,20 +585,6 @@ public class WebPage implements Comparable<WebPage> {
             return this;
         }
 
-
-        /**
-         * Sets Name
-         *
-         * @param name Name
-         * @return this
-         * @deprecated Use {@link #link} instead
-         */
-        @Deprecated
-        public RssItemBuilder name(String name) {
-            webPage.setShortName(name);
-            return this;
-        }
-
         /**
          * Sets Link
          *

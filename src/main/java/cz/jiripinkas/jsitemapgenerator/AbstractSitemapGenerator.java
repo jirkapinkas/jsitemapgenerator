@@ -40,17 +40,6 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * Construct sitemap into single String
 	 *
 	 * @return sitemap
-	 * @deprecated Use {@link #toString()} instead
-	 */
-	@Deprecated
-	public String constructSitemapString() {
-		return toString();
-	}
-
-	/**
-	 * Construct sitemap into single String
-	 *
-	 * @return sitemap
 	 */
 	public String toString() {
 		String[] sitemapArray = toStringArray();
@@ -82,44 +71,12 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * Construct sitemap into gzipped file
 	 *
 	 * @return byte array
-	 * @deprecated Use {@link #toGzipByteArray()} instead
-	 */
-	@Deprecated
-	public byte[] constructSitemapGzip() {
-		return toGzipByteArray();
-	}
-
-	/**
-	 * Construct sitemap into gzipped file
-	 *
-	 * @return byte array
 	 */
 	public byte[] toGzipByteArray() {
 		String sitemap = this.toString();
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(sitemap.getBytes(StandardCharsets.UTF_8));
 		ByteArrayOutputStream outputStream = gzipIt(inputStream);
 		return outputStream.toByteArray();
-	}
-
-	/**
-	 * Save sitemap to output file
-	 *
-	 * @param file
-	 *            Output file
-	 * @param sitemap
-	 *            Sitemap as array of Strings (created by constructSitemap()
-	 *            method)
-	 * @throws IOException
-	 *             when error
-	 * @deprecated Use {@link #toFile(Path)} instead
-	 */
-	@Deprecated
-	public void saveSitemap(File file, String[] sitemap) throws IOException {
-		try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-			for (String string : sitemap) {
-				writer.write(string);
-			}
-		}
 	}
 
 	/**
@@ -162,34 +119,6 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 */
 	public void toFile(Path path) throws IOException {
 		toFile(path.toFile());
-	}
-
-	/**
-	 * Construct and save sitemap to output file
-	 *
-	 * @param file
-	 *            Output file
-	 * @throws IOException
-	 *             when error
-	 * @deprecated Use {@link #toFile(File)} instead
-	 */
-	@Deprecated
-	public void constructAndSaveSitemap(File file) throws IOException {
-		toFile(file);
-	}
-
-	/**
-	 * Construct and save sitemap to output file
-	 *
-	 * @param path
-	 *            Output file
-	 * @throws IOException
-	 *             when error
-	 * @deprecated Use {@link #toFile(Path)} instead
-	 */
-	@Deprecated
-	public void constructAndSaveSitemap(Path path) throws IOException {
-		toFile(path);
 	}
 
 	/**

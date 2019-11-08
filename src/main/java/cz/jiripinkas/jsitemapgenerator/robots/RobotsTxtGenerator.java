@@ -35,16 +35,6 @@ public class RobotsTxtGenerator {
 
     /**
      * Construct robots.txt String
-     * @return Robots.txt string
-     * @deprecated Use {@link #toString()} instead
-     */
-    @Deprecated
-    public String constructRobotsTxtString() {
-        return this.toString();
-    }
-
-    /**
-     * Construct robots.txt String
      * @return Robots.txt String
      */
     public String toString() {
