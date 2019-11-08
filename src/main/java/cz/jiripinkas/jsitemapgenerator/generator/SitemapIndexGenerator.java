@@ -5,6 +5,7 @@ import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Sitemap index generator
@@ -41,10 +42,10 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 	 */
 	@Override
 	public String[] toStringArray() {
-		ArrayList<String> out = new ArrayList<>();
+		List<String> out = new ArrayList<>();
 		out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.add("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
-		ArrayList<WebPage> values = new ArrayList<>(urls.values());
+		List<WebPage> values = new ArrayList<>(urls.values());
 		Collections.sort(values);
 		for (WebPage webPage : values) {
 			out.add(constructUrl(webPage));

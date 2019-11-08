@@ -23,7 +23,7 @@ public class RobotsTxtGenerator {
     }
 
     public String[] constructRobotsTxt() {
-        ArrayList<String> out = new ArrayList<>();
+        List<String> out = new ArrayList<>();
         sitemaps.forEach(sitemap -> out.add("Sitemap: " + UrlUtil.connectUrlParts(baseUrl, sitemap)));
         rules.forEach(rule -> {
             out.add("User-agent: " + rule.getUserAgent());

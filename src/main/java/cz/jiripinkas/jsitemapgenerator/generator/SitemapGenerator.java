@@ -110,10 +110,10 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
             additionalNamespaces.add(AdditionalNamespace.XHTML);
         }
 
-        ArrayList<String> out = new ArrayList<>();
+        List<String> out = new ArrayList<>();
         out.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         out.add("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"" + constructAdditionalNamespacesString(additionalNamespaces) + ">\n");
-        ArrayList<WebPage> values = new ArrayList<>(urls.values());
+        List<WebPage> values = new ArrayList<>(urls.values());
         Collections.sort(values);
         for (WebPage webPage : values) {
             out.add("<url>\n");
@@ -164,23 +164,15 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     protected String constructUrl(WebPage webPage) {
         StringBuilder out = new StringBuilder();
         out.append("<loc>");
-        try {
-            out.append(toUrl(baseUrl, webPage.constructName()));
-        } catch (MalformedURLException e) {
-            throw new InvalidUrlException(e);
-        }
+        out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(webPage.constructName())));
         out.append("</loc>\n");
         if (webPage.getAlternateNames() != null) {
-            try {
-                for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
-                    out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
-                    out.append(UrlUtil.escapeXmlSpecialCharacters(entry.getKey()));
-                    out.append("\" href=\"");
-                    out.append(toUrl(baseUrl, entry.getValue()));
-                    out.append("\"/>\n");
-                }
-            } catch (MalformedURLException e) {
-                throw new InvalidUrlException(e);
+            for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
+                out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
+                out.append(UrlUtil.escapeXmlSpecialCharacters(entry.getKey()));
+                out.append("\" href=\"");
+                out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(entry.getValue())));
+                out.append("\"/>\n");
             }
         }
         if (webPage.getLastMod() != null) {
@@ -199,14 +191,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
             out.append("</priority>\n");
         }
         return out.toString();
-    }
-
-    private String toUrl(String baseUrl, String name) throws MalformedURLException {
-        if (name == null) {
-            return UrlUtil.escapeXmlSpecialCharacters(new URL(baseUrl).toString());
-        }
-        String urlString = UrlUtil.connectUrlParts(baseUrl, name);
-        return UrlUtil.escapeXmlSpecialCharacters(new URL(urlString).toString());
     }
 
 }

@@ -41,6 +41,9 @@ public final class UrlUtil {
      * @return Escaped url
      */
     public static String escapeXmlSpecialCharacters(String url) {
+        if(url == null) {
+            return null;
+        }
         // https://stackoverflow.com/questions/1091945/what-characters-do-i-need-to-escape-in-xml-documents
         return url
                 .replace("&", "&amp;") // must be escaped first!!!
