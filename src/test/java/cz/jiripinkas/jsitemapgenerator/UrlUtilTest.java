@@ -13,4 +13,9 @@ public class UrlUtilTest {
         assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "/page"));
     }
 
+    @Test
+    public void escapeXmlSpecialCharacters() {
+        assertEquals("/page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;", UrlUtil.escapeXmlSpecialCharacters("/page?arg1='test'&arg2=<test>&arg3=\"test\""));
+    }
+
 }

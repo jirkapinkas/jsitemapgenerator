@@ -134,27 +134,27 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         out.append("<image:image>\n");
         if (image.getLoc() != null) {
             out.append("<image:loc>");
-            out.append(escapeXmlSpecialCharacters(image.getLoc()));
+            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getLoc()));
             out.append("</image:loc>\n");
         }
         if (image.getCaption() != null) {
             out.append("<image:caption>");
-            out.append(escapeXmlSpecialCharacters(image.getCaption()));
+            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getCaption()));
             out.append("</image:caption>\n");
         }
         if (image.getGeoLocation() != null) {
             out.append("<image:geo_location>");
-            out.append(escapeXmlSpecialCharacters(image.getGeoLocation()));
+            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getGeoLocation()));
             out.append("</image:geo_location>\n");
         }
         if (image.getTitle() != null) {
             out.append("<image:title>");
-            out.append(escapeXmlSpecialCharacters(image.getTitle()));
+            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getTitle()));
             out.append("</image:title>\n");
         }
         if (image.getLicense() != null) {
             out.append("<image:license>");
-            out.append(escapeXmlSpecialCharacters(image.getLicense()));
+            out.append(UrlUtil.escapeXmlSpecialCharacters(image.getLicense()));
             out.append("</image:license>\n");
         }
         out.append("</image:image>\n");
@@ -174,7 +174,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
             try {
                 for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
                     out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
-                    out.append(escapeXmlSpecialCharacters(entry.getKey()));
+                    out.append(UrlUtil.escapeXmlSpecialCharacters(entry.getKey()));
                     out.append("\" href=\"");
                     out.append(toUrl(baseUrl, entry.getValue()));
                     out.append("\"/>\n");
@@ -203,10 +203,10 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
 
     private String toUrl(String baseUrl, String name) throws MalformedURLException {
         if (name == null) {
-            return escapeXmlSpecialCharacters(new URL(baseUrl).toString());
+            return UrlUtil.escapeXmlSpecialCharacters(new URL(baseUrl).toString());
         }
         String urlString = UrlUtil.connectUrlParts(baseUrl, name);
-        return escapeXmlSpecialCharacters(new URL(urlString).toString());
+        return UrlUtil.escapeXmlSpecialCharacters(new URL(urlString).toString());
     }
 
 }

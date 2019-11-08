@@ -1,6 +1,7 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
+import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		StringBuilder out = new StringBuilder();
 		out.append("<sitemap>\n");
 		out.append("<loc>");
-		out.append(getAbsoluteUrl(escapeXmlSpecialCharacters(webPage.constructName())));
+		out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(webPage.constructName())));
 		out.append("</loc>\n");
 		if (webPage.getLastMod() != null) {
 			out.append("<lastmod>");
