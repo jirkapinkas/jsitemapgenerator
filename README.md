@@ -12,7 +12,7 @@ First add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>3.14</version>
+      <version>3.16</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -20,7 +20,7 @@ If you want to use "ping google / bing" functionality, also add this library to 
     <dependency>
         <groupId>com.squareup.okhttp3</groupId>
         <artifactId>okhttp</artifactId>
-        <version>3.12.1</version> <!-- latest version should be fine -->
+        <version>4.2.2</version> <!-- latest version should be fine, get latest version from https://javalibs.com/artifact/com.squareup.okhttp3/okhttp -->
     </dependency>
 
 ### Typical usage (web sitemap):
