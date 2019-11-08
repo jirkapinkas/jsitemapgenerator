@@ -63,7 +63,7 @@ public class SitemapIndexGenerator extends AbstractSitemapGenerator <SitemapInde
 		StringBuilder out = new StringBuilder();
 		out.append("<sitemap>\n");
 		out.append("<loc>");
-		out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(webPage.constructName())));
+		out.append(getAbsoluteUrl(webPage.constructName()));
 		out.append("</loc>\n");
 		if (webPage.getLastMod() != null) {
 			out.append("<lastmod>");

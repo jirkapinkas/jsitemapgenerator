@@ -161,14 +161,14 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     protected String constructUrl(WebPage webPage) {
         StringBuilder out = new StringBuilder();
         out.append("<loc>");
-        out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(webPage.constructName())));
+        out.append(getAbsoluteUrl(webPage.constructName()));
         out.append("</loc>\n");
         if (webPage.getAlternateNames() != null) {
             for (Map.Entry<String, String> entry : webPage.getAlternateNames().entrySet()) {
                 out.append("<xhtml:link rel=\"alternate\" hreflang=\"");
                 out.append(UrlUtil.escapeXmlSpecialCharacters(entry.getKey()));
                 out.append("\" href=\"");
-                out.append(getAbsoluteUrl(UrlUtil.escapeXmlSpecialCharacters(entry.getValue())));
+                out.append(getAbsoluteUrl(entry.getValue()));
                 out.append("\"/>\n");
             }
         }

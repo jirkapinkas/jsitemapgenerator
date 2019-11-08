@@ -484,6 +484,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * @return Correct URL
 	 */
 	protected String getAbsoluteUrl(String webPageName) {
+		webPageName = UrlUtil.escapeXmlSpecialCharacters(webPageName);
 		try {
 			String resultString;
 			if (webPageName != null) {
