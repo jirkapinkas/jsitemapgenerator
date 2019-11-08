@@ -8,7 +8,10 @@ public class RobotsRuleTest {
 
     @Test
     public void testBuilderOK() {
-        RobotsRule.builder().allowAll().userAgentAll().build();
+        RobotsRule robotsRule = RobotsRule.builder().allowAll().userAgentAll().build();
+        assertEquals("/", robotsRule.getAllows().get(0));
+        assertEquals("*", robotsRule.getUserAgent());
+        assertTrue(robotsRule.getDisallows().isEmpty());
     }
 
     @Test(expected = RobotsRuleException.class)

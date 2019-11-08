@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cz.jiripinkas.jsitemapgenerator;
 
 import static java.util.Calendar.HOUR_OF_DAY;
@@ -52,7 +49,6 @@ import java.util.TimeZone;
  * @see <a href="http://www.w3.org/TR/NOTE-datetime">Date and Time Formats</a>
  */
 public class W3CDateFormat extends SimpleDateFormat {
-	private static final long serialVersionUID = -5733368073260485802L;
 
 	/** The six patterns defined by W3C, plus {@link #AUTO} configuration */
 	public enum Pattern {

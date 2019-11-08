@@ -240,8 +240,8 @@ public abstract class AbstractGenerator <I extends AbstractGenerator> {
         void accept(T t) throws Exception;
     }
 
-    public interface StringSupplierWithException<String> {
-        String get() throws Exception;
+    public interface StringSupplierWithException<S> {
+        S get() throws Exception;
     }
 
     /**

@@ -24,14 +24,6 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
     }
 
     /**
-     * @param baseUrl Base URL
-     * @param additionalNamespaces Additional parameters
-     */
-    private SitemapGenerator(String baseUrl, AdditionalNamespace[] additionalNamespaces) {
-        this(baseUrl);
-    }
-
-    /**
      * Construct additional namespaces string
      * @param additionalNamespaceList
      * @return
