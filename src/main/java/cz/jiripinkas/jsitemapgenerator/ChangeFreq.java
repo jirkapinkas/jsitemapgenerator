@@ -13,7 +13,7 @@ public enum ChangeFreq {
 
 	private String lowerCase;
 
-	private ChangeFreq() {
+	ChangeFreq() {
 		lowerCase = name().toLowerCase();
 	}
 
