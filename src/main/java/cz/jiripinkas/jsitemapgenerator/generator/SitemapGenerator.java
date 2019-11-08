@@ -4,10 +4,7 @@ import cz.jiripinkas.jsitemapgenerator.AbstractSitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.UrlUtil;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
