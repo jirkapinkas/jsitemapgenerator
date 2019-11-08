@@ -12,8 +12,9 @@ import org.mockito.Mockito;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +25,7 @@ public class SitemapGeneratorTest {
 	@Before
 	public void setUp() {
 		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
-		sitemapGenerator.addPage(WebPage.builder().name("index.php").priority(1.0).changeFreqNever().lastMod(new Date()).build());
+		sitemapGenerator.addPage(WebPage.builder().name("index.php").priority(1.0).changeFreqNever().lastMod(LocalDateTime.of(2019, 1, 1, 0, 0)).build());
 		sitemapGenerator.addPage(WebPage.builder().name("latest.php").build());
 		sitemapGenerator.addPage(WebPage.builder().name("contact.php").build());
 	}
@@ -115,6 +116,23 @@ public class SitemapGeneratorTest {
 	public void testSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		sitemapGenerator.toFile(tmpFile);
+		String actualSitemap = String.join("\n", Files.readAllLines(tmpFile.toPath()));
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+				"<url>\n" +
+				"<loc>http://www.javavids.com/index.php</loc>\n" +
+				"<lastmod>2019-01-01</lastmod>\n" +
+				"<changefreq>never</changefreq>\n" +
+				"<priority>1.0</priority>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>http://www.javavids.com/contact.php</loc>\n" +
+				"</url>\n" +
+				"<url>\n" +
+				"<loc>http://www.javavids.com/latest.php</loc>\n" +
+				"</url>\n" +
+				"</urlset>";
+		assertEquals(expectedSitemap, actualSitemap);
 		try {
 			TestUtil.testSitemapXsdFile(tmpFile, new File("sitemap.xsd"));
 		} finally {
