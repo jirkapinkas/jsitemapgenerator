@@ -50,6 +50,15 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 		return result.toString();
 	}
 
+	/**
+	 * Construct sitemap into single prettified String
+	 * @param indent
+	 * @return
+	 */
+	public String toPrettyString(int indent) {
+		return toPrettyXmlString(toString(), indent).replace("\r\n", "\n");
+	}
+
 	private ByteArrayOutputStream gzipIt(InputStream inputStream) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
