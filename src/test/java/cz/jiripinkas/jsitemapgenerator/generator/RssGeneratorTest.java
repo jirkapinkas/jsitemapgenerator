@@ -2,8 +2,8 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
@@ -13,19 +13,19 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RssGeneratorTest {
+class RssGeneratorTest {
 
     private RssGenerator rssGenerator;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         rssGenerator = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community");
     }
 
     @Test
-    public void testConstructRssEmptyItemsShouldThrowException() {
+    void testConstructRssEmptyItemsShouldThrowException() {
         try {
             String rss = rssGenerator.toString();
             ByteArrayInputStream xml = new ByteArrayInputStream(rss.getBytes(StandardCharsets.UTF_8));
@@ -36,7 +36,7 @@ public class RssGeneratorTest {
     }
 
     @Test
-    public void testConstructRssWithItems() throws SAXException, IOException {
+    void testConstructRssWithItems() throws SAXException, IOException {
         rssGenerator.addPage(WebPage.rssBuilder()
                 .title("latest news")
                 .description("description")
@@ -50,8 +50,8 @@ public class RssGeneratorTest {
     }
 
     @Test
-    public void testConstructRssWithItemsLocalDateTime() {
-        String rss = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
+    void testConstructRssWithItemsLocalDateTime() {
+        String actual = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
                 .addPage(WebPage.rssBuilder()
                         .title("latest news")
                         .description("description")
@@ -76,12 +76,12 @@ public class RssGeneratorTest {
                 "</item>\n" +
                 "</channel>\n" +
                 "</rss>\n";
-        assertEquals(expected, rss);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void testConstructRssWithItemsLocalDateTimeWithRedundantSlash() {
-        String rss = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
+    void testConstructRssWithItemsLocalDateTimeWithRedundantSlash() {
+        String actual = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
                 .addPage(WebPage.rssBuilder()
                         .title("latest news")
                         .description("description")
@@ -106,7 +106,7 @@ public class RssGeneratorTest {
                 "</item>\n" +
                 "</channel>\n" +
                 "</rss>\n";
-        assertEquals(expected, rss);
+        assertEquals(expected, actual);
     }
 
 }

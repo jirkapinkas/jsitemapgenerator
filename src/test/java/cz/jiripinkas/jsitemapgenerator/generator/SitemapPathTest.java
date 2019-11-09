@@ -2,25 +2,25 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.W3CDateFormat;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.text.DateFormat;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SitemapPathTest {
+class SitemapPathTest {
 
     private DateFormat dateFormat;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         dateFormat = new W3CDateFormat();
     }
 
     @Test
-    public void testSitemapPaths() {
+    void testSitemapPaths() {
         SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
         Date lastModDate = new Date();
         sitemapGenerator.addPage(WebPage.builder()
@@ -51,7 +51,7 @@ public class SitemapPathTest {
     }
 
     @Test
-    public void testSitemapPaths2() {
+    void testSitemapPaths2() {
         SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
         sitemapGenerator.addPage(WebPage.builder()
                 .name("/x0")
@@ -102,7 +102,7 @@ public class SitemapPathTest {
     }
 
     @Test
-    public void testSitemapPathWithSpecialCharacters() {
+    void testSitemapPathWithSpecialCharacters() {
         SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
         sitemapGenerator.addPage(WebPage.builder()
                 .name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")

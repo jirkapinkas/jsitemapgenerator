@@ -1,20 +1,20 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class UrlUtilTest {
+class UrlUtilTest {
 
     @Test
-    public void connectUrlParts() {
+    void connectUrlParts() {
         assertEquals("https://javalibs.com", UrlUtil.connectUrlParts("https://javalibs.com", null));
         assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "page"));
         assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "/page"));
     }
 
     @Test
-    public void escapeXmlSpecialCharacters() {
+    void escapeXmlSpecialCharacters() {
         assertEquals("/page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;", UrlUtil.escapeXmlSpecialCharacters("/page?arg1='test'&arg2=<test>&arg3=\"test\""));
         assertNull(UrlUtil.escapeXmlSpecialCharacters(null));
     }

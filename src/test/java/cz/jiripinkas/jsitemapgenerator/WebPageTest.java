@@ -3,62 +3,70 @@ package cz.jiripinkas.jsitemapgenerator;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class WebPageTest {
+class WebPageTest {
 
-	@Test(expected = InvalidUrlException.class)
-	public void testConstruct() {
-		SitemapGenerator.of("www.javavids.com");
-	}
-
-	@Test(expected = InvalidPriorityException.class)
-	public void testLowPriority() {
-		new WebPage().setPriority(-1.0);
-	}
-
-	@Test(expected = InvalidPriorityException.class)
-	public void testHighPriority() {
-		new WebPage().setPriority(10.0);
+	@Test
+	void testConstruct() {
+		assertThrows(InvalidUrlException.class, () -> {
+			SitemapGenerator.of("www.javavids.com");
+		});
 	}
 
 	@Test
-	public void testPrefixDirAndSuffix() {
+	void testLowPriority() {
+		assertThrows(InvalidPriorityException.class, () -> {
+			new WebPage().setPriority(-1.0);
+		});
+	}
+
+	@Test
+	void testHighPriority() {
+		assertThrows(InvalidPriorityException.class, () -> {
+			new WebPage().setPriority(10.0);
+		});
+	}
+
+	@Test
+	void testPrefixDirAndSuffix() {
 		WebPage build = WebPage.builder().dir("dir").name("name").extension("html").build();
 		assertEquals("dir/name.html", build.constructName());
 	}
 
 	@Test
-	public void testPrefixDirs() {
+	void testPrefixDirs() {
 		WebPage build = WebPage.builder().dir("dir1", "dir2", "dir3").name("name").extension("html").build();
 		assertEquals("dir1/dir2/dir3/name.html", build.constructName());
 	}
 
 	@Test
-	public void testDirs() {
+	void testDirs() {
 		WebPage build = WebPage.builder().name("dir1", "dir2", "dir3", "name").build();
 		assertEquals("dir1/dir2/dir3/name", build.constructName());
 	}
 
 	@Test
-	public void testNameRoot() {
+	void testNameRoot() {
 		WebPage build = WebPage.builder().nameRoot().build();
 		assertEquals("", build.constructName());
 	}
 
 	@Test
-	public void of_name_is_not_null() {
+	void of_name_is_not_null() {
 		WebPage webPage = WebPage.of("test");
 		assertThat(webPage.getName()).isEqualTo("test");
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void of_name_cannot_be_null() {
-		String nullString = null;
-		WebPage webPage = WebPage.of(nullString);
+	@Test
+	void of_name_cannot_be_null() {
+		assertThrows(NullPointerException.class, () -> {
+			String nullString = null;
+			WebPage.of(nullString);
+		});
 	}
 
 }

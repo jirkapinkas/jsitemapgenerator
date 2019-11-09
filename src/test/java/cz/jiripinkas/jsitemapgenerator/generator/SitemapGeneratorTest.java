@@ -5,8 +5,8 @@ import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
@@ -16,14 +16,14 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SitemapGeneratorTest {
+class SitemapGeneratorTest {
 
 	private SitemapGenerator sitemapGenerator;
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	void setUp() {
 		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().name("index.php").priority(1.0).changeFreqNever().lastMod(LocalDateTime.of(2019, 1, 1, 0, 0)).build());
 		sitemapGenerator.addPage(WebPage.builder().name("latest.php").build());
@@ -31,7 +31,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructImage() {
+	void testConstructImage() {
 		Image image = new Image();
 		image.setLoc("http://example.com/image");
 		String imageString = sitemapGenerator.constructImage(image);
@@ -39,7 +39,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructImageWithBaseUrl() {
+	void testConstructImageWithBaseUrl() {
 		Image image = new Image();
 		image.setLoc("/image");
 		String imageString = sitemapGenerator.constructImage(image);
@@ -47,7 +47,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructSitemapWithImagesHeader() {
+	void testConstructSitemapWithImagesHeader() {
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().images(new ArrayList<>()).build());
 		String sitemapString = sitemapGenerator.toString();
@@ -61,7 +61,7 @@ public class SitemapGeneratorTest {
 	}
 	
 	@Test
-	public void testConstructSitemapWithImages() {
+	void testConstructSitemapWithImages() {
 		sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
@@ -71,19 +71,19 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructUrlEmptyPage() {
+	void testConstructUrlEmptyPage() {
 		String url = sitemapGenerator.constructUrl(new WebPage());
 		assertEquals("<loc>http://www.javavids.com/</loc>\n", url);
 	}
 
 	@Test
-	public void testConstructUrlNotEmptyPage() {
+	void testConstructUrlNotEmptyPage() {
 		String url = sitemapGenerator.constructUrl(WebPage.builder().name("latest.php").build());
 		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n", url);
 	}
 
 	@Test
-	public void testConstructAlternateUrls() {
+	void testConstructAlternateUrls() {
 		String url = SitemapGenerator.of("http://www.javavids.com")
 				.constructUrl(WebPage.builder()
 				.name("latest.php")
@@ -95,7 +95,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructAlternateUrls2() {
+	void testConstructAlternateUrls2() {
 		String url = SitemapGenerator.of("http://www.javavids.com").constructUrl(WebPage.builder()
 				.name("latest.php")
 				.alternateName("de", () -> "latest-de.php")
@@ -106,14 +106,14 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructSitemap() throws Exception {
+	void testConstructSitemap() throws Exception {
 		String sitemap = sitemapGenerator.toString();
 		ByteArrayInputStream sitemapXml = new ByteArrayInputStream(sitemap.getBytes(StandardCharsets.UTF_8));
 		TestUtil.testSitemapXsd(sitemapXml, new File("src/test/resources/sitemap.xsd"));
 	}
 
 	@Test
-	public void testSaveSitemap() throws Exception {
+	void testSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		sitemapGenerator.toFile(tmpFile);
 		String actualSitemap = String.join("\n", Files.readAllLines(tmpFile.toPath()));
@@ -141,7 +141,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testConstructAndSaveSitemap() throws Exception {
+	void testConstructAndSaveSitemap() throws Exception {
 		File tmpFile = File.createTempFile("test", "sitemap");
 		sitemapGenerator.toFile(tmpFile);
 		try {
@@ -152,7 +152,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void test() {
+	void test() {
 		String sitemap = SitemapGenerator.of("https://javalibs.com")
 				.defaultDir("dir1")
 				.defaultChangeFreqWeekly()
@@ -194,7 +194,7 @@ public class SitemapGeneratorTest {
 //	public MockitoRule mockitoRule = MockitoJUnit.rule();
 
 	@Test
-	public void testPingGoogleSuccess() throws Exception {
+	void testPingGoogleSuccess() throws Exception {
 		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
 		sitemapGenerator.setHttpClient(httpClientMock);
@@ -206,19 +206,20 @@ public class SitemapGeneratorTest {
 		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml");
 	}
 
-	@Test(expected = GWTException.class)
-	public void testPingGoogleError() throws Exception {
-		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
-		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
-		sitemapGenerator.setHttpClient(httpClientMock);
-		Mockito.when(httpClientMock.get(Mockito.anyString()))
-				.thenReturn(500);
-//		Mockito.doReturn(500).when(httpClientMock).get(Mockito.any());
-		sitemapGenerator.pingGoogle();
+	@Test
+	void testPingGoogleError() throws Exception {
+		assertThrows(GWTException.class, () -> {
+			HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+			SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+			sitemapGenerator.setHttpClient(httpClientMock);
+			Mockito.when(httpClientMock.get(Mockito.anyString()))
+					.thenReturn(500);
+			sitemapGenerator.pingGoogle();
+		});
 	}
 
 	@Test
-	public void testRemoveRedundantSlashes1() {
+	void testRemoveRedundantSlashes1() {
 		String actualSitemap = SitemapGenerator.of("https://javalibs.com/")
 				.addPage(WebPage.of("/test"))
 				.toString();
@@ -232,7 +233,7 @@ public class SitemapGeneratorTest {
 	}
 
 	@Test
-	public void testRemoveRedundantSlashes2() {
+	void testRemoveRedundantSlashes2() {
 		String actualSitemap = SitemapGenerator.of("https://javalibs.com/")
 				.defaultDir("testDir")
 				.addPage(WebPage.of("/testPage"))

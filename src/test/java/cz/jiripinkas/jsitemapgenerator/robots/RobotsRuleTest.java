@@ -1,26 +1,30 @@
 package cz.jiripinkas.jsitemapgenerator.robots;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RobotsRuleTest {
+class RobotsRuleTest {
 
     @Test
-    public void testBuilderOK() {
+    void testBuilderOK() {
         RobotsRule robotsRule = RobotsRule.builder().allowAll().userAgentAll().build();
         assertEquals("/", robotsRule.getAllows().get(0));
         assertEquals("*", robotsRule.getUserAgent());
         assertTrue(robotsRule.getDisallows().isEmpty());
     }
 
-    @Test(expected = RobotsRuleException.class)
-    public void testBuilderMissingUserAgent() {
-        RobotsRule.builder().allowAll().disallowAll().build();
+    @Test
+    void testBuilderMissingUserAgent() {
+        assertThrows(RobotsRuleException.class, () -> {
+            RobotsRule.builder().allowAll().disallowAll().build();
+        });
     }
 
-    @Test(expected = RobotsRuleException.class)
-    public void testBuilderMissingAllowAndDisallow() {
-        RobotsRule.builder().userAgentAll().build();
+    @Test
+    void testBuilderMissingAllowAndDisallow() {
+        assertThrows(RobotsRuleException.class, () -> {
+            RobotsRule.builder().userAgentAll().build();
+        });
     }
 }
