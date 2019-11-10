@@ -1,6 +1,6 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
+import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 
@@ -159,10 +159,10 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 			// ping Google / Bing
 			int returnCode = httpClient.get(pingUrl);
 			if (returnCode != 200) {
-				throw new GWTException(serviceName + " could not be informed about new sitemap!");
+				throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!");
 			}
 		} catch (Exception ex) {
-			throw new GWTException(serviceName + " could not be informed about new sitemap!");
+			throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!");
 		}
 	}
 

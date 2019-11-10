@@ -3,7 +3,7 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 import cz.jiripinkas.jsitemapgenerator.HttpClient;
 import cz.jiripinkas.jsitemapgenerator.Image;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
-import cz.jiripinkas.jsitemapgenerator.exception.GWTException;
+import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -207,8 +207,8 @@ class SitemapGeneratorTest {
 	}
 
 	@Test
-	void testPingGoogleError() throws Exception {
-		assertThrows(GWTException.class, () -> {
+	void testPingGoogleError() {
+		assertThrows(WebmasterToolsException.class, () -> {
 			HttpClient httpClientMock = Mockito.mock(HttpClient.class);
 			SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
 			sitemapGenerator.setHttpClient(httpClientMock);
