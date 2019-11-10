@@ -29,11 +29,11 @@ class SitemapPathTest {
                 .changeFreqNever()
                 .lastMod(lastModDate)
                 .build());
-        sitemapGenerator.addPage(WebPage.builder().name("basepath/latest.php").build());
-        sitemapGenerator.addPage(WebPage.builder().name("/basepath/contact.php").build());
+        sitemapGenerator.addPage(WebPage.of("basepath", "latest.php"));
+        sitemapGenerator.addPage(WebPage.of("basepath", "contact.php"));
 
-        String sitemap = sitemapGenerator.toString();
-        final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        String actualSitemap = sitemapGenerator.toString();
+        final String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
                 + "<url>\n"
                 + "<loc>http://www.javavids.com/index.php</loc>\n"
@@ -47,7 +47,7 @@ class SitemapPathTest {
                 + "<loc>http://www.javavids.com/basepath/latest.php</loc>\n"
                 + "</url>\n"
                 + "</urlset>";
-        assertEquals(sitemap, expected);
+        assertEquals(expectedSitemap, actualSitemap);
     }
 
     @Test
@@ -69,11 +69,11 @@ class SitemapPathTest {
                 .name("/a1")
                 .priority(0.5)
                 .build());
-        sitemapGenerator.addPage(WebPage.builder().name("x2").build());
-        sitemapGenerator.addPage(WebPage.builder().name("a2").build());
+        sitemapGenerator.addPage(WebPage.of("x2"));
+        sitemapGenerator.addPage(WebPage.of("a2"));
 
-        String sitemap = sitemapGenerator.toString();
-        final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        String actualSitemap = sitemapGenerator.toString();
+        final String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
                 "<url>\n" +
                 "<loc>http://www.javavids.com/a0</loc>\n" +
@@ -98,17 +98,15 @@ class SitemapPathTest {
                 "<loc>http://www.javavids.com/x2</loc>\n" +
                 "</url>\n" +
                 "</urlset>";
-        assertEquals(sitemap, expected);
+        assertEquals(expectedSitemap, actualSitemap);
     }
 
     @Test
     void testSitemapPathWithSpecialCharacters() {
         SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com/");
-        sitemapGenerator.addPage(WebPage.builder()
-                .name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")
-                .build());
+        sitemapGenerator.addPage(WebPage.of("/page?arg1='test'&arg2=<test>&arg3=\"test\""));
 
-        String sitemap = sitemapGenerator.toString();
+        String actualSitemap = sitemapGenerator.toString();
         String expectedSitemap =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
@@ -116,7 +114,7 @@ class SitemapPathTest {
                 "<loc>http://www.javavids.com/page?arg1=&apos;test&apos;&amp;arg2=&lt;test&gt;&amp;arg3=&quot;test&quot;</loc>\n" +
                 "</url>\n" +
                 "</urlset>";
-        assertEquals(expectedSitemap, sitemap);
+        assertEquals(expectedSitemap, actualSitemap);
     }
 
 }

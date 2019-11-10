@@ -8,9 +8,11 @@ class UrlUtilTest {
 
     @Test
     void connectUrlParts() {
-        assertEquals("https://javalibs.com", UrlUtil.connectUrlParts("https://javalibs.com", null));
-        assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "page"));
-        assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "/page"));
+        assertAll(
+                () -> assertEquals("https://javalibs.com", UrlUtil.connectUrlParts("https://javalibs.com", null)),
+                () -> assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "page")),
+                () -> assertEquals("https://javalibs.com/page", UrlUtil.connectUrlParts("https://javalibs.com", "/page"))
+        );
     }
 
     @Test

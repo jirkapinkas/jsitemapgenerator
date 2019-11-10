@@ -54,8 +54,8 @@ class SitemapIndexGeneratorTest {
 				.name("/page?arg1='test'&arg2=<test>&arg3=\"test\"")
 				.build());
 
-		String actualSitemap = sitemapIndexGenerator.toString();
-		String expectedSitemap =
+		String actualSitemapIndex = sitemapIndexGenerator.toString();
+		String expectedSitemapIndex =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 						"<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
 						"<sitemap>\n" +
@@ -68,7 +68,7 @@ class SitemapIndexGeneratorTest {
 						"<loc>http://javalibs.com/sitemap-plugins.xml</loc>\n" +
 						"</sitemap>\n" +
 						"</sitemapindex>";
-		assertEquals(expectedSitemap, actualSitemap);
+		assertEquals(expectedSitemapIndex, actualSitemapIndex);
 	}
 
 	@Test

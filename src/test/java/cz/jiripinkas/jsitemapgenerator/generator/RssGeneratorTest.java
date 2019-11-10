@@ -51,7 +51,7 @@ class RssGeneratorTest {
 
     @Test
     void testConstructRssWithItemsLocalDateTime() {
-        String actual = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
+        String actualRss = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
                 .addPage(WebPage.rssBuilder()
                         .title("latest news")
                         .description("description")
@@ -59,7 +59,7 @@ class RssGeneratorTest {
                         .pubDate(LocalDateTime.of(2000, 1, 1, 1, 0))
                         .build())
                 .toString();
-        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+        String expectedRss = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                 "<rss version=\"2.0\">\n" +
                 "<channel>\n" +
                 "<title>Top Java Blogs</title>\n" +
@@ -76,12 +76,12 @@ class RssGeneratorTest {
                 "</item>\n" +
                 "</channel>\n" +
                 "</rss>\n";
-        assertEquals(expected, actual);
+        assertEquals(expectedRss, actualRss);
     }
 
     @Test
     void testConstructRssWithItemsLocalDateTimeWithRedundantSlash() {
-        String actual = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
+        String actualRss = RssGenerator.of("http://www.topjavablogs.com", "Top Java Blogs", "News from Java community")
                 .addPage(WebPage.rssBuilder()
                         .title("latest news")
                         .description("description")
@@ -89,7 +89,7 @@ class RssGeneratorTest {
                         .pubDate(LocalDateTime.of(2000, 1, 1, 1, 0))
                         .build())
                 .toString();
-        String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
+        String expectedRss = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
                 "<rss version=\"2.0\">\n" +
                 "<channel>\n" +
                 "<title>Top Java Blogs</title>\n" +
@@ -106,7 +106,7 @@ class RssGeneratorTest {
                 "</item>\n" +
                 "</channel>\n" +
                 "</rss>\n";
-        assertEquals(expected, actual);
+        assertEquals(expectedRss, actualRss);
     }
 
 }

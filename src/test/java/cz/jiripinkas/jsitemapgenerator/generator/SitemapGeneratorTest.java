@@ -34,30 +34,32 @@ class SitemapGeneratorTest {
 	void testConstructImage() {
 		Image image = new Image();
 		image.setLoc("http://example.com/image");
-		String imageString = sitemapGenerator.constructImage(image);
-		assertEquals("<image:image>\n<image:loc>http://example.com/image</image:loc>\n</image:image>\n", imageString);
+		String actualImageString = sitemapGenerator.constructImage(image);
+		String expectedImageString = "<image:image>\n<image:loc>http://example.com/image</image:loc>\n</image:image>\n";
+		assertEquals(expectedImageString, actualImageString);
 	}
 
 	@Test
 	void testConstructImageWithBaseUrl() {
 		Image image = new Image();
 		image.setLoc("/image");
-		String imageString = sitemapGenerator.constructImage(image);
-		assertEquals("<image:image>\n<image:loc>http://www.javavids.com/image</image:loc>\n</image:image>\n", imageString);
+		String actualImageString = sitemapGenerator.constructImage(image);
+		String expectedImageString = "<image:image>\n<image:loc>http://www.javavids.com/image</image:loc>\n</image:image>\n";
+		assertEquals(expectedImageString, actualImageString);
 	}
 
 	@Test
 	void testConstructSitemapWithImagesHeader() {
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("http://www.javavids.com");
 		sitemapGenerator.addPage(WebPage.builder().images(new ArrayList<>()).build());
-		String sitemapString = sitemapGenerator.toString();
-		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+		String actualSitemap = sitemapGenerator.toString();
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n" +
 				"<url>\n" +
 				"<loc>http://www.javavids.com/</loc>\n" +
 				"</url>\n" +
 				"</urlset>";
-		assertEquals(expected, sitemapString);
+		assertEquals(expectedSitemap, actualSitemap);
 	}
 	
 	@Test
@@ -66,8 +68,9 @@ class SitemapGeneratorTest {
 		WebPage webPage = WebPage.builder().nameRoot().build();
 		webPage.addImage(WebPage.imageBuilder().loc("http://www.javavids.com/favicon.ico").build());
 		sitemapGenerator.addPage(webPage);
-		String sitemapString = sitemapGenerator.toString();
-		assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>", sitemapString);
+		String actualSitemap = sitemapGenerator.toString();
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:image=\"http://www.google.com/schemas/sitemap-image/1.1\" >\n<url>\n<loc>http://www.javavids.com/</loc>\n<image:image>\n<image:loc>http://www.javavids.com/favicon.ico</image:loc>\n</image:image>\n</url>\n</urlset>";
+		assertEquals(expectedSitemap, actualSitemap);
 	}
 
 	@Test
@@ -84,25 +87,27 @@ class SitemapGeneratorTest {
 
 	@Test
 	void testConstructAlternateUrls() {
-		String url = SitemapGenerator.of("http://www.javavids.com")
+		String actualAlternateUrl = SitemapGenerator.of("http://www.javavids.com")
 				.constructUrl(WebPage.builder()
 				.name("latest.php")
 				.alternateName("de", "latest-de.php")
 				.alternateName("es", "latest-es.php")
 				.build());
-		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
-				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n", url);
+		String expectedAlaternateUrl = "<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
+				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n";
+		assertEquals(expectedAlaternateUrl, actualAlternateUrl);
 	}
 
 	@Test
 	void testConstructAlternateUrls2() {
-		String url = SitemapGenerator.of("http://www.javavids.com").constructUrl(WebPage.builder()
+		String actualAlternateUrl = SitemapGenerator.of("http://www.javavids.com").constructUrl(WebPage.builder()
 				.name("latest.php")
 				.alternateName("de", () -> "latest-de.php")
 				.alternateName("es", () -> "latest-es.php")
 				.build());
-		assertEquals("<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
-				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n", url);
+		String expectedAlternateUrl = "<loc>http://www.javavids.com/latest.php</loc>\n<xhtml:link rel=\"alternate\" hreflang=\"de\" href=\"http://www.javavids.com/latest-de.php\"/>\n" +
+				"<xhtml:link rel=\"alternate\" hreflang=\"es\" href=\"http://www.javavids.com/latest-es.php\"/>\n";
+		assertEquals(expectedAlternateUrl, actualAlternateUrl);
 	}
 
 	@Test
@@ -153,7 +158,7 @@ class SitemapGeneratorTest {
 
 	@Test
 	void test() {
-		String sitemap = SitemapGenerator.of("https://javalibs.com")
+		String actualSitemap = SitemapGenerator.of("https://javalibs.com")
 				.defaultDir("dir1")
 				.defaultChangeFreqWeekly()
 				.addPage(WebPage.of("a"))
@@ -164,7 +169,7 @@ class SitemapGeneratorTest {
 				.addPage(WebPage.of("y"))
 				.addPage(WebPage.builder().dir("dir3").name("z").changeFreqNever().build())
 				.toString();
-		String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+		String expectedSitemap = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
 				"<url>\n" +
 				"<loc>https://javalibs.com/dir1/a</loc>\n" +
@@ -187,11 +192,8 @@ class SitemapGeneratorTest {
 				"<changefreq>never</changefreq>\n" +
 				"</url>\n" +
 				"</urlset>";
-		assertEquals(expected, sitemap);
+		assertEquals(expectedSitemap, actualSitemap);
 	}
-
-//	@Rule
-//	public MockitoRule mockitoRule = MockitoJUnit.rule();
 
 	@Test
 	void testPingGoogleSuccess() throws Exception {

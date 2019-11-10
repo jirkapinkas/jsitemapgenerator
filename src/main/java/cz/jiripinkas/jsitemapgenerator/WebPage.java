@@ -38,9 +38,25 @@ public class WebPage implements Comparable<WebPage> {
      * @throws NullPointerException When name is null
      */
     public static WebPage of(String name) {
-		Objects.requireNonNull(name);
+        Objects.requireNonNull(name);
         WebPage webPage = new WebPage();
         webPage.setName(name);
+        return webPage;
+    }
+
+    /**
+     * Method for creating WebPage only with name
+     * (this can be useful for really simple sitemaps
+     * or with combination of default settings
+     * set on SitemapGenerator)
+     * @param names Names (cannot be null), will be connected using "/"
+     * @return WebPage instance
+     * @throws NullPointerException When name is null
+     */
+    public static WebPage of(String ... names) {
+        Objects.requireNonNull(names);
+        WebPage webPage = new WebPage();
+        webPage.setName(String.join("/", names));
         return webPage;
     }
 
