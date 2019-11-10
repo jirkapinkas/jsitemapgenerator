@@ -50,6 +50,12 @@ class WebPageTest {
 	}
 
 	@Test
+	void testDirs2() {
+		WebPage build = WebPage.of("dir1", "dir2", "dir3", "name");
+		assertEquals("dir1/dir2/dir3/name", build.constructName());
+	}
+
+	@Test
 	void testNameRoot() {
 		WebPage build = WebPage.builder().nameRoot().build();
 		assertEquals("", build.constructName());
