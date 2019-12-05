@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.function.Supplier;
 import java.util.zip.GZIPOutputStream;
 
 public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> extends AbstractGenerator <T> {
@@ -118,6 +119,17 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 			}
 		}
 		return getThis();
+	}
+
+	/**
+	 * Construct and save sitemap to output file
+	 *
+	 * @param fileSupplier Supplier which supplies output file
+	 * @return this
+	 * @throws IOException when error
+	 */
+	public T toFile(Supplier<File> fileSupplier) throws IOException {
+		return toFile(fileSupplier.get());
 	}
 
 	/**
