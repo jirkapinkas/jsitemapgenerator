@@ -68,7 +68,7 @@ or with list of pages:
 
 ```java
 List<String> pages = Arrays.asList("firstPage", "secondPage", "otherPage");
-String sitemap = SitemapGenerator.of("http://example.com")
+String sitemap = SitemapGenerator.of("https://example.com")
         .addPage(WebPage.builder().nameRoot().priorityMax().build())
         .defaultDir("dirName")
         .addPages(pages, page -> WebPage.of(page))
@@ -84,7 +84,7 @@ class News {
     public String getName() { return name; }
 }
 List<News> newsList = Arrays.asList(new News("a"), new News("b"), new News("c"));
-String sitemap = SitemapGenerator.of("http://example.com")
+String sitemap = SitemapGenerator.of("https://example.com")
         .addPage(WebPage.builder().nameRoot().priorityMax().build())
         .defaultDir("news")
         .addPages(newsList, news -> WebPage.of(news::getName))
@@ -94,7 +94,7 @@ String sitemap = SitemapGenerator.of("http://example.com")
 or to store it to file & ping google:
 
 ```java
-// create web sitemap for web http://www.javavids.com
+// create web sitemap for web https://www.example.com
 SitemapGenerator sg = SitemapGenerator.of("https://example.com");
 // add some URLs
 sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
