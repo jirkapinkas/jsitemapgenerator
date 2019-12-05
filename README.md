@@ -101,7 +101,7 @@ sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().bu
   .addPage("foo.html")
   .addPage("bar.html");
 // generate sitemap and save it to file ./sitemap.xml
-sg.constructAndSaveSitemap(Paths.get("sitemap.xml"));
+sg.toFile(Paths.get("sitemap.xml"));
 // inform Google that this sitemap has changed
 sg.pingGoogle(); // this requires okhttp in classpath!!!
 ```
@@ -145,7 +145,6 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
 
 - [javalibs: (not only) Maven Central search engine](https://javalibs.com)
 - [Java video tutorials](https://javavids.com)
-- [Website monitoring software](http://sitemonitoring.sourceforge.net/)
 - [Java školení](https://www.java-skoleni.cz)
 - [SQL školení](https://www.sql-skoleni.cz)
 
