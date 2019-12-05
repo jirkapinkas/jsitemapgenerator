@@ -49,10 +49,11 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Helper method to create an instance of SitemapGenerator
-     * @param baseUrl Base URL
-     * @param root If Base URL is root (for example http://www.javavids.com or if
-     *             it's some path like http://www.javalibs.com/blog)
-     * @param webTitle Web title
+     *
+     * @param baseUrl        Base URL
+     * @param root           If Base URL is root (for example http://www.javavids.com or if
+     *                       it's some path like http://www.javalibs.com/blog)
+     * @param webTitle       Web title
      * @param webDescription Web description
      * @return Instance of RssGenerator
      */
@@ -62,9 +63,10 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Helper method to create an instance of SitemapGenerator
+     *
      * @param baseUrl Base URL
-     * @param root If Base URL is root (for example http://www.javavids.com or if
-     *             it's some path like http://www.javalibs.com/blog)
+     * @param root    If Base URL is root (for example http://www.javavids.com or if
+     *                it's some path like http://www.javalibs.com/blog)
      * @return Instance of RssGenerator
      */
     public static RssGenerator of(String baseUrl, boolean root) {
@@ -73,8 +75,9 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Helper method to create an instance of SitemapGenerator
-     * @param baseUrl Base URL
-     * @param webTitle Web title
+     *
+     * @param baseUrl        Base URL
+     * @param webTitle       Web title
      * @param webDescription Web description
      * @return Instance of RssGenerator
      */
@@ -84,6 +87,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Helper method to create an instance of SitemapGenerator
+     *
      * @param baseUrl Base URL
      * @return Instance of RssGenerator
      */
@@ -93,6 +97,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Set Web title
+     *
      * @param webTitle Web title
      * @return this
      */
@@ -103,6 +108,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Set Web description
+     *
      * @param webDescription Web description
      * @return this
      */
@@ -178,16 +184,17 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     @Override
     protected void beforeAddPageEvent(WebPage webPage) {
-        if(defaultDir != null && webPage.getDir() == null) {
+        if (defaultDir != null && webPage.getDir() == null) {
             webPage.setShortName(UrlUtil.connectUrlParts(defaultDir, webPage.getShortName()));
         }
-        if(defaultExtension != null && webPage.getExtension() == null) {
+        if (defaultExtension != null && webPage.getExtension() == null) {
             webPage.setShortName(webPage.getShortName() + "." + defaultExtension);
         }
     }
 
     /**
      * Sets default prefix dir to name for all subsequent WebPages. Final name will be "dirName/name"
+     *
      * @param dirName Dir name
      * @return this
      */
@@ -198,16 +205,18 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Sets default prefix dirs to name for all subsequent WebPages. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+     *
      * @param dirNames Dir names
      * @return this
      */
-    public RssGenerator defaultDir(String ... dirNames) {
+    public RssGenerator defaultDir(String... dirNames) {
         defaultDir = String.join("/", dirNames);
         return getThis();
     }
 
     /**
      * Reset default dir value
+     *
      * @return this
      */
     public RssGenerator resetDefaultDir() {
@@ -217,6 +226,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Sets default suffix extension for all subsequent WebPages. Final name will be "name.extension"
+     *
      * @param extension Extension
      * @return this
      */
@@ -227,6 +237,7 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
 
     /**
      * Reset default extension value
+     *
      * @return this
      */
     public RssGenerator resetDefaultExtension() {

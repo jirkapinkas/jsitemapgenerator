@@ -93,10 +93,10 @@ public class RobotsRule {
         }
 
         public RobotsRule build() {
-            if(rule.getUserAgent() == null) {
+            if (rule.getUserAgent() == null) {
                 throw new RobotsRuleException("UserAgent is not specified!");
             }
-            if(rule.getAllows().isEmpty() && rule.getDisallows().isEmpty()) {
+            if (rule.getAllows().isEmpty() && rule.getDisallows().isEmpty()) {
                 throw new RobotsRuleException("Either allows and / or disallows must be present!");
             }
             return rule;

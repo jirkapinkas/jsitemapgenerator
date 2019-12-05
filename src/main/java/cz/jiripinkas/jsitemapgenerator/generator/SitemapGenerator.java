@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator> {
+public class SitemapGenerator extends AbstractSitemapGenerator<SitemapGenerator> {
 
     public enum AdditionalNamespace {
         IMAGE, XHTML
@@ -25,6 +25,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
 
     /**
      * Construct additional namespaces string
+     *
      * @param additionalNamespaceList
      * @return
      */
@@ -41,6 +42,7 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
 
     /**
      * Helper method to create an instance of SitemapGenerator
+     *
      * @param baseUrl Base URL
      * @return Instance of SitemapGenerator
      */
@@ -61,12 +63,12 @@ public class SitemapGenerator extends AbstractSitemapGenerator <SitemapGenerator
         List<AdditionalNamespace> additionalNamespaces = new ArrayList<>();
         boolean hasImages = urls.values().stream()
                 .anyMatch(webPage -> webPage.getImages() != null);
-        if(hasImages) {
+        if (hasImages) {
             additionalNamespaces.add(AdditionalNamespace.IMAGE);
         }
         boolean hasAlternateNames = urls.values().stream()
                 .anyMatch(webPage -> webPage.getAlternateNames() != null);
-        if(hasAlternateNames) {
+        if (hasAlternateNames) {
             additionalNamespaces.add(AdditionalNamespace.XHTML);
         }
 

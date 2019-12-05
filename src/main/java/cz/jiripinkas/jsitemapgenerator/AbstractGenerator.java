@@ -280,7 +280,8 @@ public abstract class AbstractGenerator<I extends AbstractGenerator> {
 
     /**
      * Method to prettify XML string
-     * @param xml Input XML
+     *
+     * @param xml    Input XML
      * @param indent Ident
      * @return Prettified XML
      */

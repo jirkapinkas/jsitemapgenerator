@@ -18,7 +18,7 @@ public class HttpClient {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        try(Response response = client.newCall(request).execute()) {
+        try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 throw new Exception("error sending HTTP GET to this URL: " + url);
             }

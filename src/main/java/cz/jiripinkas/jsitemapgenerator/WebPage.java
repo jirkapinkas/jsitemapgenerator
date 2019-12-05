@@ -33,6 +33,7 @@ public class WebPage implements Comparable<WebPage> {
      * (this can be useful for really simple sitemaps
      * or with combination of default settings
      * set on SitemapGenerator)
+     *
      * @param name Name (cannot be null)
      * @return WebPage instance
      * @throws NullPointerException When name is null
@@ -49,11 +50,12 @@ public class WebPage implements Comparable<WebPage> {
      * (this can be useful for really simple sitemaps
      * or with combination of default settings
      * set on SitemapGenerator)
+     *
      * @param names Names (cannot be null), will be connected using "/"
      * @return WebPage instance
      * @throws NullPointerException When name is null
      */
-    public static WebPage of(String ... names) {
+    public static WebPage of(String... names) {
         Objects.requireNonNull(names);
         WebPage webPage = new WebPage();
         webPage.setName(String.join("/", names));
@@ -65,6 +67,7 @@ public class WebPage implements Comparable<WebPage> {
      * (this can be useful for really simple sitemaps
      * or with combination of default settings
      * set on SitemapGenerator)
+     *
      * @param nameSupplier Name supplier (cannot return null!!!)
      * @return WebPage instance
      * @throws NullPointerException When nameSupplier or nameSupplier.get() returns null
@@ -142,14 +145,15 @@ public class WebPage implements Comparable<WebPage> {
 
     /**
      * Constructs name from dir and extension (if available), used in SitemapGenerators
+     *
      * @return Name
      */
     public String constructName() {
         String result = name;
-        if(dir != null) {
+        if (dir != null) {
             result = UrlUtil.connectUrlParts(dir, result);
         }
-        if(extension != null) {
+        if (extension != null) {
             result = result + "." + extension;
         }
         return result;
@@ -157,14 +161,15 @@ public class WebPage implements Comparable<WebPage> {
 
     /**
      * Constructs shortName from dir and extension (if available), used in RssGenerator
+     *
      * @return Name
      */
     public String constructShortName() {
         String result = shortName;
-        if(dir != null) {
+        if (dir != null) {
             result = UrlUtil.connectUrlParts(dir, result);
         }
-        if(extension != null) {
+        if (extension != null) {
             result = result + "." + extension;
         }
         return result;
@@ -280,6 +285,7 @@ public class WebPage implements Comparable<WebPage> {
 
         /**
          * Sets WebPage name
+         *
          * @param supplier Supplier
          * @return this
          */
@@ -294,7 +300,7 @@ public class WebPage implements Comparable<WebPage> {
          * @param nameAndDirs Dirs and name, for example: ["a", "b", "xxx"] will be transformed to name: "a/b/xxx"
          * @return this
          */
-        public WebPageBuilder name(String ... nameAndDirs) {
+        public WebPageBuilder name(String... nameAndDirs) {
             webPage.setName(String.join("/", nameAndDirs));
             return this;
         }
@@ -325,6 +331,7 @@ public class WebPage implements Comparable<WebPage> {
 
         /**
          * Sets prefix dir to name. Final name will be "dirName/name"
+         *
          * @param dirName Dir name
          * @return this
          */
@@ -335,16 +342,18 @@ public class WebPage implements Comparable<WebPage> {
 
         /**
          * Sets prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+         *
          * @param dirNames Dir names
          * @return this
          */
-        public WebPageBuilder dir(String ... dirNames) {
+        public WebPageBuilder dir(String... dirNames) {
             webPage.setDir(String.join("/", dirNames));
             return this;
         }
 
         /**
          * Sets suffix extension. Final name will be "name.extension"
+         *
          * @param extension Extension
          * @return this
          */
@@ -618,13 +627,14 @@ public class WebPage implements Comparable<WebPage> {
          * @param nameAndDirs Dirs and name, for example: ["a", "b", "xxx"] will be transformed to name: "a/b/xxx"
          * @return this
          */
-        public RssItemBuilder name(String ... nameAndDirs) {
+        public RssItemBuilder name(String... nameAndDirs) {
             webPage.setName(String.join("/", nameAndDirs));
             return this;
         }
 
         /**
          * Sets prefix dir to name. Final name will be "dirName/name"
+         *
          * @param dirName Dir name
          * @return this
          */
@@ -635,16 +645,18 @@ public class WebPage implements Comparable<WebPage> {
 
         /**
          * Sets prefix dirs to name. For dirs: ["a", "b", "c"], the final name will be "a/b/c/name"
+         *
          * @param dirNames Dir names
          * @return this
          */
-        public RssItemBuilder dir(String ... dirNames) {
+        public RssItemBuilder dir(String... dirNames) {
             webPage.setDir(String.join("/", dirNames));
             return this;
         }
 
         /**
          * Sets suffix extension. Final name will be "name.extension"
+         *
          * @param extension Extension
          * @return this
          */

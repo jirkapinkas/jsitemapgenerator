@@ -37,11 +37,12 @@ public final class UrlUtil {
 
     /**
      * Escape special characters in XML
+     *
      * @param url Url to be escaped
      * @return Escaped url
      */
     public static String escapeXmlSpecialCharacters(String url) {
-        if(url == null) {
+        if (url == null) {
             return null;
         }
         // https://stackoverflow.com/questions/1091945/what-characters-do-i-need-to-escape-in-xml-documents

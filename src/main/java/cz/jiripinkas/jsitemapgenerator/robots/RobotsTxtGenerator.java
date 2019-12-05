@@ -15,7 +15,7 @@ public class RobotsTxtGenerator {
 
     public static RobotsTxtGenerator of(String baseUrl) {
         RobotsTxtGenerator robotsTxtGenerator = new RobotsTxtGenerator();
-        if(!baseUrl.endsWith("/")) {
+        if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
         robotsTxtGenerator.setBaseUrl(baseUrl);
@@ -35,6 +35,7 @@ public class RobotsTxtGenerator {
 
     /**
      * Construct robots.txt String
+     *
      * @return Robots.txt String
      */
     public String toString() {

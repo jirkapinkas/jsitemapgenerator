@@ -9,16 +9,16 @@ package cz.jiripinkas.jsitemapgenerator;
  */
 public enum ChangeFreq {
 
-	ALWAYS, HOURLY, DAILY, WEEKLY, MONTHLY, YEARLY, NEVER;
+    ALWAYS, HOURLY, DAILY, WEEKLY, MONTHLY, YEARLY, NEVER;
 
-	private String lowerCase;
+    private String lowerCase;
 
-	ChangeFreq() {
-		lowerCase = name().toLowerCase();
-	}
+    ChangeFreq() {
+        lowerCase = name().toLowerCase();
+    }
 
-	@Override
-	public String toString() {
-		return lowerCase;
-	}
+    @Override
+    public String toString() {
+        return lowerCase;
+    }
 }
