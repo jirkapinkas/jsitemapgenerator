@@ -52,8 +52,8 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 
 	/**
 	 * Construct sitemap into single prettified String
-	 * @param indent
-	 * @return
+	 * @param indent Indentation
+	 * @return sitemap
 	 */
 	public String toPrettyString(int indent) {
 		return toPrettyXmlString(toString(), indent).replace("\r\n", "\n");
@@ -95,6 +95,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 *            Output file
 	 * @throws IOException
 	 *             when error
+	 * @return this
 	 */
 	public T toFile(File file) throws IOException {
 		if (file.exists()) {
@@ -126,6 +127,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 *            Output file
 	 * @throws IOException
 	 *             when error
+	 * @return this
 	 */
 	public T toFile(Path path) throws IOException {
 		return toFile(path.toFile());
