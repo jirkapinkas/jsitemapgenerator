@@ -96,7 +96,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * @throws IOException
 	 *             when error
 	 */
-	public void toFile(File file) throws IOException {
+	public T toFile(File file) throws IOException {
 		if (file.exists()) {
 			if (file.isDirectory()) {
 				throw new IOException("File '" + file + "' exists but is a directory");
@@ -116,6 +116,7 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 				writer.write(string);
 			}
 		}
+		return getThis();
 	}
 
 	/**
@@ -126,8 +127,8 @@ public abstract class AbstractSitemapGenerator <T extends AbstractGenerator> ext
 	 * @throws IOException
 	 *             when error
 	 */
-	public void toFile(Path path) throws IOException {
-		toFile(path.toFile());
+	public T toFile(Path path) throws IOException {
+		return toFile(path.toFile());
 	}
 
 	/**

@@ -94,16 +94,14 @@ String sitemap = SitemapGenerator.of("https://example.com")
 or to store it to file & ping google:
 
 ```java
-// create web sitemap for web https://www.example.com
-SitemapGenerator sg = SitemapGenerator.of("https://example.com");
-// add some URLs
-sg.addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
-  .addPage("foo.html")
-  .addPage("bar.html");
-// generate sitemap and save it to file ./sitemap.xml
-sg.toFile(Paths.get("sitemap.xml"));
-// inform Google that this sitemap has changed
-sg.pingGoogle(); // this requires okhttp in classpath!!!
+SitemapGenerator.of("https://example.com")
+    .addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
+    .addPage("foo.html")
+    .addPage("bar.html")
+    // generate sitemap and save it to file ./sitemap.xml
+    .toFile(Paths.get("sitemap.xml"))
+    // inform Google that this sitemap has changed
+    .pingGoogle(); // this requires okhttp in classpath!!!
 ```
 
 ### How to create sitemap index:
