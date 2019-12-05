@@ -39,7 +39,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
     public abstract String[] toStringArray();
 
     /**
-     * Construct sitemap into single String
+     * Construct sitemap into String
      *
      * @return sitemap
      */
@@ -53,13 +53,36 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
     }
 
     /**
-     * Construct sitemap into single prettified String
+     * Construct sitemap into String which is consumed by supplied Consumer
+     *
+     * @param stringConsumer Consumer which consumes generated String
+     * @return this
+     */
+    public T toString(Consumer<String> stringConsumer) {
+        stringConsumer.accept(toString());
+        return getThis();
+    }
+
+    /**
+     * Construct sitemap into prettified String
      *
      * @param indent Indentation
      * @return sitemap
      */
     public String toPrettyString(int indent) {
         return toPrettyXmlString(toString(), indent).replace("\r\n", "\n");
+    }
+
+    /**
+     * Construct sitemap into prettified String which is consumed by supplied Consumer
+     *
+     * @param indent         Indentation
+     * @param stringConsumer Consumer which consumes generated String
+     * @return this
+     */
+    public T toPrettyString(int indent, Consumer<String> stringConsumer) {
+        stringConsumer.accept(toPrettyString(indent));
+        return getThis();
     }
 
     private ByteArrayOutputStream gzipIt(InputStream inputStream) {
