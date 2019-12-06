@@ -23,6 +23,9 @@ public class HttpClient {
                 throw new Exception("error sending HTTP GET to this URL: " + url);
             }
             return response.code();
+        } finally {
+            // this will be executed after "return response.code();"
+            client.connectionPool().evictAll(); // OkHttpClient starts connection pool which needs to be shut down here
         }
     }
 }
