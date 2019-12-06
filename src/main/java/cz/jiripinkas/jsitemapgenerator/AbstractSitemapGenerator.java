@@ -210,6 +210,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param sitemapUrl   sitemap url
      */
     public void ping(String sitemapUrl, SearchEngine ... searchEngines) {
+        if(searchEngines.length == 0) {
+            throw new UnsupportedOperationException("Must provide at least one search engine!");
+        }
         for (SearchEngine searchEngine : searchEngines) {
             ping(searchEngine.getPingUrl(), sitemapUrl, searchEngine.getPrettyName());
         }
@@ -225,6 +228,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @return If operation succeeded
      */
     public boolean ping(boolean doNotThrowExceptionOnFailure, SearchEngine ... searchEngines) {
+        if(searchEngines.length == 0) {
+            throw new UnsupportedOperationException("Must provide at least one search engine!");
+        }
         try {
             ping(searchEngines);
             return true;
@@ -247,6 +253,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @return If operation succeeded
      */
     public boolean ping(String sitemapUrl, boolean doNotThrowExceptionOnFailure, SearchEngine... searchEngines) {
+        if(searchEngines.length == 0) {
+            throw new UnsupportedOperationException("Must provide at least one search engine!");
+        }
         try {
             ping(sitemapUrl, searchEngines);
             return true;
@@ -264,6 +273,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param searchEngines Search engines to ping
      */
     public void ping(SearchEngine ... searchEngines) {
+        if(searchEngines.length == 0) {
+            throw new UnsupportedOperationException("Must provide at least one search engine!");
+        }
         ping(baseUrl + "sitemap.xml", searchEngines);
     }
 

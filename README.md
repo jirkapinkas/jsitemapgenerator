@@ -101,7 +101,7 @@ SitemapGenerator.of("https://example.com")
     // generate sitemap and save it to file ./sitemap.xml
     .toFile(Paths.get("sitemap.xml"))
     // inform Google that this sitemap has changed
-    .pingGoogle(); // this requires okhttp in classpath!!!
+    .ping(SearchEngine.GOOGLE); // this requires okhttp in classpath!!!
 ```
 
 ### How to create sitemap index:
