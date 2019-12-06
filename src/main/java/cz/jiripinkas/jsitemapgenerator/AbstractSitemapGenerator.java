@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -175,6 +176,30 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      */
     public T toFile(Path path) throws IOException {
         return toFile(path.toFile());
+    }
+
+    /**
+     * Construct and save sitemap to output file
+     *
+     * @param first The path string or initial part of the path string
+     * @param more Additional strings to be joined to form the path string
+     * @return this
+     * @throws IOException when error
+     */
+    public T toFile(String first, String ... more) throws IOException {
+        return toFile(Paths.get(first, more));
+    }
+
+    /**
+     * Construct and save sitemap to output file
+     *
+     * @param parent The parent abstract pathname
+     * @param child The child pathname string
+     * @return this
+     * @throws IOException when error
+     */
+    public T toFile(File parent, String child) throws IOException {
+        return toFile(new File(parent, child));
     }
 
     /**
