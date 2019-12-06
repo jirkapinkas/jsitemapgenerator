@@ -2,12 +2,12 @@
 
 
 This library generates a web sitemap and can ping Google that it has
-changed. This project has been inspired by [sitemapgen4j](https://code.google.com/p/sitemapgen4j/),
-but is much more focused on traditional web sitemap and ease of use.
+changed (also it can generate RSS feed and robots.txt). It has friendly, 
+easy to use Java 8 functional API and is AWS-lambda friendly.
 
 ## Typical usage:
 
-First add this library to classpath:
+Add this library to classpath:
 
     <dependency>
       <groupId>cz.jiripinkas</groupId>
