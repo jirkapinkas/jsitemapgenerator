@@ -2,6 +2,7 @@ package cz.jiripinkas.jsitemapgenerator.generator;
 
 import cz.jiripinkas.jsitemapgenerator.HttpClient;
 import cz.jiripinkas.jsitemapgenerator.Image;
+import cz.jiripinkas.jsitemapgenerator.SearchEngine;
 import cz.jiripinkas.jsitemapgenerator.WebPage;
 import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
@@ -204,7 +205,7 @@ class SitemapGeneratorTest {
 				.thenReturn(500);
 		Mockito.when(httpClientMock.get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml"))
 				.thenReturn(200);
-		sitemapGenerator.pingGoogle();
+		sitemapGenerator.ping(SearchEngine.GOOGLE);
 		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml");
 	}
 
@@ -216,7 +217,7 @@ class SitemapGeneratorTest {
 			sitemapGenerator.setHttpClient(httpClientMock);
 			Mockito.when(httpClientMock.get(Mockito.anyString()))
 					.thenReturn(500);
-			sitemapGenerator.pingGoogle();
+			sitemapGenerator.ping(SearchEngine.GOOGLE);
 		});
 	}
 

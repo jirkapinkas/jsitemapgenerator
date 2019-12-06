@@ -203,11 +203,78 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
     }
 
     /**
+     * Ping search engine that sitemap has changed. For Google it will call this URL:
+     * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
+     *
+     * @param searchEngines Search engines to ping
+     * @param sitemapUrl   sitemap url
+     */
+    public void ping(String sitemapUrl, SearchEngine ... searchEngines) {
+        for (SearchEngine searchEngine : searchEngines) {
+            ping(searchEngine.getPingUrl(), sitemapUrl, searchEngine.getPrettyName());
+        }
+    }
+
+    /**
+     * Ping search engine that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     *
+     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping search engine,
+     *                                     this method won't throw any exception, but will return false.
+     * @param searchEngines                Search engines to ping
+     * @return If operation succeeded
+     */
+    public boolean ping(boolean doNotThrowExceptionOnFailure, SearchEngine ... searchEngines) {
+        try {
+            ping(searchEngines);
+            return true;
+        } catch (Exception e) {
+            if (doNotThrowExceptionOnFailure) {
+                return false;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Ping search engine that sitemap has changed. For Google it will call this URL:
+     * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
+     *
+     * @param sitemapUrl                   sitemap url
+     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping search engine,
+     *                                     this method won't throw any exception, but will return false.
+     * @param searchEngines                Search engines to ping
+     * @return If operation succeeded
+     */
+    public boolean ping(String sitemapUrl, boolean doNotThrowExceptionOnFailure, SearchEngine... searchEngines) {
+        try {
+            ping(sitemapUrl, searchEngines);
+            return true;
+        } catch (Exception e) {
+            if (doNotThrowExceptionOnFailure) {
+                return false;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Ping search engine that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     * @param searchEngines Search engines to ping
+     */
+    public void ping(SearchEngine ... searchEngines) {
+        ping(baseUrl + "sitemap.xml", searchEngines);
+    }
+
+    /**
      * Ping Google that sitemap has changed. Will call this URL:
      * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
      *
      * @param sitemapUrl sitemap url
+     * @deprecated Use {@link #ping(String, SearchEngine...)}
      */
+    @Deprecated
     public void pingGoogle(String sitemapUrl) {
         ping("https://www.google.com/ping?sitemap=", sitemapUrl, "Google");
     }
@@ -220,7 +287,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
+     * @deprecated Use {@link #ping(String, boolean, SearchEngine...)}
      */
+    @Deprecated
     public boolean pingGoogle(String sitemapUrl, boolean doNotThrowExceptionOnFailure) {
         try {
             pingGoogle(sitemapUrl);
@@ -238,7 +307,9 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * https://www.bing.com/ping?sitemap=URL_Encoded_sitemapUrl
      *
      * @param sitemapUrl sitemap url
+     * @deprecated Use {@link #ping(String, SearchEngine...)}
      */
+    @Deprecated
     public void pingBing(String sitemapUrl) {
         ping("https://www.bing.com/ping?sitemap=", sitemapUrl, "Bing");
     }
@@ -251,10 +322,78 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
+     * @deprecated Use {@link #ping(String, boolean, SearchEngine...)}
      */
+    @Deprecated
     public boolean pingBing(String sitemapUrl, boolean doNotThrowExceptionOnFailure) {
         try {
             pingBing(sitemapUrl);
+            return true;
+        } catch (Exception e) {
+            if (doNotThrowExceptionOnFailure) {
+                return false;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Ping Google that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     *
+     * @deprecated Use {@link #ping(SearchEngine...)}
+     */
+    @Deprecated
+    public void pingGoogle() {
+        pingGoogle(baseUrl + "sitemap.xml");
+    }
+
+    /**
+     * Ping Google that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     *
+     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
+     *                                     this method won't throw any exception, but will return false.
+     * @return If operation succeeded
+     * @deprecated Use {@link #ping(boolean, SearchEngine...)}
+     */
+    @Deprecated
+    public boolean pingGoogle(boolean doNotThrowExceptionOnFailure) {
+        try {
+            pingGoogle();
+            return true;
+        } catch (Exception e) {
+            if (doNotThrowExceptionOnFailure) {
+                return false;
+            }
+            throw e;
+        }
+    }
+
+    /**
+     * Ping Google that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     *
+     * @deprecated Use {@link #ping(SearchEngine...)}
+     */
+    @Deprecated
+    public void pingBing() {
+        pingBing(baseUrl + "sitemap.xml");
+    }
+
+    /**
+     * Ping Bing that sitemap has changed. Sitemap must be on this location:
+     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
+     *
+     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
+     *                                     this method won't throw any exception, but will return false.
+     * @return If operation succeeded
+     * @deprecated Use {@link #ping(boolean, SearchEngine...)}
+     */
+    @Deprecated
+    public boolean pingBing(boolean doNotThrowExceptionOnFailure) {
+        try {
+            pingBing();
             return true;
         } catch (Exception e) {
             if (doNotThrowExceptionOnFailure) {
@@ -274,62 +413,6 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
             }
         } catch (Exception ex) {
             throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!");
-        }
-    }
-
-    /**
-     * Ping Google that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     */
-    public void pingGoogle() {
-        pingGoogle(baseUrl + "sitemap.xml");
-    }
-
-    /**
-     * Ping Google that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     *
-     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
-     *                                     this method won't throw any exception, but will return false.
-     * @return If operation succeeded
-     */
-    public boolean pingGoogle(boolean doNotThrowExceptionOnFailure) {
-        try {
-            pingGoogle();
-            return true;
-        } catch (Exception e) {
-            if (doNotThrowExceptionOnFailure) {
-                return false;
-            }
-            throw e;
-        }
-    }
-
-    /**
-     * Ping Google that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     */
-    public void pingBing() {
-        pingBing(baseUrl + "sitemap.xml");
-    }
-
-    /**
-     * Ping Bing that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     *
-     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
-     *                                     this method won't throw any exception, but will return false.
-     * @return If operation succeeded
-     */
-    public boolean pingBing(boolean doNotThrowExceptionOnFailure) {
-        try {
-            pingBing();
-            return true;
-        } catch (Exception e) {
-            if (doNotThrowExceptionOnFailure) {
-                return false;
-            }
-            throw e;
         }
     }
 
