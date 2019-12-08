@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.jiripinkas</groupId>
     <artifactId>jsitemapgenerator</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
     <packaging>jar</packaging>
     <name>Java sitemap generator</name>
     <description>This library generates a web sitemap and can ping Google that it has changed. This project has been
@@ -30,6 +30,8 @@
         <junit.version>5.5.2</junit.version>
         <assertj.version>3.14.0</assertj.version>
         <mockito.version>3.1.0</mockito.version>
+        <spring.version>5.2.1.RELEASE</spring.version>
+        <httpclient.version>4.5.10</httpclient.version>
     </properties>
 
     <developers>
@@ -45,6 +47,18 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>${okhttp.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>

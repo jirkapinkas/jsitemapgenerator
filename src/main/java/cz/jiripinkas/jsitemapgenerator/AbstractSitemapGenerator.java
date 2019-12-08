@@ -1,8 +1,18 @@
 package cz.jiripinkas.jsitemapgenerator;
 
-import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
+import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.*;
@@ -203,80 +213,68 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
     }
 
     /**
-     * Ping search engine that sitemap has changed. For Google it will call this URL:
-     * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
-     *
-     * @param searchEngines Search engines to ping
-     * @param sitemapUrl   sitemap url
+     * Ping search engine(s) that sitemap has changed.
+     * @param ping Ping object
+     * @return true if operation succeeded. If ping.isThrowExceptionOnFailure() == false and operation doesn't succeed, returns false.
      */
-    public void ping(String sitemapUrl, SearchEngine ... searchEngines) {
-        if(searchEngines.length == 0) {
-            throw new UnsupportedOperationException("Must provide at least one search engine!");
-        }
-        for (SearchEngine searchEngine : searchEngines) {
-            ping(searchEngine.getPingUrl(), sitemapUrl, searchEngine.getPrettyName());
-        }
-    }
-
-    /**
-     * Ping search engine that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     *
-     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping search engine,
-     *                                     this method won't throw any exception, but will return false.
-     * @param searchEngines                Search engines to ping
-     * @return If operation succeeded
-     */
-    public boolean ping(boolean doNotThrowExceptionOnFailure, SearchEngine ... searchEngines) {
-        if(searchEngines.length == 0) {
-            throw new UnsupportedOperationException("Must provide at least one search engine!");
-        }
+    public PingResponse ping(Ping ping) {
         try {
-            ping(searchEngines);
-            return true;
-        } catch (Exception e) {
-            if (doNotThrowExceptionOnFailure) {
-                return false;
+            for (Ping.SearchEngine searchEngine : ping.getSearchEngines()) {
+                String resourceUrl;
+                if (searchEngine == Ping.SearchEngine.GOOGLE) {
+                    resourceUrl = "https://www.google.com/ping?sitemap=";
+                } else if (searchEngine == Ping.SearchEngine.BING) {
+                    resourceUrl = "https://www.bing.com/ping?sitemap=";
+                } else {
+                    throw new UnsupportedOperationException("Unknown search engine: " + searchEngine);
+                }
+                String sitemapUrl;
+                if (ping.getSitemapUrl() == null) {
+                    sitemapUrl = getAbsoluteUrl("sitemap.xml", false);
+                } else {
+                    sitemapUrl = getAbsoluteUrl(ping.getSitemapUrl(), false);
+                }
+                boolean responseIsNot200 = false;
+                if (ping.getHttpClientType() == null) {
+                    ping(resourceUrl, sitemapUrl, searchEngine.getPrettyName());
+                } else if(ping.getHttpClientType() == Ping.HttpClientType.REST_TEMPLATE) {
+                    String pingUrl = resourceUrl + sitemapUrl;
+                    RestTemplate restTemplate = (RestTemplate) ping.getHttpClientImplementation();
+                    ResponseEntity<String> responseEntity = restTemplate.getForEntity(pingUrl, String.class);
+                    if (responseEntity.getStatusCodeValue() != 200) {
+                        responseIsNot200 = true;
+                    }
+                } else if(ping.getHttpClientType() == Ping.HttpClientType.OK_HTTP) {
+                    String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
+                    OkHttpClient okHttpClient = (OkHttpClient) ping.getHttpClientImplementation();
+                    Request request = new Request.Builder().url(pingUrl).build();
+                    try (Response response = okHttpClient.newCall(request).execute()) {
+                        if (!response.isSuccessful()) {
+                            responseIsNot200 = true;
+                        }
+                    }
+                } else if(ping.getHttpClientType() == Ping.HttpClientType.APACHE_HTTP_CLIENT) {
+                    String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
+                    CloseableHttpClient closeableHttpClient = (CloseableHttpClient) ping.getHttpClientImplementation();
+                    HttpGet httpGet = new HttpGet(pingUrl);
+                    try (CloseableHttpResponse httpResponse = closeableHttpClient.execute(httpGet)) {
+                        HttpEntity httpEntity = httpResponse.getEntity();
+                        EntityUtils.consume(httpEntity);
+                        if(httpResponse.getStatusLine().getStatusCode() != 200) {
+                            responseIsNot200 = true;
+                        }
+                    }
+                } else {
+                    throw new UnsupportedOperationException("Unknown HttpClientType!");
+                }
+                if(responseIsNot200) {
+                    throw new WebmasterToolsException(searchEngine.getPrettyName() + " could not be informed about new sitemap! Return code != 200");
+                }
             }
-            throw e;
-        }
-    }
-
-    /**
-     * Ping search engine that sitemap has changed. For Google it will call this URL:
-     * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
-     *
-     * @param sitemapUrl                   sitemap url
-     * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping search engine,
-     *                                     this method won't throw any exception, but will return false.
-     * @param searchEngines                Search engines to ping
-     * @return If operation succeeded
-     */
-    public boolean ping(String sitemapUrl, boolean doNotThrowExceptionOnFailure, SearchEngine... searchEngines) {
-        if(searchEngines.length == 0) {
-            throw new UnsupportedOperationException("Must provide at least one search engine!");
-        }
-        try {
-            ping(sitemapUrl, searchEngines);
-            return true;
         } catch (Exception e) {
-            if (doNotThrowExceptionOnFailure) {
-                return false;
-            }
-            throw e;
+            return new PingResponse(true, new WebmasterToolsException(e));
         }
-    }
-
-    /**
-     * Ping search engine that sitemap has changed. Sitemap must be on this location:
-     * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
-     * @param searchEngines Search engines to ping
-     */
-    public void ping(SearchEngine ... searchEngines) {
-        if(searchEngines.length == 0) {
-            throw new UnsupportedOperationException("Must provide at least one search engine!");
-        }
-        ping(baseUrl + "sitemap.xml", searchEngines);
+        return new PingResponse(false);
     }
 
     /**
@@ -284,7 +282,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * https://www.google.com/ping?sitemap=URL_Encoded_sitemapUrl
      *
      * @param sitemapUrl sitemap url
-     * @deprecated Use {@link #ping(String, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public void pingGoogle(String sitemapUrl) {
@@ -299,7 +297,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
-     * @deprecated Use {@link #ping(String, boolean, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public boolean pingGoogle(String sitemapUrl, boolean doNotThrowExceptionOnFailure) {
@@ -319,7 +317,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * https://www.bing.com/ping?sitemap=URL_Encoded_sitemapUrl
      *
      * @param sitemapUrl sitemap url
-     * @deprecated Use {@link #ping(String, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public void pingBing(String sitemapUrl) {
@@ -334,7 +332,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
-     * @deprecated Use {@link #ping(String, boolean, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public boolean pingBing(String sitemapUrl, boolean doNotThrowExceptionOnFailure) {
@@ -353,7 +351,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * Ping Google that sitemap has changed. Sitemap must be on this location:
      * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
      *
-     * @deprecated Use {@link #ping(SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public void pingGoogle() {
@@ -367,7 +365,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
-     * @deprecated Use {@link #ping(boolean, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public boolean pingGoogle(boolean doNotThrowExceptionOnFailure) {
@@ -386,7 +384,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * Ping Google that sitemap has changed. Sitemap must be on this location:
      * baseUrl/sitemap.xml (for example http://www.javavids.com/sitemap.xml)
      *
-     * @deprecated Use {@link #ping(SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public void pingBing() {
@@ -400,7 +398,7 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * @param doNotThrowExceptionOnFailure If this is true and it's not possible to ping google,
      *                                     this method won't throw any exception, but will return false.
      * @return If operation succeeded
-     * @deprecated Use {@link #ping(boolean, SearchEngine...)}
+     * @deprecated Use {@link #ping(Ping)}
      */
     @Deprecated
     public boolean pingBing(boolean doNotThrowExceptionOnFailure) {
@@ -421,10 +419,10 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
             // ping Google / Bing
             int returnCode = httpClient.get(pingUrl);
             if (returnCode != 200) {
-                throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!");
+                throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap! Return code != 200");
             }
         } catch (Exception ex) {
-            throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!");
+            throw new WebmasterToolsException(serviceName + " could not be informed about new sitemap!", ex);
         }
     }
 
@@ -675,13 +673,32 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
      * Get absolute URL:
      * If webPageName is null, return baseUrl.
      * If webPageName is not null, check if webPageName is absolute (can be URL from CDN) or relative URL.
-     * If it's relative URL, prepend baseUrl and return result
+     * If it's relative URL, prepend baseUrl and return result.
+     * This method escapes webPageName's special characters, thus it must not be called for ping Google / Bing functionality!
      *
      * @param webPageName WebPageName
      * @return Correct URL
      */
     protected String getAbsoluteUrl(String webPageName) {
-        webPageName = UrlUtil.escapeXmlSpecialCharacters(webPageName);
+        return getAbsoluteUrl(webPageName, true);
+    }
+
+    /**
+     * Get absolute URL:
+     * If webPageName is null, return baseUrl.
+     * If webPageName is not null, check if webPageName is absolute (can be URL from CDN) or relative URL.
+     * If it's relative URL, prepend baseUrl and return result
+     *
+     * @param webPageName WebPageName
+     * @param escapeSpecialCharacters Escape special characters?
+     *                                Special characters must be escaped if the URL will be stored to sitemap.
+     *                                If this method is called for ping Google / Bing functionality, special characters must not be escaped.
+     * @return Correct URL
+     */
+    protected String getAbsoluteUrl(String webPageName, boolean escapeSpecialCharacters) {
+        if(escapeSpecialCharacters) {
+            webPageName = UrlUtil.escapeXmlSpecialCharacters(webPageName);
+        }
         try {
             String resultString;
             if (webPageName != null) {

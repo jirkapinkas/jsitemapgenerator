@@ -1,9 +1,6 @@
 package cz.jiripinkas.jsitemapgenerator.generator;
 
-import cz.jiripinkas.jsitemapgenerator.HttpClient;
-import cz.jiripinkas.jsitemapgenerator.Image;
-import cz.jiripinkas.jsitemapgenerator.SearchEngine;
-import cz.jiripinkas.jsitemapgenerator.WebPage;
+import cz.jiripinkas.jsitemapgenerator.*;
 import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
 import cz.jiripinkas.jsitemapgenerator.util.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -197,7 +195,7 @@ class SitemapGeneratorTest {
 	}
 
 	@Test
-	void testPingGoogleSuccess() throws Exception {
+	void testPingGoogleSuccess1() throws Exception {
 		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
 		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
 		sitemapGenerator.setHttpClient(httpClientMock);
@@ -205,20 +203,91 @@ class SitemapGeneratorTest {
 				.thenReturn(500);
 		Mockito.when(httpClientMock.get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml"))
 				.thenReturn(200);
-		sitemapGenerator.ping(SearchEngine.GOOGLE);
+		PingResponse pingResponse = sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).build());
 		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fsitemap.xml");
+
+		// failure shouldn't be catched
+		AtomicBoolean catchedFailure = new AtomicBoolean(false);
+		pingResponse.catchOnFailure(e -> catchedFailure.set(true));
+		assertFalse(catchedFailure.get());
+
+		// this shouldn't produce any exception
+		pingResponse.throwOnFailure();
+
+		// this shouldn't produce any exception
+		pingResponse.throwOnFailure(UnsupportedOperationException::new);
+
+		AtomicBoolean success = new AtomicBoolean(false);
+		pingResponse.callOnSuccess(() -> success.set(true));
+		assertTrue(success.get());
 	}
 
 	@Test
-	void testPingGoogleError() {
+	void testPingGoogleSuccess2() throws Exception {
+		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+		sitemapGenerator.setHttpClient(httpClientMock);
+		Mockito.when(httpClientMock.get(Mockito.anyString()))
+				.thenReturn(500);
+		Mockito.when(httpClientMock.get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fcustomsitemap.xml"))
+				.thenReturn(200);
+		sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).sitemapUrl("customsitemap.xml").build());
+		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.example.com%2Fcustomsitemap.xml");
+	}
+
+	@Test
+	void testPingGoogleSuccess3() throws Exception {
+		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+		sitemapGenerator.setHttpClient(httpClientMock);
+		Mockito.when(httpClientMock.get(Mockito.anyString()))
+				.thenReturn(500);
+		Mockito.when(httpClientMock.get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.customdomain.com%2Fcustomsitemap.xml"))
+				.thenReturn(200);
+		sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).sitemapUrl("https://www.customdomain.com/customsitemap.xml").build());
+		Mockito.verify(httpClientMock).get("https://www.google.com/ping?sitemap=https%3A%2F%2Fwww.customdomain.com%2Fcustomsitemap.xml");
+	}
+
+	@Test
+	void testPingGoogleError1() {
 		assertThrows(WebmasterToolsException.class, () -> {
 			HttpClient httpClientMock = Mockito.mock(HttpClient.class);
 			SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
 			sitemapGenerator.setHttpClient(httpClientMock);
 			Mockito.when(httpClientMock.get(Mockito.anyString()))
 					.thenReturn(500);
-			sitemapGenerator.ping(SearchEngine.GOOGLE);
+			sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).build())
+					.callOnSuccess(() -> fail("This shouldn't be called"))
+					.throwOnFailure(WebmasterToolsException::new);
 		});
+	}
+
+	@Test
+	void testPingGoogleError2() {
+		assertThrows(WebmasterToolsException.class, () -> {
+			HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+			SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+			sitemapGenerator.setHttpClient(httpClientMock);
+			Mockito.when(httpClientMock.get(Mockito.anyString()))
+					.thenReturn(500);
+			sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).build())
+					.callOnSuccess(() -> fail("This shouldn't be called"))
+					.throwOnFailure();
+		});
+	}
+
+	@Test
+	void testPingGoogleError3() throws Exception {
+		AtomicBoolean catchedFailure = new AtomicBoolean(false);
+		HttpClient httpClientMock = Mockito.mock(HttpClient.class);
+		SitemapGenerator sitemapGenerator = SitemapGenerator.of("https://www.example.com/");
+		sitemapGenerator.setHttpClient(httpClientMock);
+		Mockito.when(httpClientMock.get(Mockito.anyString()))
+				.thenReturn(500);
+		sitemapGenerator.ping(Ping.builder().engines(Ping.SearchEngine.GOOGLE).build())
+				.callOnSuccess(() -> fail("This shouldn't be called"))
+				.catchOnFailure(e -> catchedFailure.set(true));
+		assertTrue(catchedFailure.get());
 	}
 
 	@Test

@@ -12,7 +12,7 @@ Add this library to classpath:
     <dependency>
       <groupId>cz.jiripinkas</groupId>
       <artifactId>jsitemapgenerator</artifactId>
-      <version>4.2</version>
+      <version>4.3</version>
     </dependency>
 
 If you want to use "ping google / bing" functionality, also add this library to classpath:
@@ -91,9 +91,12 @@ String sitemap = SitemapGenerator.of("https://example.com")
         .toString();
 ```
 
-or to store it to file & ping google:
+or to store it to file & ping Google:
 
 ```java
+Ping ping = Ping.builder()
+        .engines(Ping.SearchEngine.GOOGLE)
+        .build();
 SitemapGenerator.of("https://example.com")
     .addPage(WebPage.builder().maxPriorityRoot().changeFreqNever().lastModNow().build())
     .addPage("foo.html")
@@ -101,8 +104,15 @@ SitemapGenerator.of("https://example.com")
     // generate sitemap and save it to file ./sitemap.xml
     .toFile(Paths.get("sitemap.xml"))
     // inform Google that this sitemap has changed
-    .ping(SearchEngine.GOOGLE); // this requires okhttp in classpath!!!
+    .ping(ping); // this requires okhttp in classpath!!!
+    .callOnSuccess(() -> System.out.println("Pinged Google")) // what will happen on success
+    .catchOnFailure(e -> System.out.println("Could not ping Google!")); // what will happen on error
 ```
+
+Note: To ping Google / Bing, you can either use built-in support (requires OkHttp in classpath!!!), 
+or you can use your own http client implementation. Supported http clients: Custom OkHttpClient, 
+CloseableHttpClient (Apache Http Client), RestTemplate (from Spring). To use your own http client 
+implementation just call on PingBuilder method: httpClient*() and pass inside your implementation.
 
 ### How to create sitemap index:
 
@@ -115,7 +125,8 @@ String sitemapIndex = SitemapIndexGenerator.of("https://javalibs.com")
 
 ### How to create RSS channel:
 
-... RSS ISN'T sitemap :-), but it's basically just a list of links (like sitemap) and if you need sitemap, then probably you also need RSS
+... RSS ISN'T sitemap :-), but it's basically just a list of links (like sitemap) and if you need sitemap, 
+then probably you also need RSS. Note: RssGenerator has lots of common methods with SitemapGenerator.
 
 ```java
 String rss = RssGenerator.of("https://topjavablogs.com", "Top Java Blogs", "Best Java Blogs")
