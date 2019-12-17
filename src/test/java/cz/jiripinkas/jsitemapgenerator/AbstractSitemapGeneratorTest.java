@@ -1,9 +1,13 @@
 package cz.jiripinkas.jsitemapgenerator;
 
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
 import cz.jiripinkas.jsitemapgenerator.generator.SitemapIndexGenerator;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,5 +56,18 @@ class AbstractSitemapGeneratorTest {
     void getAbsoluteUrlBaseUrlCheck() {
         String absoluteUrl = sitemapIndexGenerator.getAbsoluteUrl(null);
         assertEquals("http://javalibs.com/", absoluteUrl);
+    }
+
+    @Test
+    void pingWithApacheHttpClient() throws IOException {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            Ping ping = Ping.builder()
+                    .engines(Ping.SearchEngine.GOOGLE, Ping.SearchEngine.BING)
+                    .httpClientApacheHttpClient(client)
+                    .build();
+            SitemapGenerator.of("https://example.com")
+                    .ping(ping)
+                    .throwOnFailure();
+        }
     }
 }

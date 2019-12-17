@@ -3,18 +3,9 @@ package cz.jiripinkas.jsitemapgenerator;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidPriorityException;
 import cz.jiripinkas.jsitemapgenerator.exception.InvalidUrlException;
 import cz.jiripinkas.jsitemapgenerator.exception.WebmasterToolsException;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -239,31 +230,51 @@ public abstract class AbstractSitemapGenerator<T extends AbstractGenerator> exte
                     ping(resourceUrl, sitemapUrl, searchEngine.getPrettyName());
                 } else if(ping.getHttpClientType() == Ping.HttpClientType.REST_TEMPLATE) {
                     String pingUrl = resourceUrl + sitemapUrl;
-                    RestTemplate restTemplate = (RestTemplate) ping.getHttpClientImplementation();
-                    ResponseEntity<String> responseEntity = restTemplate.getForEntity(pingUrl, String.class);
+                    org.springframework.web.client.RestTemplate restTemplate = (org.springframework.web.client.RestTemplate) ping.getHttpClientImplementation();
+                    org.springframework.http.ResponseEntity<String> responseEntity = restTemplate.getForEntity(pingUrl, String.class);
                     if (responseEntity.getStatusCodeValue() != 200) {
                         responseIsNot200 = true;
                     }
                 } else if(ping.getHttpClientType() == Ping.HttpClientType.OK_HTTP) {
                     String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
-                    OkHttpClient okHttpClient = (OkHttpClient) ping.getHttpClientImplementation();
-                    Request request = new Request.Builder().url(pingUrl).build();
-                    try (Response response = okHttpClient.newCall(request).execute()) {
+                    okhttp3.OkHttpClient okHttpClient = (okhttp3.OkHttpClient) ping.getHttpClientImplementation();
+                    okhttp3.Request request = new okhttp3.Request.Builder().url(pingUrl).build();
+                    try (okhttp3.Response response = okHttpClient.newCall(request).execute()) {
                         if (!response.isSuccessful()) {
                             responseIsNot200 = true;
                         }
                     }
                 } else if(ping.getHttpClientType() == Ping.HttpClientType.APACHE_HTTP_CLIENT) {
                     String pingUrl = resourceUrl + URLEncoder.encode(sitemapUrl, "UTF-8");
-                    CloseableHttpClient closeableHttpClient = (CloseableHttpClient) ping.getHttpClientImplementation();
-                    HttpGet httpGet = new HttpGet(pingUrl);
-                    try (CloseableHttpResponse httpResponse = closeableHttpClient.execute(httpGet)) {
-                        HttpEntity httpEntity = httpResponse.getEntity();
-                        EntityUtils.consume(httpEntity);
-                        if(httpResponse.getStatusLine().getStatusCode() != 200) {
+                    Object httpGet = Class.forName("org.apache.http.client.methods.HttpGet").getDeclaredConstructor(String.class).newInstance(pingUrl);
+                    Method execute = Class.forName("org.apache.http.impl.client.CloseableHttpClient").getMethod("execute", Class.forName("org.apache.http.client.methods.HttpUriRequest"));
+                    Object httpResponse = null;
+                    try {
+                        httpResponse = execute.invoke(ping.getHttpClientImplementation(), httpGet);
+                        Method getEntity = Class.forName("org.apache.http.HttpResponse").getMethod("getEntity");
+                        Object httpEntity = getEntity.invoke(httpResponse);
+                        Method consume = Class.forName("org.apache.http.util.EntityUtils").getMethod("consume", Class.forName("org.apache.http.HttpEntity"));
+                        consume.invoke(null, httpEntity);
+                        Object getStatusLine = Class.forName("org.apache.http.HttpResponse").getMethod("getStatusLine").invoke(httpResponse);
+                        int getStatusCode = (Integer) Class.forName("org.apache.http.StatusLine").getMethod("getStatusCode").invoke(getStatusLine);
+                        if(getStatusCode != 200) {
                             responseIsNot200 = true;
                         }
+                    } finally {
+                        if(httpResponse != null) {
+                            Class.forName("java.io.Closeable").getMethod("close").invoke(httpResponse);
+                        }
                     }
+                    // same code without reflection
+//                    org.apache.http.impl.client.CloseableHttpClient closeableHttpClient = (org.apache.http.impl.client.CloseableHttpClient) ping.getHttpClientImplementation();
+//                    org.apache.http.client.methods.HttpGet httpGet = new org.apache.http.client.methods.HttpGet(pingUrl);
+//                    try (org.apache.http.client.methods.CloseableHttpResponse httpResponse = closeableHttpClient.execute(httpGet)) {
+//                        org.apache.http.HttpEntity httpEntity = httpResponse.getEntity();
+//                        org.apache.http.util.EntityUtils.consume(httpEntity);
+//                        if(httpResponse.getStatusLine().getStatusCode() != 200) {
+//                            responseIsNot200 = true;
+//                        }
+//                    }
                 } else {
                     throw new UnsupportedOperationException("Unknown HttpClientType!");
                 }
