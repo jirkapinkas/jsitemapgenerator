@@ -14,9 +14,12 @@ import java.util.List;
 public class SitemapIndexGenerator extends AbstractSitemapGenerator<SitemapIndexGenerator> {
 
     /**
-     * @param baseUrl Base url
+     * This constructor is public, because sometimes somebody wants SitemapIndexGenerator to be
+     * a Spring bean and Spring wants to create a proxy which requires public constructor.
+     * But you shouldn't call this constructor on your own, use {@link SitemapIndexGenerator#of(String)} instead.
+     * @param baseUrl Base URL
      */
-    private SitemapIndexGenerator(String baseUrl) {
+    public SitemapIndexGenerator(String baseUrl) {
         super(baseUrl);
     }
 

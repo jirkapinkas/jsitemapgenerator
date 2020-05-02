@@ -20,7 +20,10 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
     private String defaultExtension;
 
     /**
-     * Create RssGenerator
+     * Creates RssGenerator.
+     * This constructor is public, because sometimes somebody wants RssGenerator to be
+     * a Spring bean and Spring wants to create a proxy which requires public constructor.
+     * But you shouldn't call this constructor on your own, use {@link RssGenerator#of(String, String, String)} instead.
      *
      * @param baseUrl        Base URL
      * @param root           If Base URL is root (for example http://www.javavids.com or if
@@ -28,14 +31,14 @@ public class RssGenerator extends AbstractGenerator<RssGenerator> {
      * @param webTitle       Web title
      * @param webDescription Web description
      */
-    private RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
+    public RssGenerator(String baseUrl, boolean root, String webTitle, String webDescription) {
         super(baseUrl, root);
         this.webTitle = webTitle;
         this.webDescription = webDescription;
     }
 
     /**
-     * Create RssGenerator. Root = true.
+     * Creates RssGenerator. Root = true.
      *
      * @param baseUrl        Base URL
      * @param webTitle       Web title

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.jiripinkas</groupId>
     <artifactId>jsitemapgenerator</artifactId>
-    <version>4.4</version>
+    <version>4.5</version>
     <packaging>jar</packaging>
     <name>Java sitemap generator</name>
     <description>This library generates a web sitemap and can ping Google that it has changed. This project has been

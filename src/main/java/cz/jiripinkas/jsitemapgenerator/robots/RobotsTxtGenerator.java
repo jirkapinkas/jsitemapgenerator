@@ -1,6 +1,7 @@
 package cz.jiripinkas.jsitemapgenerator.robots;
 
 import cz.jiripinkas.jsitemapgenerator.UrlUtil;
+import cz.jiripinkas.jsitemapgenerator.generator.SitemapGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,14 @@ public class RobotsTxtGenerator {
     private List<String> sitemaps = new ArrayList<>();
 
     private String baseUrl;
+
+    /**
+     * This constructor is public, because sometimes somebody wants RobotsTxtGenerator to be
+     * a Spring bean and Spring wants to create a proxy which requires public constructor.
+     * But you shouldn't call this constructor on your own, use {@link RobotsTxtGenerator#of(String)} instead.
+     */
+    public RobotsTxtGenerator() {
+    }
 
     public static RobotsTxtGenerator of(String baseUrl) {
         RobotsTxtGenerator robotsTxtGenerator = new RobotsTxtGenerator();

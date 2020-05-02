@@ -17,9 +17,12 @@ public class SitemapGenerator extends AbstractSitemapGenerator<SitemapGenerator>
     }
 
     /**
+     * This constructor is public, because sometimes somebody wants SitemapGenerator to be
+     * a Spring bean and Spring wants to create a proxy which requires public constructor.
+     * But you shouldn't call this constructor on your own, use {@link SitemapGenerator#of(String)} instead.
      * @param baseUrl Base URL
      */
-    private SitemapGenerator(String baseUrl) {
+    public SitemapGenerator(String baseUrl) {
         super(baseUrl);
     }
 
