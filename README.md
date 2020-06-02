@@ -150,6 +150,10 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
         .toString();
 ```
 
+### How to easily check sitemap using Docker image (even with CI/CD server):
+
+- https://hub.docker.com/r/jirkapinkas/sitemap_validator
+
 ## My other projects:
 
 - [javalibs: (not only) Maven Central search engine](https://javalibs.com)
