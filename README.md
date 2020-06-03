@@ -161,7 +161,7 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
 ### Best practices & performance
 
 - SitemapGenerator (and other Generator classes) are builders, thus they're not immutable.
-- Also having SitemapGenerator as singleton and at one time calling addPage() and toString() (in multiple threads) isn't really advised. SitemapGenerator operations aren't thread-safe (with one exception: SitemapGenerator.of(), which creates new instance of SitemapGenerator).
+- Also having SitemapGenerator as singleton and at the same time calling addPage() and toString() (in multiple threads) isn't really advised. SitemapGenerator operations aren't thread-safe (with one exception: SitemapGenerator.of(), which creates new instance of SitemapGenerator).
 - When you call addPage(), you store it to Map, where key is page's URL (so you cannot have two items with the same URL in sitemap).
 - toString(), toFile(), toGzipByteArray() methods (terminal operations) generate final sitemap from the Map of objects. So when creating sitemap, most time will be spent executing terminal operation.
 - If you need raw speed for accessing sitemap, I suggest to:
