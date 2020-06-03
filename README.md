@@ -166,7 +166,7 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
 - toString(), toFile(), toGzipByteArray() methods (terminal operations) generate final sitemap from the Map of objects. So when creating sitemap, most time will be spent executing terminal operation.
 - If you need raw speed for accessing sitemap, I suggest to:
     - either save sitemap to external file and then just get the data from file
-    - or cache result of terminal operation
+    - or cache the result of terminal operation
 
 ## My other projects:
 
