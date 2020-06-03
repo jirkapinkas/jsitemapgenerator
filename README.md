@@ -157,6 +157,16 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
     - usable with Docker
     - can be easily used in CI/CD pipeline
     - perfect for testing generated sitemap
+    
+### Best practices & performance
+
+- SitemapGenerator (and other Generator classes) are builders, thus they're not immutable.
+- Also having SitemapGenerator as singleton and at one time calling addPage() and toString() (in multiple threads) isn't really advised. SitemapGenerator operations aren't thread-safe (with one exception: SitemapGenerator.of(), which creates new instance of SitemapGenerator).
+- When you call addPage(), you store it to Map, where key is page's URL (so you cannot have two items with the same URL in sitemap).
+- toString(), toFile(), toGzipByteArray() methods (terminal operations) generate final sitemap from the Map of objects. So when creating sitemap, most time will be spent executing terminal operation.
+- If you need raw speed for accessing sitemap, I suggest to:
+    - either save sitemap to external file and then just get the data from file
+    - or cache result of terminal operation
 
 ## My other projects:
 
