@@ -150,9 +150,13 @@ String robotsTxt = RobotsTxtGenerator.of("https://example.com")
         .toString();
 ```
 
-### How to easily check sitemap using Docker image (even with CI/CD server):
+### How to check sitemap:
 
 - https://hub.docker.com/r/jirkapinkas/sitemap_validator
+    - this tool will crawl any sitemap.xml, parse and check each URL
+    - usable with Docker
+    - can be easily used in CI/CD pipeline
+    - perfect for testing generated sitemap
 
 ## My other projects:
 
